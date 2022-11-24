@@ -46,7 +46,7 @@ class Doosan:
         mir_pose.pose.orientation.z = 0.707  # 0.0
         mir_pose.pose.orientation.w = 0.707  # 1.0
         mir_name = "mir"
-        self.scene.attach_box('link1', mir_name, mir_pose,  size=(0.75, 0.95, 0.40) )
+        self.scene.attach_box('world', mir_name, mir_pose,  size=(0.75, 0.95, 0.40) )
         # Add the controler doosan as a box
         controler_pose = geometry_msgs.msg.PoseStamped()
         controler_pose.header.frame_id = "world"  # world frame (careful with the simu to real)
@@ -58,7 +58,7 @@ class Doosan:
         controler_pose.pose.orientation.z = 0.0  # 1.57
         controler_pose.pose.orientation.w = 1.0  # 1.0
         controler_name = "controler"
-        self.scene.attach_box('link1', controler_name, controler_pose, size=(0.40, 0.50, 0.40))
+        self.scene.attach_box('world', controler_name, controler_pose, size=(0.40, 0.50, 0.40))
 
         self.get_pos_x()
 

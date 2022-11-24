@@ -29,7 +29,7 @@ def move_base_client():
     rospy.loginfo("Waiting for action server to come up...")
     client.wait_for_server()
     goal = MoveBaseGoal()
-    goal.target_pose.header.frame_id = "map"
+    goal.target_pose.header.frame_id = pose.header.frame_id
     goal.target_pose.header.stamp = rospy.get_rostime()
     pose.header.stamp = rospy.get_rostime()
 
@@ -105,5 +105,5 @@ def callback(pose_desired):
 
 if __name__ == '__main__':
     rospy.init_node('mir_ac')
-    rospy.Subscriber("mir_go_to", PoseStamped, callback)
+    rospy.Subscriber("/mir_go_to", PoseStamped, callback)
     rospy.spin()

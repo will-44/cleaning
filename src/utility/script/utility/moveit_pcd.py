@@ -23,8 +23,6 @@ import copy
 
 from alive_progress import alive_bar
 
-
-
 from tf.transformations import euler_from_quaternion, quaternion_from_euler, \
     quaternion_matrix, quaternion_from_matrix
 from geometry_msgs.msg import PoseStamped, Pose, Point, Quaternion
@@ -83,12 +81,23 @@ def fkin(poses):
     except rospy.ServiceException as e:
         print("Service call failed: s")
 
+def callback(msg):
+    global mir_result
+    print("mir_result:", msg)
+    mir_result = msg
 
 if __name__ == '__main__':
+    global mir_result
     rospy.init_node('moveit_pcd', anonymous=True)
     arm = Doosan()
+    mir_result = False
+    rospy.Subscriber("/mir_result", Bool, callback)
+    mir_pub = rospy.Publisher('/mir_go_to', PoseStamped, queue_size=10)
 
-    mir_pub = rospy.Publisher('mir_go_to', PoseStamped, queue_size=1)
+    arm.go_to_j([0, 0, 0, 0, 0, 0])
+    while arm.check_motion() != 0:
+        rospy.sleep(0.1)
+
 
     pcd_path = rospkg.RosPack().get_path('utility') + "/mesh/scie1.ply"
     cone_path = rospkg.RosPack().get_path('utility') + "/mesh/cone.stl"
@@ -115,76 +124,54 @@ if __name__ == '__main__':
     machine_pose.pose.position.y = 3.6
     machine_pose.pose.position.z = -0.2
     machine_pose.pose.orientation.x = 0.707
-    machine_pose.pose.orientation.y = 0#-0.707
-    machine_pose.pose.orientation.z = 0#-0.707
+    machine_pose.pose.orientation.y = 0  # -0.707
+    machine_pose.pose.orientation.z = 0  # -0.707
     machine_pose.pose.orientation.w = 0.707
     arm.scene.add_mesh("machine", machine_pose, mesh_path)
 
-    # base = copy.deepcopy(cone_load)
-    # base.translate(((best_spot[0][0] - pcd_load.get_center()[0]), (best_spot[0][1] - pcd_load.get_center()[1]), 1.3))
-    # R = base.get_rotation_matrix_from_xyz((0, 0, np.pi))
-    # R = cone.get_rotation_matrix_from_quaternion([machine_pose.pose.orientation.x, machine_pose.pose.orientation.y,
-    #                                               machine_pose.pose.orientation.z, machine_pose.pose.orientation.w])
-    # base.rotate(R)
-    #
-    # pose = [radians(0), radians(0), radians(0),
-    #         radians(0), radians(0), radians(0)]
-    # trans = fkin(pose).pose_stamped[0].pose
-    # link6 = copy.deepcopy(base)
-    # link6.translate((-trans.position.x, -trans.position.y, trans.position.z))
-
     mesh = o3d.geometry.TriangleMesh.create_coordinate_frame()
-
-    # vis.add_geometry(pcd_load)
-    # vis.add_geometry(base)
-    # vis.add_geometry(mesh)
-    # new_cone = copy.deepcopy(link6)
-    # vis.add_geometry(new_cone)
-    # vis.update_geometry(new_cone)
-    # vis.poll_events()
-    # vis.update_renderer()
 
     rospy.loginfo(spots_np)
     display_marker(Marker.CUBE, spots_np[0][0], spots_np[0][1], spots_np[0][2], 0, 0, 0, 1, "machine")
+    pose_mir = PoseStamped()
+    pose_mir.header.frame_id = "machine"
+    pose_mir.pose.position.x = spots_np[0][0]
+    pose_mir.pose.position.y = spots_np[0][1]
+    pose_mir.pose.orientation.x = 0
+    pose_mir.pose.orientation.y = 0
+    pose_mir.pose.orientation.z = -0.707
+    pose_mir.pose.orientation.w = 0.707
 
+    mir_pub.publish(pose_mir)
+    rospy.loginfo("pose send")
+    while not mir_result:
+        rospy.sleep(0.1)
+    print("mir finish")
+    pose_valid = []
+    with alive_bar(2519424) as bar:
+        for teta1 in range(-150, -30, 10):
+            for teta2 in range(-90, 90, 10):
+                for teta3 in range(-90, 90, 10):
+                    for teta4 in range(-180, 180, 10):
+                        for teta5 in range(-90, 90, 10):
+                            teta6 = 0
 
-    # with alive_bar(2519424) as bar:
-    #     for teta1 in range(-150, -30, 10):
-    #         for teta2 in range(-90, 90, 10):
-    #             for teta3 in range(-90, 90, 10):
-    #                 for teta4 in range(-180, 180, 10):
-    #                     for teta5 in range(-90, 90, 10):
-    #                         teta6 = 0
-    #
-    #                         pose = [radians(teta1), radians(teta2), radians(teta3),
-    #                                 radians(teta4), radians(teta5), radians(teta6)]
-    #                         trans = fkin(pose).pose_stamped[0].pose
-    #                         if radians(160) >= trans.orientation.z >= radians(30) and \
-    #                                 radians(160) >= trans.orientation.y >= radians(20):
-    #                             # print(degrees(trans.orientation.x))
-    #                             # print(degrees(trans.orientation.y))
-    #                             # while(arm.check_motion() != 0):
-    #                             #     rospy.sleep(0.1)
-    #
-    #                             if check_collision(pose).valid:
-    #                                 # vis.remove_geometry(new_cone)
-    #                                 new_cone = copy.deepcopy(base)
-    #                                 # trans = fkin(pose).pose_stamped[0].pose
-    #                                 new_cone.translate((-trans.position.x, -trans.position.y, trans.position.z))
-    #                                 R = new_cone.get_rotation_matrix_from_quaternion([trans.orientation.x,
-    #                                                                                   trans.orientation.y,
-    #                                                                                   trans.orientation.z,
-    #                                                                                   trans.orientation.w])
-    #                                 new_cone.rotate(R)
-    #                                 R = new_cone.get_rotation_matrix_from_xyz([0, 0, np.pi])
-    #                                 new_cone.rotate(R)
-    #                                 o3d.io.write_point_cloud('/home/guillaume/Documents/cones/' + str(pose) + '.ply', new_cone)
-    #                                 input()
-    #
-    #                                 # vis.add_geometry(new_cone)
-    #                                 # vis.update_geometry(new_cone)
-    #                                 # vis.poll_events()
-    #                                 # vis.update_renderer()
-    #                         bar()
-    #                                 # o3d.visualization.draw_geometries([new_cone, pcd_load, base, mesh])
-    #                                 # input()
+                            pose = [radians(teta1), radians(teta2), radians(teta3),
+                                    radians(teta4), radians(teta5), radians(teta6)]
+                            trans = fkin(pose).pose_stamped[0].pose
+                            quaternion = (
+                                trans.orientation.x,
+                                trans.orientation.y,
+                                trans.orientation.z,
+                                trans.orientation.w)
+                            euler = tf.transformations.euler_from_quaternion(quaternion)
+                            if radians(160) >= euler[2] >= radians(30) and \
+                                    radians(160) >= euler[1] >= radians(20):
+                                #     arm.go_to_l(trans)
+                                #     while arm.check_motion() != 0:
+                                #         rospy.sleep(0.1)
+
+                                if check_collision(pose).valid:
+                                    pose_valid.append(pose)
+                            bar()
+
