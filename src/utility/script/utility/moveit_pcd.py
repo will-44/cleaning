@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import rospy
+from ros_numpy import numpify
 import rospkg
 from doosan import Doosan
 from robotiq import Robotiq
@@ -9,7 +10,9 @@ from std_msgs.msg import Bool
 from geometry_msgs.msg import PoseStamped, Pose2D
 from visualization_msgs.msg import Marker
 from rviz_tool import display_marker
+import tf2_ros
 import tf
+import tf2_geometry_msgs
 import geometry_msgs.msg
 import pickle
 import open3d as o3d
@@ -81,10 +84,12 @@ def fkin(poses):
     except rospy.ServiceException as e:
         print("Service call failed: s")
 
+
 def callback(msg):
     global mir_result
     print("mir_result:", msg)
     mir_result = msg
+
 
 if __name__ == '__main__':
     global mir_result
@@ -97,7 +102,6 @@ if __name__ == '__main__':
     arm.go_to_j([0, 0, 0, 0, 0, 0])
     while arm.check_motion() != 0:
         rospy.sleep(0.1)
-
 
     pcd_path = rospkg.RosPack().get_path('utility') + "/mesh/scie1.ply"
     cone_path = rospkg.RosPack().get_path('utility') + "/mesh/cone.stl"
@@ -147,6 +151,8 @@ if __name__ == '__main__':
     while not mir_result:
         rospy.sleep(0.1)
     print("mir finish")
+    tf_buffer = tf2_ros.Buffer()
+    listener = tf2_ros.TransformListener(tf_buffer)
     pose_valid = []
     with alive_bar(2519424) as bar:
         for teta1 in range(-150, -30, 10):
@@ -155,23 +161,46 @@ if __name__ == '__main__':
                     for teta4 in range(-180, 180, 10):
                         for teta5 in range(-90, 90, 10):
                             teta6 = 0
-
                             pose = [radians(teta1), radians(teta2), radians(teta3),
                                     radians(teta4), radians(teta5), radians(teta6)]
-                            trans = fkin(pose).pose_stamped[0].pose
+                            tcp_map = fkin(pose).pose_stamped[0]
                             quaternion = (
-                                trans.orientation.x,
-                                trans.orientation.y,
-                                trans.orientation.z,
-                                trans.orientation.w)
+                                tcp_map.pose.orientation.x,
+                                tcp_map.pose.orientation.y,
+                                tcp_map.pose.orientation.z,
+                                tcp_map.pose.orientation.w)
                             euler = tf.transformations.euler_from_quaternion(quaternion)
                             if radians(160) >= euler[2] >= radians(30) and \
                                     radians(160) >= euler[1] >= radians(20):
-                                #     arm.go_to_l(trans)
-                                #     while arm.check_motion() != 0:
-                                #         rospy.sleep(0.1)
-
-                                if check_collision(pose).valid:
+                                check = check_collision(pose)
+                                if check.valid:
                                     pose_valid.append(pose)
-                            bar()
+                                    # transform the pose from the map to the base_footprint
+                                    try:
+                                        trans_machine = tf_buffer.lookup_transform('machine', 'map', rospy.Time(),
+                                                                                   rospy.Duration(1.0))
+                                    except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
+                                            tf2_ros.ExtrapolationException):
+                                        rospy.loginfo("pb dans la transformation")
+                                    tcp_machine = tf2_geometry_msgs.do_transform_pose(tcp_map, trans_machine)
+                                    transformer = tf.TransformerROS()
+                                    cone_transform = transformer.fromTranslationRotation((tcp_machine.pose.position.x,
+                                                                                          tcp_machine.pose.position.y,
+                                                                                          tcp_machine.pose.position.z),
+                                                                                         (
+                                                                                         tcp_machine.pose.orientation.x,
+                                                                                         tcp_machine.pose.orientation.y,
+                                                                                         tcp_machine.pose.orientation.z,
+                                                                                         tcp_machine.pose.orientation.w))
+                                    display_marker(Marker.CUBE,
+                                                   tcp_machine.pose.position.x,
+                                                   tcp_machine.pose.position.y,
+                                                   tcp_machine.pose.position.z,
+                                                   tcp_machine.pose.orientation.x,
+                                                   tcp_machine.pose.orientation.y,
+                                                   tcp_machine.pose.orientation.z,
+                                                   tcp_machine.pose.orientation.w,
+                                                   "machine")
 
+
+                            bar()
