@@ -1,0 +1,22 @@
+[submodule "src/mir_robot"]
+	path = src/mir_robot
+	url = https://github.com/dfki-ric/mir_robot.git
+[submodule "src/serial"]
+	path = src/serial
+	url = https://github.com/wjwwood/serial.git
+[submodule "src/robotiq"]
+	path = src/robotiq
+	url = https://github.com/ros-industrial/robotiq.git
+[submodule "src/doosan-robot"]
+	path = src/doosan-robot
+	url = https://github.com/Sycodal/doosan-robot.git
+	branch = noetic-devel
+[submodule "src/artag"]
+	path = src/artag
+	url = https://github.com/Sycodal/artag.git
+[submodule "src/realsense-ros"]
+	path = src/realsense-ros
+	url = https://github.com/Sycodal/realsense-ros.git
+[submodule "src/moveit_calibration"]
+	path = src/moveit_calibration
+	url = https://github.com/ros-planning/moveit_calibration.git

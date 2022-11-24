@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<launch>
+    <node pkg="behaviors" name="bhvr_docking" type="bhvr_docking.py" output="screen"/>
+    <node pkg="perceptions" name="proc_battery_level" type="proc_battery_level.py" output="screen"/>
+
+    <include file="$(find mir_driver)/launch/mir.launch">
+        <arg name="mir_hostname" value="192.168.100.209" />
+    </include>
+    <!-- HBBA -->
+    <node pkg="hbba" name="intention_workspace" type="intention_workspace.py" output="screen"/>
+    <!-- Behaviors -->
+    <node pkg="behaviors" name="bhvr_basic_arm_behavior" type="bhvr_basic_arm_behavior.py" output="screen"/>
+    <node pkg="behaviors" name="bhvr_mir_move_canplexe" type="bhvr_mir_move_canplexe.py" output="screen"/>
+    <!-- Perceptions -->
+    <node pkg="perceptions" name="perception_mir" type="proc_mir_motion.py" output="screen" />
+    <!-- Motivations -->
+    <node pkg="motivations" name="motv_basic_motivation" type="motv_basic_motivation.py" output="screen"/>
+    <!-- Controllers -->
+    <node pkg="utility" name="move_j" type="move_j.py" output="screen" ns="/dsr01m1013" >
+        <param  name="robot_description" value="/dsr01m1013/robot_description" />
+    </node>
+    <node pkg="utility" name="mir_node" type="mir_node.py" output="screen" />
+
+    <!--Add Desire-->
+    <node pkg="rostopic" type="rostopic" name="add_desire_mir" args="   pub /scenario_mir std_msgs/Bool 'data: true' " output="screen">
+    </node>
+
+</launch>
