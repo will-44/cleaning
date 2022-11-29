@@ -145,7 +145,7 @@ catkin_package(
 
 
 include_directories(
-# include
+ include
   ${catkin_INCLUDE_DIRS}
     ${PCL_INCLUDE_DIRS}
 )
@@ -167,10 +167,16 @@ add_definitions(${PCL_DEFINITIONS})
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(mir src/mir_node.cpp includes/mir.h src/mir.cpp)
 add_executable(test_cloud src/test.cpp)
+add_executable(create_reachability_map src/create_reachability_map.cpp includes/sphere_discretization.h src/sphere_discretization.cpp )
+
+
+
 target_link_libraries(mir ${catkin_LIBRARIES})
+target_link_libraries(create_reachability_map ${catkin_LIBRARIES})
 target_link_libraries(test_cloud ${catkin_LIBRARIES} pcl_visualization)
 
 add_dependencies(mir ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(create_reachability_map ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use

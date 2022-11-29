@@ -9,6 +9,7 @@ RUN source /opt/ros/noetic/setup.bash
 
 # install ros package
 RUN apt-get update && apt-get install -y \
+    pip -y \
     libmove-base-msgs-dev -y \
     ros-noetic-navigation -y \
     ros-noetic-robot-localization -y \
@@ -21,6 +22,7 @@ RUN apt-get update && apt-get install -y \
     ros-noetic-position-controllers  \
     ros-noetic-ros-controllers  \
     ros-noetic-ros-control  \
+    ros-noetic-ros-numpy \
     ros-noetic-joint-state-publisher-gui  \
     ros-noetic-joint-state-publisher -y \
     ros-noetic-socketcan-interface -y \
@@ -37,12 +39,12 @@ RUN mkdir -p /urs/src/rubyrhod_ws/build/
 RUN mkdir -p /urs/src/rubyrhod_ws/devel/
 WORKDIR /urs/src/rubyrhod_ws/
 COPY ./ ./src/
+RUN source /urs/src/rubyrhod_ws/src/REQUIREMENT.bash
 RUN source /opt/ros/noetic/setup.sh
 RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; cd /urs/src/rubyrhod_ws/; catkin_make'
-#RUN catkin init
-#RUN catkin config --extend /opt/ros/noetic --cmake-args -DCMAKE_BUILD_TYPE=Release
-#WORKDIR /usr/src/rubyrhod_ws/src
-
+RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+RUN echo "source /urs/src/rubyrhod_ws/devel/setup.bash" >> ~/.bashrc
+#CMD roslaunch behaviors simulation.launch
 
 # launch ros package
 #CMD ["launch"]
