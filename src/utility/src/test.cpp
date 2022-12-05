@@ -24,6 +24,11 @@ using namespace std;
 #include <pcl/visualization/cloud_viewer.h>
 #include <pcl/filters/crop_hull.h>
 
+// PCL specific includes
+#include <sensor_msgs/PointCloud2.h>
+#include <pcl_conversions/pcl_conversions.h>
+#include <pcl/point_cloud.h>
+
 
 
 /*
@@ -169,57 +174,74 @@ calculateHull (std::vector<pcl::Vertices>& polygons, int& dim, CloudT::Ptr cloud
     return hull;
 }
 
-//int main (int argc, char** argv)
-//{
-//    print_info ("Filter a point cloud using the convex hull of another point "
-//                "cloud. For more information, use: %s -h\n", argv[0]);
-//
-////    if (argc < 4)
-////    {
-////        printHelp (argc, argv);
-////        return (-1);
-////    }
-////
-////    // Parse the command line arguments for .pcd files
-////    std::vector<int> p_file_indices;
-////    p_file_indices = parse_file_extension_argument (argc, argv, ".pcd");
-////    if (p_file_indices.size () != 3)
-////    {
-////        print_error ("Need at least three pcd files to continue.\n");
-////        return (-1);
-////    }
-////
-////    // Command line parsing
-//    double alpha = default_alpha;
-////    parse_argument (argc, argv, "-alpha", alpha);
-//
-//    CloudT::Ptr hull_cloud (new CloudT);
-//    CloudT::Ptr hull_points (new CloudT);
-//    CloudT::Ptr input_cloud (new CloudT);
-//    CloudT::Ptr output_cloud (new CloudT);
-//    std::vector<pcl::Vertices> hull_polygons;
-//    int dim = 0;
-//    std::string path_hull = ros::package::getPath("utility") + "/mesh/cone.pcd";
-//    std::string path_pcd = ros::package::getPath("utility") + "/mesh/scie1.pcd";
-//    std::string path_output = ros::package::getPath("utility") + "/mesh/output.pcd";
-//    if (!loadCloud (path_hull, *hull_cloud))
+int main (int argc, char** argv)
+{
+
+    // Initialize ROS
+    ros::init (argc, argv, "test_cloud");
+    ros::NodeHandle nh;
+    ros::Publisher pub_cloud = nh.advertise<sensor_msgs::PointCloud2> ("/output", 10);
+
+    print_info ("Filter a point cloud using the convex hull of another point "
+                "cloud. For more information, use: %s -h\n", argv[0]);
+
+//    if (argc < 4)
+//    {
+//        printHelp (argc, argv);
 //        return (-1);
+//    }
 //
-//    if (!loadCloud (path_pcd, *input_cloud))
+//    // Parse the command line arguments for .pcd files
+//    std::vector<int> p_file_indices;
+//    p_file_indices = parse_file_extension_argument (argc, argv, ".pcd");
+//    if (p_file_indices.size () != 3)
+//    {
+//        print_error ("Need at least three pcd files to continue.\n");
 //        return (-1);
-//    print_info ("load ok \n");
-//    hull_points = calculateHull (hull_polygons, dim, hull_cloud, alpha);
-//    print_info ("hull ok");
-//    cropToHull (output_cloud, input_cloud, hull_points, hull_polygons, dim);
-//    print_info ("crop finish");
+//    }
 //
-//    if (!output_cloud->empty ())
-//        saveCloud (path_output, *output_cloud);
-//    else
-//        print_error ("No points passed crop.\n");
-//
-//    return (0);
-//}
+//    // Command line parsing
+    double alpha = default_alpha;
+//    parse_argument (argc, argv, "-alpha", alpha);
+
+    CloudT::Ptr hull_cloud (new CloudT);
+    CloudT::Ptr hull_points (new CloudT);
+    CloudT::Ptr input_cloud (new CloudT);
+    CloudT::Ptr output_cloud (new CloudT);
+    std::vector<pcl::Vertices> hull_polygons;
+    int dim = 0;
+    std::string path_hull = ros::package::getPath("utility") + "/mesh/cone.pcd";
+    std::string path_pcd = ros::package::getPath("utility") + "/mesh/scie1.pcd";
+    std::string path_output = ros::package::getPath("utility") + "/mesh/output.pcd";
+    if (!loadCloud (path_hull, *hull_cloud))
+        return (-1);
+
+    if (!loadCloud (path_pcd, *input_cloud))
+        return (-1);
+    print_info ("load ok \n");
+    hull_points = calculateHull (hull_polygons, dim, hull_cloud, alpha);
+    print_info ("hull ok");
+    cropToHull (output_cloud, input_cloud, hull_points, hull_polygons, dim);
+    print_info ("crop finish");
+
+    // Send points on topics
+
+    sensor_msgs::PointCloud2 msg_cloud;
+    pcl::PCLPointCloud2 cloud2;
+    pcl::toPCLPointCloud2(*output_cloud, cloud2);
+    pcl_conversions::fromPCL(cloud2, msg_cloud);
+    msg_cloud.header.frame_id = "map";
+    // Publish the data
+    pub_cloud.publish (msg_cloud);
+    ROS_INFO("msg send");
+
+    if (!output_cloud->empty ())
+        saveCloud (path_output, *output_cloud);
+    else
+        print_error ("No points passed crop.\n");
+
+    return (0);
+}
 
 
 void
@@ -230,36 +252,36 @@ setBackground (pcl::visualization::PCLVisualizer& viewer)
 
 
 
-int main(int argc, char **argv)
-{
-    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_machine (new pcl::PointCloud<pcl::PointXYZ>),
-                                      cloud_filtered (new pcl::PointCloud<pcl::PointXYZ>),
-                                      cloud_projected (new pcl::PointCloud<pcl::PointXYZ>);
-    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_spot (new pcl::PointCloud<pcl::PointXYZ>),
-                                      cloud_spot_filtered (new pcl::PointCloud<pcl::PointXYZ>),
-                                      cloud_spot_projected (new pcl::PointCloud<pcl::PointXYZ>);
-    pcl::PCDReader reader_pcd;
-    pcl::PLYReader reader_ply;
-//    std::string path = ros::package::getPath("utility") + "/mesh/scie1.ply";
-//    reader_ply.read (path, *cloud_machine);
-    std::string path_spot = ros::package::getPath("utility") + "/mesh/poses.ply";
-    reader_ply.read (path_spot, *cloud_spot);
-
-    pcl::visualization::CloudViewer viewer ("Simple Cloud Viewer");
-
-//    viewer.showCloud (cloud_machine, "cloud_machine");
-    viewer.showCloud (cloud_spot, "cloud_spot");
-//    viewer.setBackgroundColor (1.0, 0.5, 1.0);
-
-
-//    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_hull (new pcl::PointCloud<pcl::PointXYZ>);
-//    pcl::ConcaveHull<pcl::PointXYZ> chull;
-//    chull.setInputCloud (cloud);
-//    chull.setAlpha (0.1);
-//    chull.reconstruct (*cloud_hull);
-
-    while (!viewer.wasStopped ())
-    {
-    }
-    return 0;
-}
+//int main(int argc, char **argv)
+//{
+//    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_machine (new pcl::PointCloud<pcl::PointXYZ>),
+//                                      cloud_filtered (new pcl::PointCloud<pcl::PointXYZ>),
+//                                      cloud_projected (new pcl::PointCloud<pcl::PointXYZ>);
+//    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_spot (new pcl::PointCloud<pcl::PointXYZ>),
+//                                      cloud_spot_filtered (new pcl::PointCloud<pcl::PointXYZ>),
+//                                      cloud_spot_projected (new pcl::PointCloud<pcl::PointXYZ>);
+//    pcl::PCDReader reader_pcd;
+//    pcl::PLYReader reader_ply;
+////    std::string path = ros::package::getPath("utility") + "/mesh/scie1.ply";
+////    reader_ply.read (path, *cloud_machine);
+//    std::string path_spot = ros::package::getPath("utility") + "/mesh/poses.ply";
+//    reader_ply.read (path_spot, *cloud_spot);
+//
+//    pcl::visualization::CloudViewer viewer ("Simple Cloud Viewer");
+//
+////    viewer.showCloud (cloud_machine, "cloud_machine");
+//    viewer.showCloud (cloud_spot, "cloud_spot");
+////    viewer.setBackgroundColor (1.0, 0.5, 1.0);
+//
+//
+////    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_hull (new pcl::PointCloud<pcl::PointXYZ>);
+////    pcl::ConcaveHull<pcl::PointXYZ> chull;
+////    chull.setInputCloud (cloud);
+////    chull.setAlpha (0.1);
+////    chull.reconstruct (*cloud_hull);
+//
+//    while (!viewer.wasStopped ())
+//    {
+//    }
+//    return 0;
+//}

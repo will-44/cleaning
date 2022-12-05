@@ -90,9 +90,84 @@ def callback(msg):
     print("mir_result:", msg)
     mir_result = msg
 
+def add_machine_colision():
+    global arm
+    mesh_path = rospkg.RosPack().get_path('utility') + "/mesh/scie1.obj"
+    machine_pose = geometry_msgs.msg.PoseStamped()
+    machine_pose.header.frame_id = 'map'
+    machine_pose.pose.position.x = 16.6
+    machine_pose.pose.position.y = 3.6
+    machine_pose.pose.position.z = -0.2
+    machine_pose.pose.orientation.x = 0.707
+    machine_pose.pose.orientation.y = 0  # -0.707
+    machine_pose.pose.orientation.z = 0  # -0.707
+    machine_pose.pose.orientation.w = 0.707
+    arm.scene.add_mesh("machine", machine_pose, mesh_path)
+
+def move_base(x, y):
+    pose_mir = PoseStamped()
+    pose_mir.header.frame_id = "machine"
+    pose_mir.pose.position.x = x
+    pose_mir.pose.position.y = y
+    # TODO modifie the orientation
+    pose_mir.pose.orientation.x = 0
+    pose_mir.pose.orientation.y = 0
+    pose_mir.pose.orientation.z = -0.707
+    pose_mir.pose.orientation.w = 0.707
+
+    mir_pub.publish(pose_mir)
+    rospy.loginfo("pose send")
+
+def send_cone_pose(pose):
+    '''
+    Return the TCP pose in the map frame
+    :param pose:
+    :return: translatio  and is pose valide
+    '''
+    tcp_map = fkin(pose).pose_stamped[0]
+    quaternion = (
+        tcp_map.pose.orientation.x,
+        tcp_map.pose.orientation.y,
+        tcp_map.pose.orientation.z,
+        tcp_map.pose.orientation.w)
+    euler = tf.transformations.euler_from_quaternion(quaternion)
+    if radians(160) >= euler[2] >= radians(30) and \
+            radians(160) >= euler[1] >= radians(20):
+        check = check_collision(pose)
+        if check.valid:
+            pose_valid.append(pose)
+            # transform the pose from the map to the base_footprint
+            try:
+                trans_machine = tf_buffer.lookup_transform('machine', 'map', rospy.Time(),
+                                                           rospy.Duration(1.0))
+            except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
+                    tf2_ros.ExtrapolationException):
+                rospy.loginfo("pb dans la transformation")
+            tcp_machine = tf2_geometry_msgs.do_transform_pose(tcp_map, trans_machine)
+            transformer = tf.TransformerROS()
+            # Get transform matrix
+            cone_transform = transformer.fromTranslationRotation((tcp_machine.pose.position.x,
+                                                                  tcp_machine.pose.position.y,
+                                                                  tcp_machine.pose.position.z),
+                                                                 (
+                                                                     tcp_machine.pose.orientation.x,
+                                                                     tcp_machine.pose.orientation.y,
+                                                                     tcp_machine.pose.orientation.z,
+                                                                     tcp_machine.pose.orientation.w))
+            display_marker(Marker.CUBE,
+                           tcp_machine.pose.position.x,
+                           tcp_machine.pose.position.y,
+                           tcp_machine.pose.position.z,
+                           tcp_machine.pose.orientation.x,
+                           tcp_machine.pose.orientation.y,
+                           tcp_machine.pose.orientation.z,
+                           tcp_machine.pose.orientation.w,
+                           "machine")
+            return tcp_machine, True
+    return 0, False
 
 if __name__ == '__main__':
-    global mir_result
+    global mir_result, arm
     rospy.init_node('moveit_pcd', anonymous=True)
     arm = Doosan()
     mir_result = False
@@ -118,42 +193,27 @@ if __name__ == '__main__':
     print("center pcd")
     print(pcd_load.get_center())
 
-    # vis = o3d.visualization.Visualizer()
-    # vis.create_window()
 
-    mesh_path = rospkg.RosPack().get_path('utility') + "/mesh/scie1.obj"
-    machine_pose = geometry_msgs.msg.PoseStamped()
-    machine_pose.header.frame_id = 'map'
-    machine_pose.pose.position.x = 16.6
-    machine_pose.pose.position.y = 3.6
-    machine_pose.pose.position.z = -0.2
-    machine_pose.pose.orientation.x = 0.707
-    machine_pose.pose.orientation.y = 0  # -0.707
-    machine_pose.pose.orientation.z = 0  # -0.707
-    machine_pose.pose.orientation.w = 0.707
-    arm.scene.add_mesh("machine", machine_pose, mesh_path)
-
-    mesh = o3d.geometry.TriangleMesh.create_coordinate_frame()
+    add_machine_colision()
 
     rospy.loginfo(spots_np)
     display_marker(Marker.CUBE, spots_np[0][0], spots_np[0][1], spots_np[0][2], 0, 0, 0, 1, "machine")
-    pose_mir = PoseStamped()
-    pose_mir.header.frame_id = "machine"
-    pose_mir.pose.position.x = spots_np[0][0]
-    pose_mir.pose.position.y = spots_np[0][1]
-    pose_mir.pose.orientation.x = 0
-    pose_mir.pose.orientation.y = 0
-    pose_mir.pose.orientation.z = -0.707
-    pose_mir.pose.orientation.w = 0.707
 
-    mir_pub.publish(pose_mir)
-    rospy.loginfo("pose send")
+    move_base(spots_np[0][0], spots_np[0][1])
+
+
     while not mir_result:
         rospy.sleep(0.1)
     print("mir finish")
     tf_buffer = tf2_ros.Buffer()
     listener = tf2_ros.TransformListener(tf_buffer)
     pose_valid = []
+    broadcaster = tf2_ros.StaticTransformBroadcaster()
+    static_transformStamped = geometry_msgs.msg.TransformStamped()
+    static_transformStamped.header.stamp = rospy.Time.now()
+    static_transformStamped.header.frame_id = "machine"
+    static_transformStamped.child_frame_id = "cone"
+
     with alive_bar(2519424) as bar:
         for teta1 in range(-150, -30, 10):
             for teta2 in range(-90, 90, 10):
@@ -163,44 +223,19 @@ if __name__ == '__main__':
                             teta6 = 0
                             pose = [radians(teta1), radians(teta2), radians(teta3),
                                     radians(teta4), radians(teta5), radians(teta6)]
-                            tcp_map = fkin(pose).pose_stamped[0]
-                            quaternion = (
-                                tcp_map.pose.orientation.x,
-                                tcp_map.pose.orientation.y,
-                                tcp_map.pose.orientation.z,
-                                tcp_map.pose.orientation.w)
-                            euler = tf.transformations.euler_from_quaternion(quaternion)
-                            if radians(160) >= euler[2] >= radians(30) and \
-                                    radians(160) >= euler[1] >= radians(20):
-                                check = check_collision(pose)
-                                if check.valid:
-                                    pose_valid.append(pose)
-                                    # transform the pose from the map to the base_footprint
-                                    try:
-                                        trans_machine = tf_buffer.lookup_transform('machine', 'map', rospy.Time(),
-                                                                                   rospy.Duration(1.0))
-                                    except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
-                                            tf2_ros.ExtrapolationException):
-                                        rospy.loginfo("pb dans la transformation")
-                                    tcp_machine = tf2_geometry_msgs.do_transform_pose(tcp_map, trans_machine)
-                                    transformer = tf.TransformerROS()
-                                    cone_transform = transformer.fromTranslationRotation((tcp_machine.pose.position.x,
-                                                                                          tcp_machine.pose.position.y,
-                                                                                          tcp_machine.pose.position.z),
-                                                                                         (
-                                                                                         tcp_machine.pose.orientation.x,
-                                                                                         tcp_machine.pose.orientation.y,
-                                                                                         tcp_machine.pose.orientation.z,
-                                                                                         tcp_machine.pose.orientation.w))
-                                    display_marker(Marker.CUBE,
-                                                   tcp_machine.pose.position.x,
-                                                   tcp_machine.pose.position.y,
-                                                   tcp_machine.pose.position.z,
-                                                   tcp_machine.pose.orientation.x,
-                                                   tcp_machine.pose.orientation.y,
-                                                   tcp_machine.pose.orientation.z,
-                                                   tcp_machine.pose.orientation.w,
-                                                   "machine")
 
+                            tcp, is_valid = send_cone_pose(pose)
+                            # rospy.loginfo(is_valid)
+                            if is_valid:
 
+                                static_transformStamped.transform.translation.x = tcp.pose.position.x
+                                static_transformStamped.transform.translation.y = tcp.pose.position.y
+                                static_transformStamped.transform.translation.z = tcp.pose.position.z
+
+                                static_transformStamped.transform.rotation.x = tcp.pose.orientation.x
+                                static_transformStamped.transform.rotation.y = tcp.pose.orientation.y
+                                static_transformStamped.transform.rotation.z = tcp.pose.orientation.z
+                                static_transformStamped.transform.rotation.w = tcp.pose.orientation.w
+
+                                broadcaster.sendTransform(static_transformStamped)
                             bar()
