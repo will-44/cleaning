@@ -172,7 +172,7 @@ add_executable(create_reachability_map src/create_reachability_map.cpp includes/
 
 
 target_link_libraries(mir ${catkin_LIBRARIES})
-target_link_libraries(create_reachability_map ${catkin_LIBRARIES})
+target_link_libraries(create_reachability_map ${catkin_LIBRARIES} pcl_visualization)
 target_link_libraries(test_cloud ${catkin_LIBRARIES} pcl_visualization)
 
 add_dependencies(mir ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})

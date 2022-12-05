@@ -93,6 +93,16 @@ class ReachabilityMap:
                 pose2reach.orientation.w = q[3]
                 ikin = self.arm.ikin(pose2reach)
 
+                display_marker(Marker.ARROW,
+                               pose2reach.position.x,
+                               pose2reach.position.y,
+                               pose2reach.position.z,
+                               pose2reach.orientation.x,
+                               pose2reach.orientation.y,
+                               pose2reach.orientation.z,
+                               pose2reach.orientation.w,
+                               "map")
+
                 if ikin.error_code.val == 1:
                     # print(ikin)
                     # colision = self.arm.check_collision(ikin.solution.joint_state.position).valid

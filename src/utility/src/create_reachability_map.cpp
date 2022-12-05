@@ -15,11 +15,12 @@
 #include <sstream>
 #include <iostream>
 #include "moveit_msgs/GetPositionIK.h"
-//#include <includes/kinematics.h>
-//#include<includes/hdf5_dataset.h>
 
 #include <visualization_msgs/Marker.h>
-
+#include <pcl/io/pcd_io.h>
+#include <pcl/point_types.h>
+#include <pcl/common/common.h>
+#include <pcl/visualization/cloud_viewer.h>
 
 //struct stat st;
 
@@ -53,28 +54,10 @@ static bool isIKSuccess( ros::NodeHandle n, ros::Publisher pub, const std::vecto
     srv.request.ik_request.pose_stamped.pose.orientation.y = pose[4];
     srv.request.ik_request.pose_stamped.pose.orientation.z = pose[5];
     srv.request.ik_request.pose_stamped.pose.orientation.w = pose[6];
+    srv.request.ik_request.avoid_collisions = true;
 //    ROS_INFO("position: %f, %f, %f, %f, %f, %f, %f", pose[0], pose[1], pose[2], pose[3], pose[4], pose[5], pose[6]);
 
 
-    visualization_msgs::Marker points;
-    points.type = visualization_msgs::Marker::ARROW;
-    points.header.frame_id = "map";
-    points.pose.position.x = pose[0];
-    points.pose.position.y = pose[1];
-    points.pose.position.z = pose[2];
-    points.pose.orientation.x = pose[3];
-    points.pose.orientation.y = pose[4];
-    points.pose.orientation.z = pose[5];
-    points.pose.orientation.w = pose[6];
-    points.scale.x = 0.5;
-    points.scale.y = 0.05;
-    points.scale.z = 0.05;
-    points.color.a = 1.0; // Don't forget to set the alpha!
-    points.color.r = 0.0;
-    points.color.g = 1.0;
-    points.color.b = 0.0;
-
-    pub.publish(points);
 
 
     if (client.call(srv) && srv.response.error_code.val == 1)
@@ -85,6 +68,25 @@ static bool isIKSuccess( ros::NodeHandle n, ros::Publisher pub, const std::vecto
     }
     else
     {
+//        visualization_msgs::Marker points;
+//        points.type = visualization_msgs::Marker::ARROW;
+//        points.header.frame_id = "map";
+//        points.pose.position.x = pose[0];
+//        points.pose.position.y = pose[1];
+//        points.pose.position.z = pose[2];
+//        points.pose.orientation.x = pose[3];
+//        points.pose.orientation.y = pose[4];
+//        points.pose.orientation.z = pose[5];
+//        points.pose.orientation.w = pose[6];
+//        points.scale.x = 0.5;
+//        points.scale.y = 0.05;
+//        points.scale.z = 0.05;
+//        points.color.a = 1.0; // Don't forget to set the alpha!
+//        points.color.r = 0.0;
+//        points.color.g = 1.0;
+//        points.color.b = 0.0;
+//        pub.publish(points);
+
 //        ROS_ERROR("Failed to call service add_two_ints");
         return false;
     }
@@ -110,10 +112,12 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "workspace");
     ros::NodeHandle n;
     ros::Time startit = ros::Time::now();
-    float resolution = 0.3;  //previous 0.08
+    float resolution = 0.4;  //previous 0.08
     ros::Publisher marker_pub = n.advertise<visualization_msgs::Marker>("visualization_marker", 10);
-
     ros::Rate loop_rate(10);
+
+    pcl::PointCloud<pcl::PointXYZ> cloud;
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_ptr = cloud.makeShared();
 
     int count = 0;
 
@@ -156,8 +160,8 @@ int main(int argc, char **argv)
         // Every discretized points on spheres are converted to pose and all the poses are saved in a multimap with their
         // corresponding sphere centers
         // If the resolution is 0.01 the programs not responds
-
-        float radius = resolution;
+        //TODO seperate raduise and resolutiion
+        float radius = resolution/2;
 
         VectorOfVectors sphere_coord;
         sphere_coord.resize( new_data.size() );
@@ -198,11 +202,9 @@ int main(int argc, char **argv)
 
             if (isIKSuccess(n, marker_pub, it->first, joints, solns))
             {
-                ROS_INFO("joint = %f", joints[1] );
+//                ROS_INFO("joint = %f", joints[1] );
                 pose_col_filter.insert( std::make_pair( it->second, &(it->first)));
                 ik_solutions.push_back(joints);
-                // cout<<it->first[0]<<" "<<it->first[1]<<" "<<it->first[2]<<" "<<it->first[3]<<" "<<it->first[4]<<"
-                // "<<it->first[5]<<" "<<it->first[6]<<endl;
             }
         }
 
@@ -215,7 +217,7 @@ int main(int argc, char **argv)
         // accessing map is Olog(n)
 
         MapVecDoublePtr sphere_color;
-
+        int nb_valide_pose = 0;
 
         for (MultiMapPtr::iterator it = pose_col_filter.begin(); it != pose_col_filter.end(); ++it)
         {
@@ -225,9 +227,33 @@ int main(int argc, char **argv)
             // Reachability Index D=R/N*100;
             float d = float(pose_col_filter.count(sphere_coord)) / (pose_col.size() / new_data.size()) * 100;
             sphere_color.insert( std::make_pair(it->first, double(d)));
+
+        }
+        // create the reachability map
+//        cloud.width = sphere_color.size();
+//        cloud.height = 1;
+        cloud.is_dense = false;
+        cloud.resize (cloud.width * cloud.height);
+
+        for (auto & it : sphere_color)
+        {
+            float x = it.first[0][0];
+            float y = it.first[0][1];
+            float z = it.first[0][2];
+            cloud.push_back(pcl::PointXYZ(x, y, z));
         }
 
         ROS_INFO("No of spheres reachable: %lu", sphere_color.size());
+
+//        pcl::visualization::CloudViewer viewer("Simple Cloud Viewer");
+//        viewer.showCloud(cloud_ptr);
+        pcl::io::savePCDFileASCII ("/home/guillaume/cleaning/test_pcd.pcd", cloud);
+//        while (!viewer.wasStopped ())
+//        {
+//
+//        }
+
+
 
         // Creating maps now
 //TODO Saving map to dataset
