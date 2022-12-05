@@ -30,7 +30,7 @@ from tf.transformations import euler_from_quaternion, quaternion_from_euler, \
     quaternion_matrix, quaternion_from_matrix
 from geometry_msgs.msg import PoseStamped, Pose, Point, Quaternion
 from std_msgs.msg import Header
-
+from std_msgs.msg import Float64MultiArray
 
 def PoseStamped_2_mat(p):
     q = p.orientation
@@ -85,7 +85,7 @@ def fkin(poses):
         print("Service call failed: s")
 
 
-def callback(msg):
+def callback_mir(msg):
     global mir_result
     print("mir_result:", msg)
     mir_result = msg
@@ -118,12 +118,32 @@ def move_base(x, y):
     mir_pub.publish(pose_mir)
     rospy.loginfo("pose send")
 
-def send_cone_pose(pose):
+
+def callback_pcd(msg):
+    # Add points to dict
+
+    # if Joint all sample -> stop
+    # else add Joints
+
+    # is_valid, matrix =  get_cone_translation(joints)
+    # while not is_valid:
+
+        # is_valid, matrix =  get_cone_translation(joints)
+        # add Joints
+    # send tf
+
+    # send matrix to node
+
+
+
+def get_cone_translation(pose):
     '''
     Return the TCP pose in the map frame
     :param pose:
-    :return: translatio  and is pose valide
+    :return: translatio matrix  and is pose valide
     '''
+    global mir_result, arm, broadcaster, j1, j2, j3, j4, j5, j6
+
     tcp_map = fkin(pose).pose_stamped[0]
     quaternion = (
         tcp_map.pose.orientation.x,
@@ -163,15 +183,20 @@ def send_cone_pose(pose):
                            tcp_machine.pose.orientation.z,
                            tcp_machine.pose.orientation.w,
                            "machine")
-            return tcp_machine, True
+            # create TF cone / update TF cone
+
+            # Send msg matrix to node
+
+
+            return cone_transform, True
     return 0, False
 
 if __name__ == '__main__':
-    global mir_result, arm
+    global mir_result, arm, broadcaster, j1, j2, j3, j4, j5, j6
     rospy.init_node('moveit_pcd', anonymous=True)
     arm = Doosan()
     mir_result = False
-    rospy.Subscriber("/mir_result", Bool, callback)
+    rospy.Subscriber("/mir_result", Bool, callback_mir)
     mir_pub = rospy.Publisher('/mir_go_to', PoseStamped, queue_size=10)
 
     arm.go_to_j([0, 0, 0, 0, 0, 0])
@@ -224,8 +249,11 @@ if __name__ == '__main__':
                             pose = [radians(teta1), radians(teta2), radians(teta3),
                                     radians(teta4), radians(teta5), radians(teta6)]
 
-                            tcp, is_valid = send_cone_pose(pose)
+                            tcp, is_valid = get_cone_translation(pose)
                             # rospy.loginfo(is_valid)
+
+                            # TODO modif with callback
+
                             if is_valid:
 
                                 static_transformStamped.transform.translation.x = tcp.pose.position.x
