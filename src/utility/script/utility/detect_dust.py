@@ -43,8 +43,8 @@ class detectDust:
 
         hsv_image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
 
-        lo_color = (30, 100, 50)
-        hi_color = (90, 255, 180)
+        lo_color = (30, 64, 90)
+        hi_color = (100, 230, 180)
         mask = cv2.inRange(hsv_image, lo_color, hi_color)
         result = cv2.bitwise_and(image, image, mask=mask)
 

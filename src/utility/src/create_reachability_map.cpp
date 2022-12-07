@@ -112,7 +112,7 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "workspace");
     ros::NodeHandle n;
     ros::Time startit = ros::Time::now();
-    float resolution = 0.4;  //previous 0.08
+    float resolution = 0.08;  //previous 0.08
     ros::Publisher marker_pub = n.advertise<visualization_msgs::Marker>("visualization_marker", 10);
     ros::Rate loop_rate(10);
 

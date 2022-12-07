@@ -31,6 +31,9 @@ from tf.transformations import euler_from_quaternion, quaternion_from_euler, \
 from geometry_msgs.msg import PoseStamped, Pose, Point, Quaternion
 from std_msgs.msg import Header
 from std_msgs.msg import Float64MultiArray
+from sensor_msgs.msg import PointCloud2
+import open3d_ros_helper as o3d_ros
+
 
 def PoseStamped_2_mat(p):
     q = p.orientation
@@ -90,6 +93,7 @@ def callback_mir(msg):
     print("mir_result:", msg)
     mir_result = msg
 
+
 def add_machine_colision():
     global arm
     mesh_path = rospkg.RosPack().get_path('utility') + "/mesh/scie1.obj"
@@ -103,6 +107,7 @@ def add_machine_colision():
     machine_pose.pose.orientation.z = 0  # -0.707
     machine_pose.pose.orientation.w = 0.707
     arm.scene.add_mesh("machine", machine_pose, mesh_path)
+
 
 def move_base(x, y):
     pose_mir = PoseStamped()
@@ -120,20 +125,76 @@ def move_base(x, y):
 
 
 def callback_pcd(msg):
+    global dict_pos2pts, broadcaster, pcl_pub, j1, j2, j3, j4, j5, j6
+
     # Add points to dict
+    pcd = o3d_ros.rospc_to_o3dpc(msg)
+    dict_pos2pts[(j1, j2, j3, j4, j5, j6)] = np.asarray(pcd.points)
 
-    # if Joint all sample -> stop
-    # else add Joints
+    joints, all_poses_check = increase_joint()
+    if all_poses_check:
+        return
 
-    # is_valid, matrix =  get_cone_translation(joints)
-    # while not is_valid:
-
-        # is_valid, matrix =  get_cone_translation(joints)
+    matrix, is_valid, tcp_machine = get_cone_translation(joints)
+    while not is_valid:
         # add Joints
+        joints, all_poses_check = increase_joint()
+        if all_poses_check:
+            return
+        matrix, is_valid, tcp_machine = get_cone_translation(joints)
+
     # send tf
+    static_transformStamped = geometry_msgs.msg.TransformStamped()
+    static_transformStamped.header.stamp = rospy.Time.now()
+    static_transformStamped.header.frame_id = "machine"
+    static_transformStamped.child_frame_id = "cone"
+    static_transformStamped.transform.translation.x = tcp_machine.pose.position.x
+    static_transformStamped.transform.translation.y = tcp_machine.pose.position.y
+    static_transformStamped.transform.translation.z = tcp_machine.pose.position.z
+    static_transformStamped.transform.rotation.x = tcp_machine.pose.orientation.x
+    static_transformStamped.transform.rotation.y = tcp_machine.pose.orientation.y
+    static_transformStamped.transform.rotation.z = tcp_machine.pose.orientation.z
+    static_transformStamped.transform.rotation.w = tcp_machine.pose.orientation.w
+
+    broadcaster.sendTransform(static_transformStamped)
 
     # send matrix to node
+    msg = Float64MultiArray()
+    msg.data = matrix
+    msg.layout.dim[0].label = "height"
+    msg.layout.dim[0].size = 4
+    msg.layout.dim[0].stride = 16
+    msg.layout.dim[1].label = "width"
+    msg.layout.dim[1].size = 4
+    msg.layout.dim[1].stride = 4
 
+    pcl_pub.publish(msg)
+
+
+def increase_joint():
+    global j1, j2, j3, j4, j5, j6
+    all_poses_check = False
+    # Add x degree to the joints
+    j6 = 0
+    j5 += 10
+    if j5 > 90:
+        j5 = -90
+        j4 += 10
+        if j4 > 180:
+            j4 = -180
+            j3 += 10
+            if j3 > 90:
+                j3 = -90
+                j2 += 10
+                if j2 > 90:
+                    j2 = -90
+                    j1 += 10
+                    if j1 > -30:
+                        j1 = -150
+                        all_poses_check = True
+    print(j1, j2, j3, j4, j5, j6)
+    return [radians(j1), radians(j2), radians(j3),
+            radians(j4), radians(j5), radians(j6)], all_poses_check
 
 
 def get_cone_translation(pose):
@@ -142,7 +203,7 @@ def get_cone_translation(pose):
     :param pose:
     :return: translatio matrix  and is pose valide
     '''
-    global mir_result, arm, broadcaster, j1, j2, j3, j4, j5, j6
+    global mir_result, arm, broadcaster
 
     tcp_map = fkin(pose).pose_stamped[0]
     quaternion = (
@@ -183,21 +244,34 @@ def get_cone_translation(pose):
                            tcp_machine.pose.orientation.z,
                            tcp_machine.pose.orientation.w,
                            "machine")
-            # create TF cone / update TF cone
 
-            # Send msg matrix to node
+            return cone_transform, True, tcp_machine
+    return [0, 0, 0], False, [0, 0, 0]
 
-
-            return cone_transform, True
-    return 0, False
 
 if __name__ == '__main__':
-    global mir_result, arm, broadcaster, j1, j2, j3, j4, j5, j6
+    global mir_result, arm, broadcaster, j1, j2, j3, j4, j5, j6, dict_pos2pts, pcl_pub
     rospy.init_node('moveit_pcd', anonymous=True)
     arm = Doosan()
     mir_result = False
+
+    # Subscribers
     rospy.Subscriber("/mir_result", Bool, callback_mir)
+    rospy.Subscriber("/pcl_result", PointCloud2, callback_pcd)
+
     mir_pub = rospy.Publisher('/mir_go_to', PoseStamped, queue_size=10)
+    pcl_pub = rospy.Publisher('/transf_mat', Float64MultiArray, queue_size=10)
+
+    # Dictionnary
+    dict_pos2pts = {}
+
+    # Joint poses
+    j1 = -150
+    j2 = -90
+    j3 = -90
+    j4 = -180
+    j5 = -90
+    j6 = 0
 
     arm.go_to_j([0, 0, 0, 0, 0, 0])
     while arm.check_motion() != 0:
@@ -212,12 +286,8 @@ if __name__ == '__main__':
     spot_path = rospkg.RosPack().get_path('utility') + "/mesh/spot.ply"
     spots = o3d.io.read_point_cloud(spot_path)
     spots_np = np.asarray(spots.points)
-    # spot_path = rospkg.RosPack().get_path('utility') + "/data/best_spot.pkl"
-    # with open(spot_path, 'rb') as f:
-    #     best_spot = pickle.load(f)
     print("center pcd")
     print(pcd_load.get_center())
-
 
     add_machine_colision()
 
@@ -226,7 +296,6 @@ if __name__ == '__main__':
 
     move_base(spots_np[0][0], spots_np[0][1])
 
-
     while not mir_result:
         rospy.sleep(0.1)
     print("mir finish")
@@ -234,36 +303,50 @@ if __name__ == '__main__':
     listener = tf2_ros.TransformListener(tf_buffer)
     pose_valid = []
     broadcaster = tf2_ros.StaticTransformBroadcaster()
-    static_transformStamped = geometry_msgs.msg.TransformStamped()
-    static_transformStamped.header.stamp = rospy.Time.now()
-    static_transformStamped.header.frame_id = "machine"
-    static_transformStamped.child_frame_id = "cone"
 
-    with alive_bar(2519424) as bar:
-        for teta1 in range(-150, -30, 10):
-            for teta2 in range(-90, 90, 10):
-                for teta3 in range(-90, 90, 10):
-                    for teta4 in range(-180, 180, 10):
-                        for teta5 in range(-90, 90, 10):
-                            teta6 = 0
-                            pose = [radians(teta1), radians(teta2), radians(teta3),
-                                    radians(teta4), radians(teta5), radians(teta6)]
+    joints = [radians(j1), radians(j2), radians(j3),
+              radians(j4), radians(j5), radians(j6)]
+    matrix, is_valid, tcp_machine = get_cone_translation(joints)
+    while is_valid != True:
+        # increase Joints angles
+        # print(is_valid)
+        joints, all_poses_check = increase_joint()
 
-                            tcp, is_valid = get_cone_translation(pose)
-                            # rospy.loginfo(is_valid)
+        if not all_poses_check:
+            matrix, is_valid, tcp_machine = get_cone_translation(joints)
+        else:
+            break
+    print("all_pose", all_poses_check)
+    if not all_poses_check:
+        # send tf
+        static_transformStamped = geometry_msgs.msg.TransformStamped()
+        static_transformStamped.header.stamp = rospy.Time.now()
+        static_transformStamped.header.frame_id = "machine"
+        static_transformStamped.child_frame_id = "cone"
+        static_transformStamped.transform.translation.x = tcp_machine.pose.position.x
+        static_transformStamped.transform.translation.y = tcp_machine.pose.position.y
+        static_transformStamped.transform.translation.z = tcp_machine.pose.position.z
+        static_transformStamped.transform.rotation.x = tcp_machine.pose.orientation.x
+        static_transformStamped.transform.rotation.y = tcp_machine.pose.orientation.y
+        static_transformStamped.transform.rotation.z = tcp_machine.pose.orientation.z
+        static_transformStamped.transform.rotation.w = tcp_machine.pose.orientation.w
 
-                            # TODO modif with callback
+        broadcaster.sendTransform(static_transformStamped)
 
-                            if is_valid:
+        # send matrix to node
+        msg = Float64MultiArray()
+        msg.data = matrix
+        msg.layout.dim[0].label = "height"
+        msg.layout.dim[0].size = 4
+        msg.layout.dim[0].stride = 16
+        msg.layout.dim[1].label = "width"
+        msg.layout.dim[1].size = 4
+        msg.layout.dim[1].stride = 4
 
-                                static_transformStamped.transform.translation.x = tcp.pose.position.x
-                                static_transformStamped.transform.translation.y = tcp.pose.position.y
-                                static_transformStamped.transform.translation.z = tcp.pose.position.z
+        pcl_pub.publish(msg)
+        rospy.loginfo("msg send")
+    rospy.loginfo("no msg send")
 
-                                static_transformStamped.transform.rotation.x = tcp.pose.orientation.x
-                                static_transformStamped.transform.rotation.y = tcp.pose.orientation.y
-                                static_transformStamped.transform.rotation.z = tcp.pose.orientation.z
-                                static_transformStamped.transform.rotation.w = tcp.pose.orientation.w
-
-                                broadcaster.sendTransform(static_transformStamped)
-                            bar()
+    rospy.spin()
+    # with alive_bar(2519424) as bar:
+    #                         bar()
