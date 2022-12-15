@@ -13,6 +13,8 @@ from dsr_msgs.srv import GetCurrentRotm
 
 from moveit_msgs.srv import GetPositionIK
 from moveit_msgs.srv import GetStateValidity
+from moveit_msgs.srv import GetPositionFK
+from moveit_msgs.msg import RobotState
 from moveit_msgs.msg import RobotState, PositionIKRequest, AttachedCollisionObject
 from geometry_msgs.msg import PoseStamped
 
@@ -121,21 +123,45 @@ class Doosan:
         except rospy.ServiceException as e:
             print("Service call failed: s")
 
-    def fkin(self, pos, ref):
+    # def fkin(self, pos, ref):
+    #     """
+    #
+    #     :param pos: position in degree
+    #     :param ref: default world 0
+    #     :return: pos in metre and radian
+    #     """
+    #     try:
+    #         rospy.wait_for_service('/dsr01m1013/motion/fkin', timeout=5)
+    #     except:
+    #         return False
+    #     try:
+    #         fkin_srv = rospy.ServiceProxy('/dsr01m1013/motion/fkin', Fkin)
+    #         result = fkin_srv(pos, ref)
+    #         return self.MMDegToMRad(list(result.conv_posx))
+    #     except rospy.ServiceException as e:
+    #         print("Service call failed: s")
+
+    def fkin(self, poses):
         """
 
+        :param poses:
         :param pos: position in degree
         :param ref: default world 0
         :return: pos in metre and radian
+
         """
         try:
-            rospy.wait_for_service('/dsr01m1013/motion/fkin', timeout=5)
+            rospy.wait_for_service('/dsr01m1013/compute_fk', timeout=5)
         except:
             return False
         try:
-            fkin_srv = rospy.ServiceProxy('/dsr01m1013/motion/fkin', Fkin)
-            result = fkin_srv(pos, ref)
-            return self.MMDegToMRad(list(result.conv_posx))
+            robot = RobotState()
+            robot.joint_state.name = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
+            robot.joint_state.position = poses
+            msg = GetPositionFK()
+            fkin_srv = rospy.ServiceProxy('/dsr01m1013/compute_fk', GetPositionFK)
+            result = fkin_srv(fk_link_names=['link6'], robot_state=robot)
+            return result
         except rospy.ServiceException as e:
             print("Service call failed: s")
 
@@ -313,3 +339,20 @@ class Doosan:
             return result
         except rospy.ServiceException as e:
             print("Service call failed: s")
+
+    def add_machine_colision(self, mesh_path):
+        """
+
+        :param mesh_path:
+        :return:
+        """
+        machine_pose = geometry_msgs.msg.PoseStamped()
+        machine_pose.header.frame_id = 'map'
+        machine_pose.pose.position.x = 16.6
+        machine_pose.pose.position.y = 3.6
+        machine_pose.pose.position.z = -0.2
+        machine_pose.pose.orientation.x = 0.707
+        machine_pose.pose.orientation.y = 0  # -0.707
+        machine_pose.pose.orientation.z = 0  # -0.707
+        machine_pose.pose.orientation.w = 0.707
+        self.scene.add_mesh("machine", machine_pose, mesh_path)

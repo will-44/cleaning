@@ -21,7 +21,7 @@ from moveit_msgs.srv import GetStateValidity
 from moveit_msgs.srv import GetPositionFK
 from moveit_msgs.msg import RobotState
 from sensor_msgs.msg import JointState
-from math import radians, degrees
+from math import radians, degrees, atan2
 import copy
 
 from alive_progress import alive_bar
@@ -35,59 +35,6 @@ from sensor_msgs.msg import PointCloud2
 from open3d_ros_helper import open3d_ros_helper as o3d_ros
 
 
-def PoseStamped_2_mat(p):
-    q = p.orientation
-    pos = p.position
-    T = quaternion_matrix([q.x, q.y, q.z, q.w])
-    T[:3, 3] = np.array([pos.x, pos.y, pos.z])
-    return T
-
-
-def check_collision(poses):
-    """
-    :param poses: joints poses in rad
-    :return:
-    """
-    try:
-        rospy.wait_for_service('/dsr01m1013/check_state_validity', timeout=1)
-    except:
-        return False
-
-    try:
-        robot = RobotState()
-        robot.joint_state.name = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
-        robot.joint_state.position = poses
-        check_srv = rospy.ServiceProxy('/dsr01m1013/check_state_validity', GetStateValidity)
-        result = check_srv(group_name='arm', robot_state=robot)
-        return result
-    except rospy.ServiceException as e:
-        print("Service call failed: s")
-
-
-def fkin(poses):
-    """
-
-    :param poses:
-    :param pos: position in degree
-    :param ref: default world 0
-    :return: pos in metre and radian
-
-    """
-    try:
-        rospy.wait_for_service('/dsr01m1013/compute_fk', timeout=5)
-    except:
-        return False
-    try:
-        robot = RobotState()
-        robot.joint_state.name = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
-        robot.joint_state.position = poses
-        msg = GetPositionFK()
-        fkin_srv = rospy.ServiceProxy('/dsr01m1013/compute_fk', GetPositionFK)
-        result = fkin_srv(fk_link_names=['link6'], robot_state=robot)
-        return result
-    except rospy.ServiceException as e:
-        print("Service call failed: s")
-
 
 def callback_mir(msg):
     global mir_result
@@ -95,22 +42,10 @@ def callback_mir(msg):
     mir_result = msg
 
 
-def add_machine_colision():
-    global arm
-    mesh_path = rospkg.RosPack().get_path('utility') + "/mesh/scie1.obj"
-    machine_pose = geometry_msgs.msg.PoseStamped()
-    machine_pose.header.frame_id = 'map'
-    machine_pose.pose.position.x = 16.6
-    machine_pose.pose.position.y = 3.6
-    machine_pose.pose.position.z = -0.2
-    machine_pose.pose.orientation.x = 0.707
-    machine_pose.pose.orientation.y = 0  # -0.707
-    machine_pose.pose.orientation.z = 0  # -0.707
-    machine_pose.pose.orientation.w = 0.707
-    arm.scene.add_mesh("machine", machine_pose, mesh_path)
 
 
-def move_base(x, y):
+
+def move_base(x, y, theta):
     pose_mir = PoseStamped()
     pose_mir.header.frame_id = "machine"
     pose_mir.pose.position.x = x
@@ -208,7 +143,7 @@ def get_cone_translation(pose):
     '''
     global mir_result, arm, broadcaster
 
-    tcp_map = fkin(pose).pose_stamped[0]
+    tcp_map = arm.fkin(pose).pose_stamped[0]
     quaternion = (
         tcp_map.pose.orientation.x,
         tcp_map.pose.orientation.y,
@@ -218,7 +153,7 @@ def get_cone_translation(pose):
     if radians(160) >= euler[2] >= radians(30) and \
             radians(160) >= euler[1] >= radians(20):
 
-        check = check_collision(pose)
+        check = arm.check_collision(pose)
         if check.valid:
             # print("coucou")
             pose_valid.append(pose)
@@ -254,9 +189,34 @@ def get_cone_translation(pose):
             return cone_transform[0], True, tcp_machine
     return [0, 0, 0], False, [0, 0, 0]
 
+def find_mir_angle(pose2D, pcd_associate):
+    """ TEST
+    Get the 2d pose and return the orientation referentiel of the machine
+    :param pose2D:
+    :param pcd_associate: open3D pcd
+    :return: orientation in radian
+    """
+    # get 2d pose of all pcd points
+    pcd_associate_np  = np.asarray(pcd_associate.points)
+    # mean thoses poses x, y
+    x = pcd_associate_np[:, 0]
+    y = pcd_associate_np[:, 1]
+    x_mean = np.mean(x)
+    y_mean = np.mean(y)
+
+    # get the orientation 2D with the atan
+    a = pose2D[0] - x_mean
+    b = pose2D[1] - y_mean
+
+    angle = atan2(a, b)
+
+    return angle
+
+
 
 if __name__ == '__main__':
     global mir_result, arm, broadcaster, j1, j2, j3, j4, j5, j6, dict_pos2pts, pcl_pub
+    # INIT
     rospy.init_node('moveit_pcd', anonymous=True)
     arm = Doosan()
     mir_result = False
@@ -270,7 +230,7 @@ if __name__ == '__main__':
 
     # Dictionnary
     dict_pos2pts = {}
-    # -150 -60 10 -180 50 0
+
     # Joint poses
     j1 = -150
     j2 = -60 #-90
@@ -295,16 +255,21 @@ if __name__ == '__main__':
     print("center pcd")
     print(pcd_load.get_center())
 
-    add_machine_colision()
+    arm.add_machine_colision( rospkg.RosPack().get_path('utility') + "/mesh/scie1.obj")
 
     rospy.loginfo(spots_np)
     display_marker(Marker.CUBE, spots_np[0][0], spots_np[0][1], spots_np[0][2], 0, 0, 0, 1, "machine")
+    # END INIT
 
-    move_base(spots_np[0][0], spots_np[0][1])
+    # MOVE MIR
+    move_base(spots_np[0][0], spots_np[0][1], 0)
 
     while not mir_result:
         rospy.sleep(0.1)
     print("mir finish")
+    # END MIR MOVE
+
+    #START ALGO
     tf_buffer = tf2_ros.Buffer()
     listener = tf2_ros.TransformListener(tf_buffer)
     pose_valid = []
@@ -358,5 +323,4 @@ if __name__ == '__main__':
     rospy.loginfo("no msg send")
 
     rospy.spin()
-    # with alive_bar(2519424) as bar:
-    #                         bar()
+
