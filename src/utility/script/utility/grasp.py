@@ -3,7 +3,6 @@
 import rospy
 from doosan import Doosan
 from robotiq import Robotiq
-from geometry_msgs.msg import Pose
 from std_msgs.msg import Bool
 from geometry_msgs.msg import PoseStamped
 from visualization_msgs.msg import Marker

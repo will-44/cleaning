@@ -9,7 +9,7 @@ import rospy
 publisher = rospy.Publisher("visualization_marker", Marker, queue_size=100)
 
 
-def display_marker(marker_type, x, y, z, t, u, v, w, ref):
+def display_marker(marker_type: object, x: object, y: object, z: object, t: object, u: object, v: object, w: object, ref: object) -> object:
     '''
     Create a marker on Rviz
     :param marker_type: the type of marker (arrow, sphere...)
@@ -39,9 +39,15 @@ def display_marker(marker_type, x, y, z, t, u, v, w, ref):
     m.pose.position.x = x
     m.pose.position.y = y
     m.pose.position.z = z
-    m.scale.x = 0.05
-    m.scale.y = 0.05
-    m.scale.z = 0.05
+
+    if marker_type == Marker.ARROW:
+        m.scale.x = 0.5
+        m.scale.y = 0.05
+        m.scale.z = 0.05
+    else:
+        m.scale.x = 0.05
+        m.scale.y = 0.05
+        m.scale.z = 0.05
     m.color.a = 1
     m.color.r = 1
     m.color.g = 0

@@ -6,7 +6,7 @@ from robotiq import Robotiq
 from geometry_msgs.msg import Pose
 from std_msgs.msg import Bool
 import actionlib
-from move_base_msgs.msg import MoveBaseFeedback, MoveBaseAction, MoveBaseResult, MoveBaseGoal
+from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import Pose2D
 from nav_msgs.msg import Odometry

@@ -30,9 +30,9 @@ from tf.transformations import euler_from_quaternion, quaternion_from_euler, \
     quaternion_matrix, quaternion_from_matrix
 from geometry_msgs.msg import PoseStamped, Pose, Point, Quaternion
 from std_msgs.msg import Header
-from std_msgs.msg import Float64MultiArray
+from std_msgs.msg import Float64MultiArray, MultiArrayDimension
 from sensor_msgs.msg import PointCloud2
-import open3d_ros_helper as o3d_ros
+from open3d_ros_helper import open3d_ros_helper as o3d_ros
 
 
 def PoseStamped_2_mat(p):
@@ -67,6 +67,7 @@ def check_collision(poses):
 def fkin(poses):
     """
 
+    :param poses:
     :param pos: position in degree
     :param ref: default world 0
     :return: pos in metre and radian
@@ -160,6 +161,8 @@ def callback_pcd(msg):
 
     # send matrix to node
     msg = Float64MultiArray()
+    msg.layout.dim.append(MultiArrayDimension())
+    msg.layout.dim.append(MultiArrayDimension())
     msg.data = matrix
     msg.layout.dim[0].label = "height"
     msg.layout.dim[0].size = 4
@@ -214,8 +217,10 @@ def get_cone_translation(pose):
     euler = tf.transformations.euler_from_quaternion(quaternion)
     if radians(160) >= euler[2] >= radians(30) and \
             radians(160) >= euler[1] >= radians(20):
+
         check = check_collision(pose)
         if check.valid:
+            # print("coucou")
             pose_valid.append(pose)
             # transform the pose from the map to the base_footprint
             try:
@@ -244,8 +249,9 @@ def get_cone_translation(pose):
                            tcp_machine.pose.orientation.z,
                            tcp_machine.pose.orientation.w,
                            "machine")
-
-            return cone_transform, True, tcp_machine
+            cone_transform.resize(1, 16)
+            print(cone_transform[0])
+            return cone_transform[0], True, tcp_machine
     return [0, 0, 0], False, [0, 0, 0]
 
 
@@ -264,13 +270,13 @@ if __name__ == '__main__':
 
     # Dictionnary
     dict_pos2pts = {}
-
+    # -150 -60 10 -180 50 0
     # Joint poses
     j1 = -150
-    j2 = -90
-    j3 = -90
-    j4 = -180
-    j5 = -90
+    j2 = -60 #-90
+    j3 = 10#-90
+    j4 = -180 #-180
+    j5 = 50 #-90
     j6 = 0
 
     arm.go_to_j([0, 0, 0, 0, 0, 0])
@@ -307,6 +313,7 @@ if __name__ == '__main__':
     joints = [radians(j1), radians(j2), radians(j3),
               radians(j4), radians(j5), radians(j6)]
     matrix, is_valid, tcp_machine = get_cone_translation(joints)
+    all_poses_check = False
     while is_valid != True:
         # increase Joints angles
         # print(is_valid)
@@ -335,10 +342,13 @@ if __name__ == '__main__':
 
         # send matrix to node
         msg = Float64MultiArray()
-        msg.data = matrix
+        msg.layout.dim.append(MultiArrayDimension())
+        msg.layout.dim.append(MultiArrayDimension())
+        # print(matrix)
+        msg.data = list(matrix)
         msg.layout.dim[0].label = "height"
         msg.layout.dim[0].size = 4
-        msg.layout.dim[0].stride = 16
+        msg.layout.dim[0].stride = 4*4
         msg.layout.dim[1].label = "width"
         msg.layout.dim[1].size = 4
         msg.layout.dim[1].stride = 4
