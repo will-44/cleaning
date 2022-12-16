@@ -212,8 +212,59 @@ class OfflineStrategy:
         while not self.mir_result:
             rospy.sleep(0.1)
 
-    def get_fov_transformation(self):
-        print("DSF")
+    def get_fov_transformation(self, pose):
+        '''
+       Return the TCP pose in the map frame
+       :param pose:
+       :return: translatio matrix  and is pose valide
+       '''
+        global mir_result, arm, broadcaster
+
+        tcp_map = arm.fkin(pose).pose_stamped[0]
+        quaternion = (
+            tcp_map.pose.orientation.x,
+            tcp_map.pose.orientation.y,
+            tcp_map.pose.orientation.z,
+            tcp_map.pose.orientation.w)
+        euler = tf.transformations.euler_from_quaternion(quaternion)
+        if radians(160) >= euler[2] >= radians(30) and \
+                radians(160) >= euler[1] >= radians(20):
+
+            check = arm.check_collision(pose)
+            if check.valid:
+                # print("coucou")
+                pose_valid.append(pose)
+                # transform the pose from the map to the base_footprint
+                try:
+                    trans_machine = tf_buffer.lookup_transform('machine', 'map', rospy.Time(),
+                                                               rospy.Duration(1.0))
+                except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
+                        tf2_ros.ExtrapolationException):
+                    rospy.loginfo("pb dans la transformation")
+                tcp_machine = tf2_geometry_msgs.do_transform_pose(tcp_map, trans_machine)
+                transformer = tf.TransformerROS()
+                # Get transform matrix
+                cone_transform = transformer.fromTranslationRotation((tcp_machine.pose.position.x,
+                                                                      tcp_machine.pose.position.y,
+                                                                      tcp_machine.pose.position.z),
+                                                                     (
+                                                                         tcp_machine.pose.orientation.x,
+                                                                         tcp_machine.pose.orientation.y,
+                                                                         tcp_machine.pose.orientation.z,
+                                                                         tcp_machine.pose.orientation.w))
+                display_marker(Marker.CUBE,
+                               tcp_machine.pose.position.x,
+                               tcp_machine.pose.position.y,
+                               tcp_machine.pose.position.z,
+                               tcp_machine.pose.orientation.x,
+                               tcp_machine.pose.orientation.y,
+                               tcp_machine.pose.orientation.z,
+                               tcp_machine.pose.orientation.w,
+                               "machine")
+                cone_transform.resize(1, 16)
+                print(cone_transform[0])
+                return cone_transform[0], True, tcp_machine
+        return [0, 0, 0], False, [0, 0, 0]
     def increase_joint_angle(self):
         all_poses_check = False
         # Add x degree to the joints
@@ -241,7 +292,7 @@ class OfflineStrategy:
         if self.all_poses_check:
             print("all poses check")
             return
-        matrix, is_valid, tcp_machine = self.get_cone_translation([self.j1, self.j2, self.j3,
+        matrix, is_valid, tcp_machine = self.get_fov_transformation([self.j1, self.j2, self.j3,
                                                                    self.j4, self.j5, self.j6])
         while not is_valid:
             # add Joints
@@ -249,7 +300,7 @@ class OfflineStrategy:
             if self.all_poses_check:
                 print("all poses check in while")
                 return
-            matrix, is_valid, tcp_machine = self.get_cone_translation(joints)
+            matrix, is_valid, tcp_machine = self.get_fov_transformation(joints)
 
         # send tf
         static_transform_stamped = geometry_msgs.msg.TransformStamped()
@@ -329,8 +380,9 @@ class OfflineStrategy:
 
         return dist_mat
 
-    def generate_trajectory(self):
-        print("ds")
+    def generate_trajectory(self, dist_mat):
+        permutation, distance = solve_tsp_dynamic_programming(dist_matrix)
+        return permutation
 
 
 
@@ -342,7 +394,8 @@ if __name__ == '__main__':
     path_relation = rospkg.RosPack().get_path('utility') + "/data/relation.pkl"
 
     offline = OfflineStrategy(pcd_path, path_relation)
-
+    print(offline.relation)
+    input()
     # Init the space
     offline.arm.go_to_j([0, 0, 0, 0, 0, 0])
     while offline.arm.check_motion() != 0:
@@ -351,6 +404,7 @@ if __name__ == '__main__':
 
     # Get spots for the MiR
     best_spots, points_spots = offline.select_best_spot(offline.relation, offline.pcd_machine)
+    o3d.visualization.draw_geometries([best_spots])
     best_spots_np = np.asarray(best_spots.points)
 
     # Send MiR to spots
@@ -373,8 +427,8 @@ if __name__ == '__main__':
         is_block, pts_block = offline.is_guard_isolate(dist_matrix)
 
         # Generate path
-        permutation, distance = solve_tsp_dynamic_programming(dist_matrix)
-        
+        permutation = offline.generate_trajectory(dist_matrix)
+
         # DEBUG
         lines = []
         for i in range(len(permutation)):

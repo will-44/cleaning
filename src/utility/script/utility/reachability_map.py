@@ -213,8 +213,8 @@ class ReachabilityRelation:
             index_point_reachable = np.where(bool_points_reachable == True)
 
             # print (np.take(np.asarray(self.targets.points), index_point_reachable, axis=0))
-            self.reachability_relation[pose] = tuple(
-                map(tuple, np.take(np.asarray(self.targets.points), index_point_reachable, axis=0)[0]))
+            self.reachability_relation[pose] = list(
+                map(tuple, np.take(np.around(np.asarray(self.targets.points), decimals=5), index_point_reachable, axis=0)[0]))
 
         return self.reachability_relation
 
@@ -222,19 +222,24 @@ class ReachabilityRelation:
 if __name__ == '__main__':
     global glob_pose, vis
     rospy.init_node('reachability', anonymous=True)
+    debug = True
+    need_gen_reachability_map = False
 
-    # vis = o3d.visualization.Visualizer()
-    # vis.create_window()
+    if debug:
+        vis = o3d.visualization.Visualizer()
+        vis.create_window()
 
     reach = ReachabilityMap()
-    reachability_map = reach.get_reachability_map()
+    if need_gen_reachability_map:
+        reachability_map = reach.get_reachability_map()
 
 
-'''
-    path_map = rospkg.RosPack().get_path('utility') + "/mesh/reachability_map.ply"
-    reach.save_map_as_pcd(path_map)
 
-    # o3d.visualization.draw_geometries([reach.point_cloud])
+    path_map = rospkg.RosPack().get_path('utility') + "/mesh/reachability_map.pcd"
+    # reach.save_map_as_pcd(path_map)
+
+    # if debug:
+    #     o3d.visualization.draw_geometries([reach.point_cloud])
     reachability_map = reach.load_map_as_pcd(path_map)
 
     path_pcd = rospkg.RosPack().get_path('utility') + "/mesh/scie1.ply"
@@ -251,8 +256,8 @@ if __name__ == '__main__':
 
     relation = ReachabilityRelation(base_poses=poses_available, reachability_map=reachability_map, targets=targets)
 
-    with open(rospkg.RosPack().get_path('utility') + '/script/utility/relation.pkl', 'wb') as f:
+    with open(rospkg.RosPack().get_path('utility') + '/data/relation.pkl', 'wb') as f:
         pickle.dump(relation.get_reachability_relation(), f)
-'''
+
 # with open('saved_dictionary.pkl', 'rb') as f:
 #     loaded_dict = pickle.load(f)
