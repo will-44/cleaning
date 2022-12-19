@@ -40,7 +40,6 @@ from python_tsp.exact import solve_tsp_dynamic_programming
 from python_tsp.distances import great_circle_distance_matrix, euclidean_distance_matrix
 
 
-
 class OfflineStrategy:
     def __init__(self, path_machine, relation_path):
         """
@@ -60,10 +59,10 @@ class OfflineStrategy:
 
         # Joint poses
         self.j1 = -150
-        self.j2 = -60 #-90
-        self.j3 = 10#-90
-        self.j4 = -180 #-180
-        self.j5 = 50 #-90
+        self.j2 = -60  # -90
+        self.j3 = 10  # -90
+        self.j4 = -180  # -180
+        self.j5 = 50  # -90
         self.j6 = 0
 
         # Guard dictionnary
@@ -88,7 +87,6 @@ class OfflineStrategy:
         # ??????
         self.pose_valid = []
 
-
     def select_best_spot(self, relation, pcd_inital):
         """
 
@@ -96,84 +94,56 @@ class OfflineStrategy:
         :param pcd_inital: the pcd of the machine
         :return: pcd_spot: a pcd of all best spots, spot_points: a list of pcd associated to each spot
         """
-        flag_first = True
-        list_spot = {}
-        relation_sort = sorted(relation, key=lambda a: len(relation[a]), reverse=True)
-        # Arbitraire
-        max_len = len(np.asarray(pcd_inital.points)) * 0.50
+        # Initialiser un dictionnaire vide pour stocker les clefs et valeurs extraites
+        extracted_values = {}
 
-        # Debug
-        plt.axis([0, 600, 0, 20000])
+        # Itérer tant qu'il y a encore des éléments dans le dictionnaire
+        while relation:
 
-        loop_index = 0
-        nb_pt_covered = 0
-        while nb_pt_covered <= max_len:
-            loop_index += 1
+            # Trouver la clef avec la valeur la plus longue
+            longest_key = max(relation, key=lambda key: len(relation[key]))
 
-            if flag_first:
-                list_spot.update({relation_sort[0]: relation[relation_sort[0]]})
-                nb_pt_covered += len(relation[relation_sort[0]])
-                self.relation.pop(relation_sort[0])
-                flag_first = False
-                relation_sort = sorted(self.relation, key=lambda a: len(relation[a]), reverse=True)
-                continue
-
-            # on check tout les pts trouve jusqua present
-            commun_pts = 0
-            is_valid = True
-            for pt in list_spot:
-                inter_pts = set(relation[relation_sort[0]]).intersection(list_spot[pt])
-                commun_pts = commun_pts + len(inter_pts)
-            if commun_pts >= 1150:
-                #
-                is_valid = False
-            # Debug
-            plt.scatter(loop_index, nb_pt_covered)
-            # if we check 80% pts in the dict it should be ok
-            if loop_index >= 500:
+            # Extraire la valeur associée à la clef la plus longue
+            longest_value = relation[longest_key]
+            if not longest_value:
                 break
-            # Debug
-            plt.pause(0.005)
+            # Ajouter la clef et la valeur à notre dictionnaire extrait
+            extracted_values[longest_key] = longest_value
 
-            if is_valid:
-                # Delete all pts in commun
-                diff = relation[relation_sort[0]]
-                for pt in list_spot:
-                    diff = tuple(map(tuple, set(diff).difference(list_spot[pt])))
-                relation.update({relation_sort[0]: diff})
-                # on prend ce pts
-                nb_pt_covered += len(relation[relation_sort[0]])
-                list_spot.update({relation_sort[0]: relation[relation_sort[0]]})
-                relation.pop(relation_sort[0])
-            else:
-                # On update cet emplacement dans la relation pour toute les pos possible choisis
-                diff = relation[relation_sort[0]]
-                for pt in list_spot:
-                    diff = tuple(map(tuple, set(diff).difference(list_spot[pt])))
-                relation.update({relation_sort[0]: diff})
-            relation_sort = sorted(relation, key=lambda a: len(relation[a]), reverse=True)
+            # Supprimer la clef et la valeur du dictionnaire original
+            del relation[longest_key]
 
-        best_spots = []
-        spot_points = []
-        for pt in list_spot.keys():
-            pt = list(pt)
-            pt.append(1)
-            best_spots.append(pt)
-        pcd_spot = self.np2pcd(best_spots)
-        pcd_spot.paint_uniform_color([1, 0, 1])
+            # Pour chaque élément de la valeur de la clef la plus longue,
+            # vérifier s'il se trouve dans les valeurs des autres clefs
+            # et le supprimer si c'est le cas
+            with alive_bar(len(longest_value) * len(relation.items())) as bar:
+                for element in longest_value:
+                    for key, value in relation.items():
+                        bar()
+                        if element in value:
+                            value.remove(element)
 
-        for i in range(len(pcd_spot.colors)):
+            # print(extracted_values)
+
+        # Put all spots in a pcd
+        spots = [v for v in extracted_values.keys()]
+        print(spots)
+        spots = [(x, y, 1) for x, y in spots]
+        print(spots)
+        spots = self.np2pcd(np.asarray(spots))
+
+        # Extracte all pcd match to the spot
+        pcds_each_spot = []
+        for key, value in extracted_values.items():
             color = [rnd.uniform(0.0, 1.0), rnd.uniform(0.0, 1.0), rnd.uniform(0.0, 1.0)]
-            pcd_spot.colors[i] = color
-            spot_points.append(self.np2pcd(list(list_spot.values())[i]))
 
-            dists = pcd_inital.compute_point_cloud_distance(spot_points[i])
-            dists = np.asarray(dists)
-            ind = np.where(dists < 0.1)[0]
-            spot_points[i] = pcd_inital.select_by_index(ind)
+            # Conversion en tableau NumPy
+            pcd = self.np2pcd(np.array(value).reshape(len(value), 3))
+            pcd.paint_uniform_color(color)
+            pcds_each_spot.append(pcd)
 
-            spot_points[i].paint_uniform_color(color)
-        return pcd_spot, spot_points
+        # Renvoyer le dictionnaire extrait
+        return spots, pcds_each_spot
 
     def np2pcd(self, xyz):
         pcd = o3d.geometry.PointCloud()
@@ -192,35 +162,53 @@ class OfflineStrategy:
         joints, self.all_poses_check = self.increase_joint_angle()
         self.send_config_allow()
 
+    def mir_pose_angle(self, pose_2d, pcd_associate):
+        """ TEST
+        Get the 2d pose and return the orientation referential of the machine
+        :param pose_2d:
+        :param pcd_associate: open3D pcd
+        :return: orientation in radian
+        """
+        # get 2d pose of all pcd points
+        pcd_associate_np = np.asarray(pcd_associate.points)
+        # mean thoses poses x, y
+        x = pcd_associate_np[:, 0]
+        y = pcd_associate_np[:, 1]
+        x_mean = np.mean(x)
+        y_mean = np.mean(y)
 
-    def mir_pose_angle(self):
-        print("DSF")
+        # get the orientation 2D with the atan
+        a = pose_2d[0] - x_mean
+        b = pose_2d[1] - y_mean
+        angle = atan2(b, a) + np.pi
+
+        return angle
 
     def move_base(self, x, y, theta):
         pose_mir = PoseStamped()
         pose_mir.header.frame_id = "machine"
         pose_mir.pose.position.x = x
         pose_mir.pose.position.y = y
+        quaternion = quaternion_from_euler(0, 0, theta)
         # TODO modifie the orientation
-        pose_mir.pose.orientation.x = 0
-        pose_mir.pose.orientation.y = 0
-        pose_mir.pose.orientation.z = -0.707
-        pose_mir.pose.orientation.w = 0.707
-
+        pose_mir.pose.orientation.x = quaternion[0]
+        pose_mir.pose.orientation.y = quaternion[1]
+        pose_mir.pose.orientation.z = quaternion[2]
+        pose_mir.pose.orientation.w = quaternion[3]
+        display_marker(Marker.ARROW, x, y, 0, quaternion[0], quaternion[1], quaternion[2], quaternion[3], "machine")
         self.mir_pub.publish(pose_mir)
         rospy.loginfo("pose send")
         while not self.mir_result:
             rospy.sleep(0.1)
-
+        self.mir_result = False
     def get_fov_transformation(self, pose):
         '''
        Return the TCP pose in the map frame
        :param pose:
        :return: translatio matrix  and is pose valide
        '''
-        global mir_result, arm, broadcaster
 
-        tcp_map = arm.fkin(pose).pose_stamped[0]
+        tcp_map = self.arm.fkin(pose).pose_stamped[0]
         quaternion = (
             tcp_map.pose.orientation.x,
             tcp_map.pose.orientation.y,
@@ -230,14 +218,14 @@ class OfflineStrategy:
         if radians(160) >= euler[2] >= radians(30) and \
                 radians(160) >= euler[1] >= radians(20):
 
-            check = arm.check_collision(pose)
+            check = self.arm.check_collision(pose)
             if check.valid:
                 # print("coucou")
-                pose_valid.append(pose)
+                self.pose_valid.append(pose)
                 # transform the pose from the map to the base_footprint
                 try:
-                    trans_machine = tf_buffer.lookup_transform('machine', 'map', rospy.Time(),
-                                                               rospy.Duration(1.0))
+                    trans_machine = self.tf_buffer.lookup_transform('machine', 'map', rospy.Time(),
+                                                                    rospy.Duration(1.0))
                 except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
                         tf2_ros.ExtrapolationException):
                     rospy.loginfo("pb dans la transformation")
@@ -265,6 +253,7 @@ class OfflineStrategy:
                 print(cone_transform[0])
                 return cone_transform[0], True, tcp_machine
         return [0, 0, 0], False, [0, 0, 0]
+
     def increase_joint_angle(self):
         all_poses_check = False
         # Add x degree to the joints
@@ -288,15 +277,16 @@ class OfflineStrategy:
         print(self.j1, self.j2, self.j3, self.j4, self.j5, self.j6)
         return [radians(self.j1), radians(self.j2), radians(self.j3),
                 radians(self.j4), radians(self.j5), radians(self.j6)], all_poses_check
+
     def send_config_allow(self):
         if self.all_poses_check:
             print("all poses check")
             return
         matrix, is_valid, tcp_machine = self.get_fov_transformation([self.j1, self.j2, self.j3,
-                                                                   self.j4, self.j5, self.j6])
+                                                                     self.j4, self.j5, self.j6])
         while not is_valid:
             # add Joints
-            joints, all_poses_check = self.increase_joint()
+            joints, all_poses_check = self.increase_joint_angle()
             if self.all_poses_check:
                 print("all poses check in while")
                 return
@@ -330,6 +320,7 @@ class OfflineStrategy:
         msg.layout.dim[1].stride = 4
 
         self.pcl_pub.publish(msg)
+
     def is_guard_isolate(self, dist_mat):
         """
         Witch guards are isolate and unreachable
@@ -342,8 +333,8 @@ class OfflineStrategy:
         for i in range(len(dist_mat)):
             nb_block_guard = np.argwhere(dist_mat[i, :] == 10000)
             a = len(nb_block_guard)
-            b =len(dist_mat)
-            if(len(nb_block_guard) >= (len(dist_mat)-1)):
+            b = len(dist_mat)
+            if (len(nb_block_guard) >= (len(dist_mat) - 1)):
                 is_guard_block = True
                 pts_block.append(i)
 
@@ -385,8 +376,6 @@ class OfflineStrategy:
         return permutation
 
 
-
-
 if __name__ == '__main__':
     rospy.init_node('offline_strategie', anonymous=True)
 
@@ -394,22 +383,26 @@ if __name__ == '__main__':
     path_relation = rospkg.RosPack().get_path('utility') + "/data/relation.pkl"
 
     offline = OfflineStrategy(pcd_path, path_relation)
-    print(offline.relation)
-    input()
+
+    # Get spots for the MiR
+    best_spots, pcds_spots = offline.select_best_spot(offline.relation, offline.pcd_machine)
+    # print(best_spots)
+    # input()
+    # o3d.visualization.draw_geometries([offline.pcd_machine, pcds_spots[0], pcds_spots[1], pcds_spots[2], pcds_spots[3]])
+    best_spots_np = np.asarray(best_spots.points)
+
     # Init the space
     offline.arm.go_to_j([0, 0, 0, 0, 0, 0])
     while offline.arm.check_motion() != 0:
         rospy.sleep(0.1)
     offline.arm.add_machine_colision(rospkg.RosPack().get_path('utility') + "/mesh/scie1.obj")
 
-    # Get spots for the MiR
-    best_spots, points_spots = offline.select_best_spot(offline.relation, offline.pcd_machine)
-    o3d.visualization.draw_geometries([best_spots])
-    best_spots_np = np.asarray(best_spots.points)
+    #  Change the TCP for the compute
+    offline.arm.set_tcp("camera_color_frame")
 
     # Send MiR to spots
-    for spot in best_spots_np:
-        offline.move_base(spot[0], spot[1], 0)
+    for index, spot in enumerate(best_spots_np):
+        offline.move_base(spot[0], spot[1], offline.mir_pose_angle(spot, pcds_spots[index]))
 
         # Get all guards
         offline.send_config_allow()
@@ -441,7 +434,7 @@ if __name__ == '__main__':
         line_set.colors = o3d.utility.Vector3dVector(colors)
         o3d.visualization.draw_geometries([best_guard, offline.pcd_machine, line_set])
 
-
-
+    #  Change the TCP at the end of the compute
+    offline.arm.set_tcp("tcp")
 
     print("ok")

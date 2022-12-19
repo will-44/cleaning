@@ -195,7 +195,7 @@ class ReachabilityRelation:
             # transform RM to actual base pose, we suppose the position as 1m up to the floor
             reach_map_trans = self.reachability_map.translate([pose[0], pose[1], 1], relative=False)
             reach_map_vox_trans = o3d.geometry.VoxelGrid.create_from_point_cloud(reach_map_trans,
-                                                                                 voxel_size=0.05)
+                                                                                 voxel_size=0.08)
             # debug
             vis.update_geometry(reach_map_trans)
             vis.poll_events()

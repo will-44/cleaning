@@ -64,6 +64,9 @@ class Doosan:
 
         self.get_pos_x()
 
+    def set_tcp(self, name):
+        self.move_group.set_end_effector_link(name)
+
     def MMDegToMRad(self, pos):
         pos[0] = pos[0] / 1000
         pos[1] = pos[1] / 1000
