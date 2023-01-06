@@ -58,12 +58,20 @@ class OfflineStrategy:
         self.arm = Doosan()
 
         # Joint poses
-        self.j1 = -150
-        self.j2 = -60  # -90
-        self.j3 = 10  # -90
-        self.j4 = -180  # -180
-        self.j5 = 50  # -90
+        self.j1 = -180
+        self.j2 =  -90
+        self.j3 = -90
+        self.j4 =  -180
+        self.j5 =  -90
         self.j6 = 0
+
+        # Actuel spot position
+        self.spot_x = 0
+        self.spot_y = 0
+        self.spot_theta = 0
+
+        # reposition the robot:
+        self.mir_replace = 0
 
         # Guard dictionnary
         self.dict_pos2pts = {}
@@ -158,7 +166,7 @@ class OfflineStrategy:
         # Add points to dict
         pcd = o3d_ros.rospc_to_o3dpc(msg)
         self.dict_pos2pts[(self.j1, self.j2, self.j3, self.j4, self.j5, self.j6)] = np.asarray(pcd.points)
-
+        
         joints, self.all_poses_check = self.increase_joint_angle()
         self.send_config_allow()
 
@@ -185,6 +193,9 @@ class OfflineStrategy:
         return angle
 
     def move_base(self, x, y, theta):
+        self.spot_x = x
+        self.spot_y = y
+        self.spot_theta = theta
         pose_mir = PoseStamped()
         pose_mir.header.frame_id = "machine"
         pose_mir.pose.position.x = x
@@ -255,6 +266,11 @@ class OfflineStrategy:
         return [0, 0, 0], False, [0, 0, 0]
 
     def increase_joint_angle(self):
+        # check if the mir flage is up to replace the robot 
+        self.mir_replace +=1
+        if self.mir_replace >= 100:
+            self.move_base(self.spot_x, self.spot_y, self.spot_theta)
+            self.mir_replace = 0
         all_poses_check = False
         # Add x degree to the joints
         self.j6 = 0
@@ -318,7 +334,7 @@ class OfflineStrategy:
         msg.layout.dim[1].label = "width"
         msg.layout.dim[1].size = 4
         msg.layout.dim[1].stride = 4
-
+        print("pose find and send")
         self.pcl_pub.publish(msg)
 
     def is_guard_isolate(self, dist_mat):
@@ -373,6 +389,8 @@ class OfflineStrategy:
 
     def generate_trajectory(self, dist_mat):
         permutation, distance = solve_tsp_dynamic_programming(dist_matrix)
+        print("permutation")
+        print(permutation)
         return permutation
 
 
@@ -386,22 +404,26 @@ if __name__ == '__main__':
 
     # Get spots for the MiR
     best_spots, pcds_spots = offline.select_best_spot(offline.relation, offline.pcd_machine)
-    # print(best_spots)
+    print("best spot:")
+    print(best_spots)
     # input()
     # o3d.visualization.draw_geometries([offline.pcd_machine, pcds_spots[0], pcds_spots[1], pcds_spots[2], pcds_spots[3]])
     best_spots_np = np.asarray(best_spots.points)
 
     # Init the space
-    offline.arm.go_to_j([0, 0, 0, 0, 0, 0])
-    while offline.arm.check_motion() != 0:
-        rospy.sleep(0.1)
+    # offline.arm.go_to_j([0, 0, 0, 0, 0, 0])
+    print("move arm:")
+    # while offline.arm.check_motion() != 0:
+    #     rospy.sleep(0.1)
     offline.arm.add_machine_colision(rospkg.RosPack().get_path('utility') + "/mesh/scie1.obj")
 
     #  Change the TCP for the compute
     offline.arm.set_tcp("camera_color_frame")
-
+    rospy.sleep(5)
+    print("move MiR:")
     # Send MiR to spots
     for index, spot in enumerate(best_spots_np):
+        print(spot[0], spot[1], offline.mir_pose_angle(spot, pcds_spots[index]))
         offline.move_base(spot[0], spot[1], offline.mir_pose_angle(spot, pcds_spots[index]))
 
         # Get all guards
@@ -414,6 +436,8 @@ if __name__ == '__main__':
         # Select best guards
         best_guard, guard_spots = offline.select_best_spot(offline.dict_pos2pts, offline.pcd_machine)
         best_guard_np = np.asarray(best_guard.points)
+        print("best_guard_np:")
+        print(best_guard_np)
         # Check guards accessibility
         dist_matrix = euclidean_distance_matrix(best_guard_np)
         dist_matrix = offline.check_obs_btw_guards(dist_matrix, best_guard_np)
