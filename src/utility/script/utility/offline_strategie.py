@@ -38,7 +38,13 @@ from open3d_ros_helper import open3d_ros_helper as o3d_ros
 
 from python_tsp.exact import solve_tsp_dynamic_programming
 from python_tsp.distances import great_circle_distance_matrix, euclidean_distance_matrix
-
+import time
+# Debug
+time_callback = 0
+joint_time = time.time()
+nb_joint_time = 0
+global_time = 0
+time_flag = True
 
 class OfflineStrategy:
     def __init__(self, path_machine, relation_path):
@@ -163,12 +169,15 @@ class OfflineStrategy:
         self.mir_result = msg
 
     def callback_fov(self, msg):
+        global time_callback
+        # print("callback cone: ", ( time.time() - time_callback))
         # Add points to dict
         pcd = o3d_ros.rospc_to_o3dpc(msg)
         self.dict_pos2pts[(self.j1, self.j2, self.j3, self.j4, self.j5, self.j6)] = np.asarray(pcd.points)
         
         joints, self.all_poses_check = self.increase_joint_angle()
         self.send_config_allow()
+        time_callback =  time.time()
 
     def mir_pose_angle(self, pose_2d, pcd_associate):
         """ TEST
@@ -219,17 +228,22 @@ class OfflineStrategy:
        :return: translatio matrix  and is pose valide
        '''
 
+        current_time = time.time()
+        # Environ 7s a mieux
         tcp_map = self.arm.fkin(pose).pose_stamped[0]
+        # print("fkin: ", (time.time() - current_time))
         quaternion = (
             tcp_map.pose.orientation.x,
             tcp_map.pose.orientation.y,
             tcp_map.pose.orientation.z,
             tcp_map.pose.orientation.w)
         euler = tf.transformations.euler_from_quaternion(quaternion)
+
         if radians(160) >= euler[2] >= radians(30) and \
                 radians(160) >= euler[1] >= radians(20):
-
+            current_time =time.time()
             check = self.arm.check_collision(pose)
+            # print("collision: ", (time.time() - current_time))
             if check.valid:
                 # print("coucou")
                 self.pose_valid.append(pose)
@@ -261,13 +275,27 @@ class OfflineStrategy:
                                tcp_machine.pose.orientation.w,
                                "machine")
                 cone_transform.resize(1, 16)
+
                 print(cone_transform[0])
+
                 return cone_transform[0], True, tcp_machine
         return [0, 0, 0], False, [0, 0, 0]
 
     def increase_joint_angle(self):
-        # check if the mir flage is up to replace the robot 
-        self.mir_replace +=1
+        global joint_time, nb_joint_time, global_time, time_flag
+        if time_flag:
+            joint_time = time.time()
+            time_flag = False
+            global_time += time.time() - joint_time
+            nb_joint_time += 1
+        else:
+            global_time += time.time() - joint_time
+            nb_joint_time += 1
+        print("mean time:", global_time / nb_joint_time)#sum(global_time) / len(global_time))
+
+        # check if the mir flage is up to replace the robot
+
+        self.mir_replace += 1
         if self.mir_replace >= 100:
             self.move_base(self.spot_x, self.spot_y, self.spot_theta)
             self.mir_replace = 0
@@ -287,10 +315,11 @@ class OfflineStrategy:
                     if self.j2 > 90:
                         self.j2 = -90
                         self.j1 += 10
-                        if self.j1 > -30:
-                            self.j1 = -150
+                        if self.j1 > 180:
+                            self.j1 = -180
                             all_poses_check = True
-        print(self.j1, self.j2, self.j3, self.j4, self.j5, self.j6)
+        # print(self.j1, self.j2, self.j3, self.j4, self.j5, self.j6)
+        joint_time = time.time()
         return [radians(self.j1), radians(self.j2), radians(self.j3),
                 radians(self.j4), radians(self.j5), radians(self.j6)], all_poses_check
 
@@ -403,12 +432,12 @@ if __name__ == '__main__':
     offline = OfflineStrategy(pcd_path, path_relation)
 
     # Get spots for the MiR
-    best_spots, pcds_spots = offline.select_best_spot(offline.relation, offline.pcd_machine)
-    print("best spot:")
-    print(best_spots)
+    # best_spots, pcds_spots = offline.select_best_spot(offline.relation, offline.pcd_machine)
+    # print("best spot:")
+    # print(best_spots)
     # input()
     # o3d.visualization.draw_geometries([offline.pcd_machine, pcds_spots[0], pcds_spots[1], pcds_spots[2], pcds_spots[3]])
-    best_spots_np = np.asarray(best_spots.points)
+    # best_spots_np = np.asarray(best_spots.points)
 
     # Init the space
     # offline.arm.go_to_j([0, 0, 0, 0, 0, 0])
@@ -421,10 +450,11 @@ if __name__ == '__main__':
     offline.arm.set_tcp("camera_color_frame")
     rospy.sleep(5)
     print("move MiR:")
+    best_spots_np = np.array([[1.09341357, 1.6552466]])
     # Send MiR to spots
     for index, spot in enumerate(best_spots_np):
-        print(spot[0], spot[1], offline.mir_pose_angle(spot, pcds_spots[index]))
-        offline.move_base(spot[0], spot[1], offline.mir_pose_angle(spot, pcds_spots[index]))
+        print(spot[0], spot[1], -1.57)#offline.mir_pose_angle(spot, pcds_spots[index]))
+        offline.move_base(spot[0], spot[1], -1.57)#offline.mir_pose_angle(spot, pcds_spots[index]))
 
         # Get all guards
         offline.send_config_allow()

@@ -25,6 +25,7 @@ result_pub = rospy.Publisher('/pcl_result', PointCloud2, queue_size=10)
 # Load the machne in pcd
 machine_path = rospkg.RosPack().get_path('utility') + "/mesh/scie1.ply"
 machine_pcd = o3d.io.read_point_cloud(machine_path)
+machine_pcd = machine_pcd.voxel_down_sample(voxel_size=0.05)
 machine_np = np.asarray(machine_pcd.points)
 
 # Generate the cone parameters
