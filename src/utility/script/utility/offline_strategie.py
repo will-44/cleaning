@@ -82,6 +82,15 @@ class OfflineStrategy:
         # Guard dictionnary
         self.dict_pos2pts = {}
 
+        # Pcd for all MiR spot
+        self.pcd_spot = []
+        # The actual index spot explore
+        self.actual_spot = 0
+        # All the points to check
+        self.potential_guards = []
+
+        self.actual_index_pose = 0
+
         # Subscribers
         self.mir_sub = rospy.Subscriber("/mir_result", Bool, self.callback_mir)
         self.pcd_sub = rospy.Subscriber("/pcl_result", PointCloud2, self.callback_fov)
@@ -156,6 +165,14 @@ class OfflineStrategy:
             pcd.paint_uniform_color(color)
             pcds_each_spot.append(pcd)
 
+        # get normal vectors from initial pcd
+        for index, pcd in  enumerate(pcds_each_spot):
+            dists = pcd_inital.compute_point_cloud_distance(pcd[i])
+            dists = np.asarray(dists)
+            ind = np.where(dists < 0.1)[0]
+            pcds_each_spot[index] = pcd_inital.select_by_index(ind)
+
+
         # Renvoyer le dictionnaire extrait
         return spots, pcds_each_spot
 
@@ -229,7 +246,7 @@ class OfflineStrategy:
        '''
 
         current_time = time.time()
-        # Environ 7s a mieux
+        # Environ 7s au mieux
         tcp_map = self.arm.fkin(pose).pose_stamped[0]
         # print("fkin: ", (time.time() - current_time))
         quaternion = (
@@ -323,19 +340,66 @@ class OfflineStrategy:
         return [radians(self.j1), radians(self.j2), radians(self.j3),
                 radians(self.j4), radians(self.j5), radians(self.j6)], all_poses_check
 
+
+    def get_next_pose(self):
+        all_poses_check = False
+
+        # get the new pose
+        position = self.potential_guards.points[self.actual_index_pose]
+
+        # Get the inverse unit vector normal (we want to look at the plane not from it)
+        vector_dir = - self.potential_guards.normals[self.actual_index_pose]
+
+        # Calculate the angles rotation
+        theta_x = np.arctan2(vector_dir[2], vector_dir[1]) + np.pi/2 # don't know why +180 but it work
+        theta_y = np.arctan2(vector_dir[0], vector_dir[2])
+        theta_z = np.arctan2(vector_dir[1], vector_dir[0])
+
+        # Debug
+        arrow = o3d.geometry.TriangleMesh.create_arrow(cylinder_radius=1.0 / 1000, cone_radius=1.5 / 1000,
+                                                       cylinder_height=5.0 / 1000, cone_height=4.0 / 1000, resolution=20,
+                                                       cylinder_split=4, cone_split=1)
+        Rot_qua = arrow.get_rotation_matrix_from_xyz([theta_x, theta_y, theta_z])
+        arrow.rotate(Rot_qua, center=[0, 0, 0])
+        arrow.translate(position)
+        o3d.visualization.draw_geometries([self.potential_guards, arrow])
+
+        # Transform to quaternion
+        quaternion = quaternion_from_euler(theta_x, theta_y, theta_z)
+
+        pose = geometry_msgs.Pose()
+        pose.position.x = position[0]
+        pose.position.y = position[1]
+        pose.position.z = position[2]
+        pose.quaternion.x = quaternion[0]
+        pose.quaternion.y = quaternion[1]
+        pose.quaternion.z = quaternion[2]
+        pose.quaternion.w = quaternion[3]
+
+        # increase actual index pose to check
+        self.actual_index_pose += 1
+
+        # if all poses check return true
+        if self.actual_index_pose >= len(self.potential_guards):
+            all_poses_check = True
+
+        return pose, all_poses_check
+
     def send_config_allow(self):
         if self.all_poses_check:
             print("all poses check")
             return
-        matrix, is_valid, tcp_machine = self.get_fov_transformation([self.j1, self.j2, self.j3,
-                                                                     self.j4, self.j5, self.j6])
+        is_valid = False
         while not is_valid:
-            # add Joints
-            joints, all_poses_check = self.increase_joint_angle()
+            # Get next pose
+            pose, self.all_poses_check = self.get_next_pose()
+            # Get inverse kinematics
+            ikin = self.arm.ikin(pose)
+            if ikin.error_code.val == 1:
+                matrix, is_valid, tcp_machine = self.get_fov_transformation(ikin.solution.joint_state.position)
             if self.all_poses_check:
                 print("all poses check in while")
                 return
-            matrix, is_valid, tcp_machine = self.get_fov_transformation(joints)
 
         # send tf
         static_transform_stamped = geometry_msgs.msg.TransformStamped()
@@ -365,6 +429,44 @@ class OfflineStrategy:
         msg.layout.dim[1].stride = 4
         print("pose find and send")
         self.pcl_pub.publish(msg)
+
+    def generate_pcd_guard(pcd_init, dist = 0.4):
+        """
+        get pcd and generate guards with the same normal
+        :param pcd_init:
+        :return:
+        """
+        # Set the distance of 10 cm
+        distance = dist
+
+        # Initialize arrays to store the generated points and corresponding normals
+        points_sampled = []
+        normals_sampled = []
+
+        # Generate a number of random points equal to the number of points in the initial point cloud
+        n_points = len(pcd_init.points)
+        for index in range(n_points):
+            # Select a random point in the initial point cloud
+            index_rnd = np.random.randint(len(pcd_init.points))
+            point_rnd = pcd_init.points[index_rnd]
+            normal_rnd = pcd_init.normals[index_rnd]
+
+            # Generate a new point by placing it along the normal at a distance of 10 cm from the initial point
+            point_sampled = point_rnd + (distance * normal_rnd)
+            points_sampled.append(point_sampled)
+            normals_sampled.append(normal_rnd)
+
+        # Create a new point cloud from the generated points and normals
+        pcd_sampled = o3d.geometry.PointCloud()
+        pcd_sampled.points = o3d.utility.Vector3dVector(points_sampled)
+        pcd_sampled.normals = o3d.utility.Vector3dVector(normals_sampled)
+
+        # Visualize the new point cloud
+        o3d.visualization.draw_geometries([pcd_sampled])
+        return pcd_sampled
+
+
+
 
     def is_guard_isolate(self, dist_mat):
         """
@@ -438,7 +540,7 @@ if __name__ == '__main__':
     # input()
     # o3d.visualization.draw_geometries([offline.pcd_machine, pcds_spots[0], pcds_spots[1], pcds_spots[2], pcds_spots[3]])
     # best_spots_np = np.asarray(best_spots.points)
-
+    # offline.pcd_spot = pcds_spots
     # Init the space
     # offline.arm.go_to_j([0, 0, 0, 0, 0, 0])
     print("move arm:")
@@ -455,6 +557,12 @@ if __name__ == '__main__':
     for index, spot in enumerate(best_spots_np):
         print(spot[0], spot[1], -1.57)#offline.mir_pose_angle(spot, pcds_spots[index]))
         offline.move_base(spot[0], spot[1], -1.57)#offline.mir_pose_angle(spot, pcds_spots[index]))
+
+        # Set actual pcd spot
+        offline.actual_spot = index
+
+        # Set potential guards
+        offline.generate_pcd_guard()
 
         # Get all guards
         offline.send_config_allow()

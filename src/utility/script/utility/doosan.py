@@ -126,23 +126,6 @@ class Doosan:
         except rospy.ServiceException as e:
             print("Service call failed: s")
 
-    # def fkin(self, pos, ref):
-    #     """
-    #
-    #     :param pos: position in degree
-    #     :param ref: default world 0
-    #     :return: pos in metre and radian
-    #     """
-    #     try:
-    #         rospy.wait_for_service('/dsr01m1013/motion/fkin', timeout=5)
-    #     except:
-    #         return False
-    #     try:
-    #         fkin_srv = rospy.ServiceProxy('/dsr01m1013/motion/fkin', Fkin)
-    #         result = fkin_srv(pos, ref)
-    #         return self.MMDegToMRad(list(result.conv_posx))
-    #     except rospy.ServiceException as e:
-    #         print("Service call failed: s")
 
     def fkin(self, poses):
         """
@@ -174,19 +157,19 @@ class Doosan:
         :param pos: position in radian
         :return: True if the command have been send, False if the service down
         """
-        pos = self.RadToDeg(pos)
-        try:
-            rospy.wait_for_service('/dsr01m1013/motion/move_joint', timeout=5)
-        except:
-            return False
-        try:
-            go_srv = rospy.ServiceProxy('/dsr01m1013/motion/move_joint', MoveJoint)
-            #          pos vel acc time = 2.5s radius mode blenType syncType
-            result = go_srv(pos, 10, 20, 0, 0, 0, 0, 0)
-            return True
-        except rospy.ServiceException as e:
-            print("Service call failed: s")
-            return False
+        result = False
+
+        # Spécifier les angles de joint souhaités pour chaque joint
+        joint_angles = pos
+
+        # Planifier une trajectoire de joint en utilisant les angles de joint
+        result = self.move_group.go(joint_angles, wait=True)
+
+        # Calling ``stop()`` ensures that there is no residual movement
+        self.move_group.stop()
+
+
+        return result
 
     def go_to_l(self, pos):
         """
