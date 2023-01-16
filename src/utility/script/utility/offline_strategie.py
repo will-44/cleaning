@@ -344,6 +344,12 @@ class OfflineStrategy:
     def get_next_pose(self):
         all_poses_check = False
 
+        # check if the mir flage is up to replace the robot
+        self.mir_replace += 1
+        if self.mir_replace >= 100:
+            self.move_base(self.spot_x, self.spot_y, self.spot_theta)
+            self.mir_replace = 0
+
         # get the new pose
         position = self.potential_guards.points[self.actual_index_pose]
 
