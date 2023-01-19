@@ -11,7 +11,8 @@ sudo apt install ros-noetic-dwb-critics -y
 sudo apt install ros-noetic-move-base-msgs -y
 sudo apt install ros-noetic-rospy-message-converter -y
 sudo apt-get install ros-$ROS_DISTRO-realsense2-camera -y
-sudo apt install ros-noetic-realsense2-description
+sudo apt install ros-noetic-realsense2-description -y
+sudo apt install ros-noetic-ros-numpy -y
 rm -rf robotiq/robotiq_3f*
 pip install azure.storage.blob
 pip install azure-iot-device
@@ -20,4 +21,5 @@ pip install opencv-python
 pip install open3d
 pip install alive-progress
 pip install numba
+pip3 install open3d_ros_helper open3d python_tsp
 source /opt/ros/noetic/setup.sh

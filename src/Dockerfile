@@ -31,7 +31,13 @@ RUN apt-get update && apt-get install -y \
     ros-noetic-move-base-msgs -y \
     ros-noetic-rospy-message-converter -y \
     ros-${ROS_DISTRO}-realsense2-camera -y \
-    ros-noetic-realsense2-description -y
+    ros-noetic-realsense2-description -y \
+    ros-noetic-ros-numpy -y \ 
+    python3-tk -y
+RUN pip3 install open3d_ros_helper open3d python_tsp
+
+
+
 RUN rm -rf robotiq/robotiq_3f*
 
 RUN mkdir -p /urs/src/rubyrhod_ws/src/
@@ -44,6 +50,8 @@ RUN source /opt/ros/noetic/setup.sh
 RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; cd /urs/src/rubyrhod_ws/; catkin_make'
 RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 RUN echo "source /urs/src/rubyrhod_ws/devel/setup.bash" >> ~/.bashrc
+RUN echo "export ROS_IP=192.168.0.104" >> ~/.bashrc
+RUN echo "export ROS_MASTER_URI=http://192.168.0.104:11311" >> ~/.bashrc
 #CMD roslaunch behaviors simulation.launch
 
 # launch ros package
