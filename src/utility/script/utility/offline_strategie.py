@@ -8,7 +8,7 @@ from doosan import Doosan
 from robotiq import Robotiq
 from geometry_msgs.msg import Pose
 from std_msgs.msg import Bool
-from geometry_msgs.msg import PoseStamped, Pose2D
+from geometry_msgs.msg import PoseStamped, Pose2D, Pose
 from visualization_msgs.msg import Marker
 from rviz_tool import display_marker
 import tf2_ros
@@ -110,6 +110,9 @@ class OfflineStrategy:
         # ??????
         self.pose_valid = []
 
+        # Transforme machine to base_0
+        self.trans_base = 0
+
     def select_best_spot(self, relation, pcd_inital):
         """
 
@@ -167,7 +170,7 @@ class OfflineStrategy:
 
         # get normal vectors from initial pcd
         for index, pcd in  enumerate(pcds_each_spot):
-            dists = pcd_inital.compute_point_cloud_distance(pcd[i])
+            dists = pcd_inital.compute_point_cloud_distance(pcd)
             dists = np.asarray(dists)
             ind = np.where(dists < 0.1)[0]
             pcds_each_spot[index] = pcd_inital.select_by_index(ind)
@@ -192,7 +195,7 @@ class OfflineStrategy:
         pcd = o3d_ros.rospc_to_o3dpc(msg)
         self.dict_pos2pts[(self.j1, self.j2, self.j3, self.j4, self.j5, self.j6)] = np.asarray(pcd.points)
         
-        joints, self.all_poses_check = self.increase_joint_angle()
+        #joints, self.all_poses_check = self.increase_joint_angle()
         self.send_config_allow()
         time_callback =  time.time()
 
@@ -238,6 +241,7 @@ class OfflineStrategy:
         while not self.mir_result:
             rospy.sleep(0.1)
         self.mir_result = False
+
     def get_fov_transformation(self, pose):
         '''
        Return the TCP pose in the map frame
@@ -256,46 +260,50 @@ class OfflineStrategy:
             tcp_map.pose.orientation.w)
         euler = tf.transformations.euler_from_quaternion(quaternion)
 
-        if radians(160) >= euler[2] >= radians(30) and \
-                radians(160) >= euler[1] >= radians(20):
-            current_time =time.time()
-            check = self.arm.check_collision(pose)
-            # print("collision: ", (time.time() - current_time))
-            if check.valid:
-                # print("coucou")
-                self.pose_valid.append(pose)
-                # transform the pose from the map to the base_footprint
-                try:
-                    trans_machine = self.tf_buffer.lookup_transform('machine', 'map', rospy.Time(),
-                                                                    rospy.Duration(1.0))
-                except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
-                        tf2_ros.ExtrapolationException):
-                    rospy.loginfo("pb dans la transformation")
-                tcp_machine = tf2_geometry_msgs.do_transform_pose(tcp_map, trans_machine)
-                transformer = tf.TransformerROS()
-                # Get transform matrix
-                cone_transform = transformer.fromTranslationRotation((tcp_machine.pose.position.x,
-                                                                      tcp_machine.pose.position.y,
-                                                                      tcp_machine.pose.position.z),
-                                                                     (
-                                                                         tcp_machine.pose.orientation.x,
-                                                                         tcp_machine.pose.orientation.y,
-                                                                         tcp_machine.pose.orientation.z,
-                                                                         tcp_machine.pose.orientation.w))
-                display_marker(Marker.CUBE,
-                               tcp_machine.pose.position.x,
-                               tcp_machine.pose.position.y,
-                               tcp_machine.pose.position.z,
-                               tcp_machine.pose.orientation.x,
-                               tcp_machine.pose.orientation.y,
-                               tcp_machine.pose.orientation.z,
-                               tcp_machine.pose.orientation.w,
-                               "machine")
-                cone_transform.resize(1, 16)
+        current_time =time.time()
+        check = self.arm.check_collision(pose)
+        # print("collision: ", (time.time() - current_time))
+        if check.valid:
+            self.j1 = pose[0]
+            self.j2 = pose[1]
+            self.j3 = pose[2]
+            self.j4 = pose[3]
+            self.j5 = pose[4]
+            self.j6 = pose[5]
+            # rospy.loginfo("collision free")
+            self.pose_valid.append(pose)
+            # transform the pose from the map to the base_footprint
+            try:
+                trans_machine = self.tf_buffer.lookup_transform('machine', 'map', rospy.Time(),
+                                                                rospy.Duration(1.0))
+            except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
+                    tf2_ros.ExtrapolationException):
+                rospy.loginfo("pb dans la transformation")
+            tcp_machine = tf2_geometry_msgs.do_transform_pose(tcp_map, trans_machine)
+            transformer = tf.TransformerROS()
+            # Get transform matrix
+            cone_transform = transformer.fromTranslationRotation((tcp_machine.pose.position.x,
+                                                                    tcp_machine.pose.position.y,
+                                                                    tcp_machine.pose.position.z),
+                                                                    (
+                                                                        tcp_machine.pose.orientation.x,
+                                                                        tcp_machine.pose.orientation.y,
+                                                                        tcp_machine.pose.orientation.z,
+                                                                        tcp_machine.pose.orientation.w))
+            display_marker(Marker.CUBE,
+                            tcp_machine.pose.position.x,
+                            tcp_machine.pose.position.y,
+                            tcp_machine.pose.position.z,
+                            tcp_machine.pose.orientation.x,
+                            tcp_machine.pose.orientation.y,
+                            tcp_machine.pose.orientation.z,
+                            tcp_machine.pose.orientation.w,
+                            "machine")
+            cone_transform.resize(1, 16)
 
-                print(cone_transform[0])
+            print(cone_transform[0])
 
-                return cone_transform[0], True, tcp_machine
+            return cone_transform[0], True, tcp_machine
         return [0, 0, 0], False, [0, 0, 0]
 
     def increase_joint_angle(self):
@@ -341,6 +349,20 @@ class OfflineStrategy:
                 radians(self.j4), radians(self.j5), radians(self.j6)], all_poses_check
 
 
+    def get_transform_base(self):
+
+        tf_buffer = tf2_ros.Buffer()
+        listener = tf2_ros.TransformListener(tf_buffer)
+
+        try:
+            self.trans_base = tf_buffer.lookup_transform('base_0', 'machine', rospy.Time(),
+                                                    rospy.Duration(10.0))
+        except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
+                tf2_ros.ExtrapolationException):
+            rospy.loginfo("pb dans la transformation")
+        # rospy.loginfo(self.trans_base)
+        
+
     def get_next_pose(self):
         all_poses_check = False
 
@@ -362,34 +384,46 @@ class OfflineStrategy:
         theta_z = np.arctan2(vector_dir[1], vector_dir[0])
 
         # Debug
-        arrow = o3d.geometry.TriangleMesh.create_arrow(cylinder_radius=1.0 / 1000, cone_radius=1.5 / 1000,
-                                                       cylinder_height=5.0 / 1000, cone_height=4.0 / 1000, resolution=20,
-                                                       cylinder_split=4, cone_split=1)
-        Rot_qua = arrow.get_rotation_matrix_from_xyz([theta_x, theta_y, theta_z])
-        arrow.rotate(Rot_qua, center=[0, 0, 0])
-        arrow.translate(position)
-        o3d.visualization.draw_geometries([self.potential_guards, arrow])
+        # arrow = o3d.geometry.TriangleMesh.create_arrow(cylinder_radius=1.0 / 1000, cone_radius=1.5 / 1000,
+        #                                                cylinder_height=5.0 / 1000, cone_height=4.0 / 1000, resolution=20,
+        #                                                cylinder_split=4, cone_split=1)
+        # Rot_qua = arrow.get_rotation_matrix_from_xyz([theta_x, theta_y, theta_z])
+        # arrow.rotate(Rot_qua, center=[0, 0, 0])
+        # arrow.translate(position)
+        # o3d.visualization.draw_geometries([self.potential_guards, arrow])
 
         # Transform to quaternion
         quaternion = quaternion_from_euler(theta_x, theta_y, theta_z)
 
-        pose = geometry_msgs.Pose()
-        pose.position.x = position[0]
-        pose.position.y = position[1]
-        pose.position.z = position[2]
-        pose.quaternion.x = quaternion[0]
-        pose.quaternion.y = quaternion[1]
-        pose.quaternion.z = quaternion[2]
-        pose.quaternion.w = quaternion[3]
+        pose = PoseStamped()
+        pose.pose.position.x = position[0]
+        pose.pose.position.y = position[1]
+        pose.pose.position.z = position[2]
+        pose.pose.orientation.x = quaternion[0]
+        pose.pose.orientation.y = quaternion[1]
+        pose.pose.orientation.z = quaternion[2]
+        pose.pose.orientation.w = quaternion[3]
+        
+
 
         # increase actual index pose to check
         self.actual_index_pose += 1
 
         # if all poses check return true
-        if self.actual_index_pose >= len(self.potential_guards):
+        if self.actual_index_pose >= len(np.asarray(self.potential_guards.points)):
             all_poses_check = True
+            self.actual_index_pose = 0
 
-        return pose, all_poses_check
+        rospy.loginfo("Point nb: %d / %d", self.actual_index_pose, len(np.asarray(self.potential_guards.points)))
+
+        pose = tf2_geometry_msgs.do_transform_pose(pose, self.trans_base)
+
+        rospy.loginfo("%d, %d, %d, %d, %d, %d, %d",pose.pose.position.x, pose.pose.position.y, pose.pose.position.z,
+                        pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w)
+        display_marker(Marker.ARROW, pose.pose.position.x, pose.pose.position.y, pose.pose.position.z,
+                        pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w, "base_0")
+
+        return pose.pose, all_poses_check
 
     def send_config_allow(self):
         if self.all_poses_check:
@@ -401,7 +435,9 @@ class OfflineStrategy:
             pose, self.all_poses_check = self.get_next_pose()
             # Get inverse kinematics
             ikin = self.arm.ikin(pose)
+            # rospy.loginfo(ikin.error_code.val)
             if ikin.error_code.val == 1:
+                rospy.loginfo("Position valide for Ikin")
                 matrix, is_valid, tcp_machine = self.get_fov_transformation(ikin.solution.joint_state.position)
             if self.all_poses_check:
                 print("all poses check in while")
@@ -436,10 +472,10 @@ class OfflineStrategy:
         print("pose find and send")
         self.pcl_pub.publish(msg)
 
-    def generate_pcd_guard(pcd_init, dist = 0.4):
+    def generate_pcd_guard(self, pcd_init, dist = 0.4):
         """
         get pcd and generate guards with the same normal
-        :param pcd_init:
+        :param pcd_init: 
         :return:
         """
         # Set the distance of 10 cm
@@ -468,7 +504,7 @@ class OfflineStrategy:
         pcd_sampled.normals = o3d.utility.Vector3dVector(normals_sampled)
 
         # Visualize the new point cloud
-        o3d.visualization.draw_geometries([pcd_sampled])
+        # o3d.visualization.draw_geometries([pcd_sampled])
         return pcd_sampled
 
 
@@ -540,35 +576,37 @@ if __name__ == '__main__':
     offline = OfflineStrategy(pcd_path, path_relation)
 
     # Get spots for the MiR
-    # best_spots, pcds_spots = offline.select_best_spot(offline.relation, offline.pcd_machine)
-    # print("best spot:")
-    # print(best_spots)
-    # input()
+    best_spots, pcds_spots = offline.select_best_spot(offline.relation, offline.pcd_machine)
+    print("best spot:")
+    print(best_spots)
     # o3d.visualization.draw_geometries([offline.pcd_machine, pcds_spots[0], pcds_spots[1], pcds_spots[2], pcds_spots[3]])
-    # best_spots_np = np.asarray(best_spots.points)
-    # offline.pcd_spot = pcds_spots
+    best_spots_np = np.asarray(best_spots.points)
+    offline.pcd_spot = pcds_spots
     # Init the space
-    # offline.arm.go_to_j([0, 0, 0, 0, 0, 0])
-    print("move arm:")
-    # while offline.arm.check_motion() != 0:
-    #     rospy.sleep(0.1)
+    #offline.arm.go_to_j([0, 0, 0, 0, 0, 0])
+    #print("move arm:")
+    #while offline.arm.check_motion() != 0:
+    #    rospy.sleep(0.1)
     offline.arm.add_machine_colision(rospkg.RosPack().get_path('utility') + "/mesh/scie1.obj")
 
     #  Change the TCP for the compute
     offline.arm.set_tcp("camera_color_frame")
     rospy.sleep(5)
     print("move MiR:")
-    best_spots_np = np.array([[1.09341357, 1.6552466]])
+    # best_spots_np = np.array([[1.09341357, 1.6552466]])
     # Send MiR to spots
     for index, spot in enumerate(best_spots_np):
-        print(spot[0], spot[1], -1.57)#offline.mir_pose_angle(spot, pcds_spots[index]))
-        offline.move_base(spot[0], spot[1], -1.57)#offline.mir_pose_angle(spot, pcds_spots[index]))
+        print(spot[0], spot[1], offline.mir_pose_angle(spot, pcds_spots[index]))
+        offline.move_base(spot[0], spot[1], offline.mir_pose_angle(spot, pcds_spots[index]))
+
+        # compute transform machine to base
+        offline.get_transform_base()
 
         # Set actual pcd spot
         offline.actual_spot = index
 
         # Set potential guards
-        offline.generate_pcd_guard()
+        offline.potential_guards = offline.generate_pcd_guard(pcd_init=pcds_spots[index])
 
         # Get all guards
         offline.send_config_allow()
@@ -576,6 +614,10 @@ if __name__ == '__main__':
         # While all poses check sleep
         while not offline.all_poses_check:
             rospy.sleep(1)
+
+        with open(rospkg.RosPack().get_path('utility') + '/data/relation_path_arm.pkl', 'wb') as f:
+            pickle.dump(offline.dict_pos2pts, f)
+
 
         # Select best guards
         best_guard, guard_spots = offline.select_best_spot(offline.dict_pos2pts, offline.pcd_machine)
@@ -600,7 +642,7 @@ if __name__ == '__main__':
         line_set.points = o3d.utility.Vector3dVector(best_guard_np)
         line_set.lines = o3d.utility.Vector2iVector(lines)
         line_set.colors = o3d.utility.Vector3dVector(colors)
-        o3d.visualization.draw_geometries([best_guard, offline.pcd_machine, line_set])
+        # o3d.visualization.draw_geometries([best_guard, offline.pcd_machine, line_set])
 
     #  Change the TCP at the end of the compute
     offline.arm.set_tcp("tcp")
