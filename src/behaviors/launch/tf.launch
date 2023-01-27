@@ -13,8 +13,8 @@
 
 <!--    <param name="doosan_description" command="$(find xacro)/xacro '$(find dsr_description)/xacro/$(arg model).urdf.xacro' '&#45;&#45;inorder' 'namespace:=$(arg ns)' color:=$(arg color) gripper:=$(arg gripper)"/> -->
     <param name="vention_description" command="$(find xacro)/xacro '$(find behaviors)/description/robot.urdf.xacro' '--inorder'"/>
-    <param name="bracket_description" textfile="$(find bracket)/urdf/bracket.urdf"/>
-    <include file="$(find realsense2_description)/launch/view_d435_model.launch" />
+    <!-- <param name="bracket_description" textfile="$(find bracket)/urdf/bracket.urdf"/>
+    <include file="$(find realsense2_description)/launch/view_d435_model.launch" /> -->
 <!--     <include file="$(find robotiq_2f_85_gripper_visualization)/launch/test_2f_85_model.launch" /> -->
 <!--    <param name="gripper_description" command="$(find xacro)/xacro $(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model.xacro" /> -->
 
@@ -26,8 +26,8 @@
     <node pkg="tf" type="static_transform_publisher" name="machine_map"
           args="16.6 3.6 -0.2 0 0 0 map machine 100"/>
 
-    <node pkg="tf" type="static_transform_publisher" name="bracket_doosan"
-          args="0 0 0 1.57 0 -1.57  link6 bracket_base_link 100"/>
+    <!-- <node pkg="tf" type="static_transform_publisher" name="bracket_doosan"
+          args="0 0 0 1.57 0 -1.57  link6 bracket_base_link 100"/> -->
 
 <!--     <node pkg="tf" type="static_transform_publisher" name="gripper_doosan" -->
 <!--           args="0 0 0 1.57 0 -1.57  link6 robotiq_arg2f_base_link 100"/> -->
@@ -35,6 +35,8 @@
     <node pkg="tf" type="static_transform_publisher" name="camera_bracket"
           args="-0.0504955 0.0284431 0.0760899 -3.1321603 -1.3428157 3.1284867   link6 camera_link 100"/>
 
+    <!-- <node pkg="tf" type="static_transform_publisher" name="doosan_map"
+          args="0 0 0 0 0 0 map map_doosan 100"/> -->
 
 <!--   <node name="doosan_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" respawn="false">-->
 <!--       <remap from="/joint_states" to="/dsr01m1013/joint_states"/>-->
@@ -45,9 +47,9 @@
     <node name="vention_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" respawn="false">
         <remap from="robot_description" to="vention_description" />
     </node>
-    <node name="bracket_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" respawn="false">
+    <!-- <node name="bracket_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" respawn="false">
         <remap from="robot_description" to="bracket_description" />
-    </node>
+    </node> -->
     
     <group if="$(eval arg ('mode') == 'real')">
         <node pkg="utility" type="doosan.py" name="colision_base" ns="/dsr01m1013" >

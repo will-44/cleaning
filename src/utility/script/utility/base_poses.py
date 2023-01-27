@@ -57,7 +57,7 @@ class PosesBase:
         hull = hull.sample_points_poisson_disk(3000)
         dists = poses.compute_point_cloud_distance(hull)
         dists = np.asarray(dists)
-        ind = np.where(dists > 0.4)[0]
+        ind = np.where(dists > 0.6)[0]
         new_poses = poses.select_by_index(ind)
         self.poses_availables_pcd = new_poses
         self.poses_availables = np.asarray(new_poses.points)
@@ -91,6 +91,7 @@ if __name__ == '__main__':
     pcd_poses = o3d.geometry.PointCloud()
     pcd_poses.points = o3d.utility.Vector3dVector(poses.get_available_poses())
     o3d.visualization.draw_geometries([poses.point_cloud, pcd_poses])
+    
 
 
 
