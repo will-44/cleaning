@@ -1,0 +1,24 @@
+<launch>
+  <arg
+    name="model" />
+  <param
+    name="vacuum_description"
+    textfile="$(find vacuum)/urdf/vacuum.urdf" />
+  <node
+    name="vacuum_joint_state_publisher_gui"
+    pkg="joint_state_publisher_gui"
+    type="joint_state_publisher_gui">
+    <remap from="robot_description" to="vacuum_description" />
+  </node>
+  <node
+    name="vacuum_state_publisher"
+    pkg="robot_state_publisher"
+    type="robot_state_publisher">
+    <remap from="robot_description" to="vacuum_description" />
+  </node>
+  <node
+    name="rviz"
+    pkg="rviz"
+    type="rviz"
+    args="-d $(find vacuum)/urdf.rviz" />
+</launch>

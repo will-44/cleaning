@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <include file="$(find azure_kinect_ros_driver)/launch/driver.launch">
+    </include>
+
+    <node name="take_pictures" pkg="utility" type="take_picture.py" output="screen" respawn="false">
+    </node>
+
+</launch>
