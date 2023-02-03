@@ -63,7 +63,7 @@ class OnlineStrategy:
             self.offline_traj = pickle.load(f)
 
         # Global var
-        # self.base_trajectory = self.generate_base_traj(list(map(list,list(self.offline_traj.keys()))))
+        self.base_trajectory = self.sort_poses(spot_poses,self.generate_base_traj(list(map(list,list(self.offline_traj.keys())))))
         # print(self.base_trajectory)
 
         self.tf_buffer = tf2_ros.Buffer()
@@ -103,9 +103,14 @@ class OnlineStrategy:
             
             pcd_dust = o3d_ros.rospc_to_o3dpc(resp1.pcds[0])
             # mesh = o3d.geometry.TriangleMesh.create_coordinate_frame()
-            poses = np.asarray(pcd_dust.points)
-           
-            # o3d.visualization.draw_geometries([mesh, pcd_dust])
+            dust_poses = np.asarray(pcd_dust.points)
+
+            # TSP
+            dust_permutation = self.generate_base_traj(dust_poses)
+            
+            # Sort the array
+            result_poses = self.sort_poses(dust_poses, dust_permutation)
+            
 
             # Transform to robot frame
             frame = resp1.pcds[0].header.frame_id
@@ -115,7 +120,7 @@ class OnlineStrategy:
             except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
                     tf2_ros.ExtrapolationException):
                 rospy.loginfo("pb dans la transformation")
-            for pt in poses:
+            for pt in dust_poses:
                 pose = geometry_msgs.msg.PoseStamped()
                 pose.pose.position.x = pt[0]
                 pose.pose.position.y = pt[1]
@@ -126,7 +131,7 @@ class OnlineStrategy:
                 pose = tf2_geometry_msgs.do_transform_pose(pose, trans_camera)
 
                 result_poses.append(pose)
-
+            
         except rospy.ServiceException as e:
             print("Service call failed: %s"%e)
         return result_poses
@@ -142,7 +147,7 @@ class OnlineStrategy:
     def generate_base_traj(self, spot_poses):
         dist_matrix = ((euclidean_distance_matrix(spot_poses))*1000).astype(int)
         permutation = fast_tsp.find_tour(dist_matrix, duration_seconds=5)
-        return self.sort_poses(spot_poses, permutation)
+        return permutation
 
     def sort_poses(self, poses, order):
         result = np.zeros((len(order), len(poses[0])))
@@ -308,9 +313,10 @@ if __name__ == '__main__':
     # rospy.sleep(1)
     strat.arm.set_tcp("vacuum_tcp")
 
-    while(not rospy.is_shutdown()):
-        input("detect new ?")
-        dust_pose = strat.ask_dust_poses()
+    
+        
+    dust_poses = strat.ask_dust_poses()
+    for dust in dust_poses: 
         tcp_pose = strat.arm.get_pose()
 
         try:
@@ -323,9 +329,9 @@ if __name__ == '__main__':
 
         print(tcp_pose_world)
         pose = tcp_pose_world
-        pose.pose.position.x = dust_pose.pose.position.x
-        pose.pose.position.y = dust_pose.pose.position.y
-        pose.pose.position.z = dust_pose.pose.position.z
+        pose.pose.position.x = dust.pose.position.x
+        pose.pose.position.y = dust.pose.position.y
+        pose.pose.position.z = dust.pose.position.z
 
 
         try:

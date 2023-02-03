@@ -81,6 +81,7 @@ catkin_python_setup()
  add_service_files(
    FILES
    GraspVacuum.srv
+   DetectDust.srv
  )
 
 ## Generate actions in the 'action' folder
@@ -94,6 +95,7 @@ catkin_python_setup()
  generate_messages(
    DEPENDENCIES
    std_msgs
+   sensor_msgs
  )
 
 ################################################

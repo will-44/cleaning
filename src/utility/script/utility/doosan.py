@@ -17,6 +17,7 @@ from moveit_msgs.srv import GetPositionFK
 from moveit_msgs.msg import RobotState
 from moveit_msgs.msg import RobotState, PositionIKRequest, AttachedCollisionObject
 from geometry_msgs.msg import PoseStamped
+from sensor_msgs.msg import JointState
 
 import numpy as np
 import sys
@@ -33,7 +34,7 @@ class Doosan:
         self.move_group = moveit_commander.MoveGroupCommander(self.group_name)
         self.move_group.set_planner_id("PRMstar")
         # Set the end effector as the tcp link, define in the doosan urdf
-        self.move_group.set_end_effector_link("tcp")
+        # self.move_group.set_end_effector_link("world")
 
         # This sleep time is necessary to wait the init of the scene
         rospy.sleep(2)
@@ -62,7 +63,14 @@ class Doosan:
         controler_name = "controler"
         self.scene.attach_box('world', controler_name, controler_pose, size=(0.40, 0.50, 0.40))
 
+        # Joint state sub
+        # self.joint_state_sub = rospy.Subscriber("/dsr01m1013/joint_states", JointState, self.callback_depth)
+        # self.joint_state = 0
+
         self.get_pos_x()
+
+    # def callback_joint_state(self, msg):
+    #     self.joint_state = msg
 
     def set_tcp(self, name):
         self.move_group.set_end_effector_link(name)
@@ -102,6 +110,10 @@ class Doosan:
         pos[4] = pos[4] * np.pi / 180
         pos[5] = pos[5] * np.pi / 180
         return pos
+    
+    def get_pose(self):
+        
+        return self.move_group.get_current_pose()
 
     def ikin(self, pos):
         """
@@ -131,7 +143,7 @@ class Doosan:
         """
 
         :param poses:
-        :param pos: position in degree
+        :param pos: position in radian
         :param ref: default world 0
         :return: pos in metre and radian
 
@@ -164,12 +176,12 @@ class Doosan:
 
         # Planifier une trajectoire de joint en utilisant les angles de joint
         result = self.move_group.go(joint_angles, wait=True)
+        if(result):
+            # Calling ``stop()`` ensures that there is no residual movement
+            self.move_group.stop()
 
-        # Calling ``stop()`` ensures that there is no residual movement
-        self.move_group.stop()
 
-
-        return result
+            return result
 
     def go_to_l(self, pos):
         """
@@ -342,3 +354,19 @@ class Doosan:
         machine_pose.pose.orientation.z = 0  # -0.707
         machine_pose.pose.orientation.w = 0.707
         self.scene.add_mesh("machine", machine_pose, mesh_path)
+
+    def is_plan_valid(self, joints):
+        
+        joint_state = JointState()
+        joint_state.name = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
+        joint_state.position = joints
+        plan = self.move_group.plan(joint_state)
+        if plan[0]:    
+            return True
+        else:
+            return False
+        
+    def go_home(self):
+        res = self.go_to_j([0, 0, 2.0944, 3.1415, 0.610865, 3.1415])
+        return res 
+
