@@ -20,3 +20,7 @@
 [submodule "src/moveit_calibration"]
 	path = src/moveit_calibration
 	url = https://github.com/ros-planning/moveit_calibration.git
+
+[submodule "src/Azure_Kinect_ROS_Driver"]
+	path = src/Azure_Kinect_ROS_Driver
+	url = https://github.com/will-44/Azure_Kinect_ROS_Driver.git

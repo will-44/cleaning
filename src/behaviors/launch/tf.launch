@@ -18,13 +18,17 @@
 <!--     <include file="$(find robotiq_2f_85_gripper_visualization)/launch/test_2f_85_model.launch" /> -->
 <!--    <param name="gripper_description" command="$(find xacro)/xacro $(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model.xacro" /> -->
 
-    <node pkg="tf" type="static_transform_publisher" name="doosan_mir"
+    <!-- <node pkg="tf" type="static_transform_publisher" name="doosan_mir"
           args="0 0 0  0 0 0 plate_arm world 100"/>
     <node pkg="tf" type="static_transform_publisher" name="vention_mir"
-          args="0 0 0 0 0 0 surface structure_vention 100"/>
+          args="0 0 0 0 0 0 surface structure_vention 100"/> -->
+
+    <!-- <node pkg="tf" type="static_transform_publisher" name="doosan_map"
+          args="10 10 0.76 0 0 0 map world 100"/> -->
 
     <node pkg="tf" type="static_transform_publisher" name="machine_map"
           args="16.6 3.6 -0.2 0 0 0 map machine 100"/>
+
 
     <!-- <node pkg="tf" type="static_transform_publisher" name="bracket_doosan"
           args="0 0 0 1.57 0 -1.57  link6 bracket_base_link 100"/> -->
@@ -52,7 +56,7 @@
     </node> -->
     
     <group if="$(eval arg ('mode') == 'real')">
-        <node pkg="utility" type="doosan.py" name="colision_base" ns="/dsr01m1013" >
+        <node pkg="utility" type="add_basic_colision.py" name="colision_base" ns="/dsr01m1013" >
             <param  name="robot_description" value="/dsr01m1013/robot_description" />
         </node>
     </group>
