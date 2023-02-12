@@ -25,7 +25,7 @@ class ReachabilityMap:
     def __init__(self):
 
         # The arm controler
-        self.arm = Doosan()
+        # self.arm = Doosan()
 
         # The reach of the doosan is 1.3m from the constructor
         self.doosan_reach = 1.3
@@ -242,7 +242,7 @@ if __name__ == '__main__':
     #     o3d.visualization.draw_geometries([reach.point_cloud])
     reachability_map = reach.load_map_as_pcd(path_map)
 
-    path_pcd = rospkg.RosPack().get_path('utility') + "/mesh/scie1.ply"
+    path_pcd = rospkg.RosPack().get_path('utility') + "/mesh/scie_3.ply"
     poses_base = PosesBase(path_pcd)
     # Get all poses available around
     poses_base.get_available_poses()
@@ -256,7 +256,7 @@ if __name__ == '__main__':
 
     relation = ReachabilityRelation(base_poses=poses_available, reachability_map=reachability_map, targets=targets)
 
-    with open(rospkg.RosPack().get_path('utility') + '/data/relation.pkl', 'wb') as f:
+    with open(rospkg.RosPack().get_path('utility') + '/data/relation_scie_3.pkl', 'wb') as f:
         pickle.dump(relation.get_reachability_relation(), f)
 
 # with open('saved_dictionary.pkl', 'rb') as f:

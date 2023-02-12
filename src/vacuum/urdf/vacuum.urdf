@@ -36,11 +36,11 @@
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
+        xyz="-0.035 -0.02 -0.035"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vacuum/meshes/tool.STL" scale="0.001 0.001 0.001"/>
+          filename="package://vacuum/meshes/tool.STL" scale="0.0015 0.0015 0.0015"/>
       </geometry>
     </collision>
   </link>
@@ -49,21 +49,46 @@
 
   <link
     name="vacuum_tcp">
+    <visual>
+      <origin
+        xyz=" 0 -0.1 0"
+        rpy="1.57 0 0" />
+      <geometry>
+        <cylinder length="0.15" radius="0.015"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.96078 0.96078 0.96471 1" />
+      </material>
+    </visual>
+        <collision>
+      <origin
+        xyz="0 -0.1 0"
+        rpy="1.57 0 0" />
+      <geometry>
+         <cylinder length="0.15" radius="0.03"/>
+      </geometry>
+    </collision>
   </link>
 
 
-
+  <!-- <link
+    name="vacuum_tcp">
+  </link> -->
 
   <joint
-    name="camera_joint"
+    name="tube_joint"
     type="fixed">
     <origin
-      xyz="0 0.15 0"
+      xyz="0 0.25 0"
       rpy="0 0 0" />
     <parent
       link="vacuum_base_link" />
     <child
       link="vacuum_tcp" />
-   
   </joint>
+
+
+
 </robot>

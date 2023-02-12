@@ -22,10 +22,10 @@ class PosesBase:
         '''
         center = self.point_cloud.get_center()
         # get dimension of point cloud in meter
-        dim = self.point_cloud.get_max_bound()
-
-        nb_pt_x = int((dim[0]+2) / self.poses_gap)
-        nb_pt_y = int((dim[1]+2) / self.poses_gap)
+        dim_max = self.point_cloud.get_max_bound()
+        dim_min = self.point_cloud.get_min_bound()
+        nb_pt_x = int((dim_max[0]+3) / self.poses_gap)
+        nb_pt_y = int((dim_max[1]+3) / self.poses_gap)
 
         pos_pts_x = []
         pos_pts_y = []
@@ -34,8 +34,8 @@ class PosesBase:
 
         for i in range(nb_pt_x):
             for k in range(nb_pt_y):
-                pos_pts_y.append(k * self.poses_gap - center[0])
-                pos_pts_x.append(i * self.poses_gap - center[1])
+                pos_pts_y.append(k * self.poses_gap - (dim_max[0]-dim_min[0]))
+                pos_pts_x.append(i * self.poses_gap - (dim_max[1]-dim_min[1]))
 
 
         poses_plan = np.zeros((nb_pts, 3))

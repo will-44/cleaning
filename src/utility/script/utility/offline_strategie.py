@@ -272,7 +272,7 @@ class OfflineStrategy:
 
         return angle
 
-    def move_robot(self, x, y, theta):
+    def move_robot(self, x, y, z, theta):
         self.spot_x = x
         self.spot_y = y
         self.spot_theta = theta
@@ -280,6 +280,7 @@ class OfflineStrategy:
         pose.header.frame_id = "machine"
         pose.pose.position.x = x
         pose.pose.position.y = y
+        pose.pose.position.z = z
         quaternion = quaternion_from_euler(0, 0, theta)
         pose.pose.orientation.x = quaternion[0]
         pose.pose.orientation.y = quaternion[1]
@@ -293,7 +294,7 @@ class OfflineStrategy:
         static_transform_stamped.child_frame_id = "world"
         static_transform_stamped.transform.translation.x = pose.pose.position.x
         static_transform_stamped.transform.translation.y = pose.pose.position.y
-        static_transform_stamped.transform.translation.z = 0.76 +0.2
+        static_transform_stamped.transform.translation.z = 0.76 -0.1
         static_transform_stamped.transform.rotation.x = pose.pose.orientation.x
         static_transform_stamped.transform.rotation.y = pose.pose.orientation.y
         static_transform_stamped.transform.rotation.z = pose.pose.orientation.z
@@ -330,7 +331,7 @@ class OfflineStrategy:
 
         current_time = time.time()
         # Environ 7s au mieux
-        tcp_map = self.arm.fkin(pose).pose_stamped[0]
+        tcp_map = self.arm.fkin(pose, "camera_base").pose_stamped[0]
         # print("fkin: ", (time.time() - current_time))
         quaternion = (
             tcp_map.pose.orientation.x,
@@ -453,7 +454,7 @@ class OfflineStrategy:
         # if self.mir_replace >= 500:
         #     self.move_base(self.spot_x, self.spot_y, self.spot_theta)
         #     rospy.sleep(10)
-        #     self.arm.add_machine_colision(rospkg.RosPack().get_path('utility') + "/mesh/scie1.obj")
+        #     self.arm.add_machine_colision(rospkg.RosPack().get_path('utility') + "/mesh/scie_3.obj")
         #     rospy.sleep(5)
         #     self.mir_replace = 0
 
@@ -464,7 +465,7 @@ class OfflineStrategy:
         vector_dir = - self.potential_guards.normals[self.actual_index_pose]
 
         # Calculate the angles rotation
-        theta_x = np.arctan2(vector_dir[2], vector_dir[1]) - np.pi/2 # don't know why +90 but it work
+        theta_x = np.arctan2(vector_dir[2], vector_dir[1]) + np.pi/2 # don't know why +90 but it work
         theta_y = np.arctan2(vector_dir[0], vector_dir[2])
         theta_z = np.arctan2(vector_dir[1], vector_dir[0])
 
@@ -569,10 +570,10 @@ class OfflineStrategy:
         msg.layout.dim[1].label = "width"
         msg.layout.dim[1].size = 4
         msg.layout.dim[1].stride = 4
-        print("pose find and send")
+        # print("pose find and send")
         self.pcl_pub.publish(msg)
 
-    def generate_pcd_guard(self, pcd_init, dist = 0.3):
+    def generate_pcd_guard(self, pcd_init, dist = 0.4):
         """
         get pcd and generate guards with the same normal
         :param pcd_init: 
@@ -586,7 +587,7 @@ class OfflineStrategy:
         normals_sampled = []
 
         # Generate a number of random points equal to the number of points in the initial point cloud
-        n_points = int(len(pcd_init.points)/100)
+        n_points = int(len(pcd_init.points)/10)
         if n_points == 0:
             n_points += 1 
         for index in range(n_points):
@@ -659,15 +660,30 @@ class OfflineStrategy:
                 # print(ans)
                 if ans['t_hit'] != float('inf'):
                     dist_mat[idx[0], idx[1]] = 1000000000
-        print(dist_mat)
+        # print(dist_mat)
         return dist_mat
 
     def generate_trajectory(self, dist_mat):
         permutation = fast_tsp.find_tour(dist_mat, duration_seconds=20)
+        cost_solver = fast_tsp.compute_cost(permutation, dist_mat)
+        print("cost for find tour:")
+        print(cost_solver)  # 5984
+        tour = fast_tsp.greedy_nearest_neighbor(dist_mat)
+        cost_greedy = fast_tsp.compute_cost(tour, dist_mat)
+        print("cost for greedy nearest neighbor:")
+        print(cost_greedy)  # 6812
+        res = []
+
+        if cost_greedy > cost_solver:
+            print("We choose classic TSP")
+            res = permutation
+        else:
+            print("We choose greedy TSP")
+            res = tour
         # permutation, distance = solve_tsp_dynamic_programming(dist_matrix)
-        print("permutation")
-        print(permutation)
-        return permutation
+        # print("permutation")
+        # print(permutation)
+        return res
     
     def save_pcd_list(self, pcd_list, file_name_prefix):
         for i, pcd in enumerate(pcd_list):
@@ -704,8 +720,8 @@ class OfflineStrategy:
     def sort_poses(self, poses, order):
         result = np.zeros((len(order), 6))
         for index, index_value in enumerate(order):
-            print(index_value)
-            print(poses[index])
+            # print(index_value)
+            # print(poses[index])
             result[index_value] = poses[index]
         return result
 
@@ -713,11 +729,11 @@ class OfflineStrategy:
 
 
 if __name__ == '__main__':
-    
+    '''
     rospy.init_node('offline_strategie', anonymous=True)
 
-    pcd_path = rospkg.RosPack().get_path('utility') + "/mesh/scie1.ply"
-    path_relation = rospkg.RosPack().get_path('utility') + "/data/relation.pkl"
+    pcd_path = rospkg.RosPack().get_path('utility') + "/mesh/scie_3.ply"
+    path_relation = rospkg.RosPack().get_path('utility') + "/data/relation_scie_3.pkl"
 
     offline = OfflineStrategy(pcd_path, path_relation)
     '''
@@ -725,16 +741,16 @@ if __name__ == '__main__':
     # best_spots = offline.select_best_spot(offline.relation, offline.pcd_machine)
     # with open(rospkg.RosPack().get_path('utility') + '/data/relation_result_spots.pkl', 'wb') as f:
     #     pickle.dump(list(best_spots.keys()) , f)
-    # print("best spot:")
-    # print(np.asarray(best_spots.points))
-    # offline.save_pcd_list(list(best_spots.values()), rospkg.RosPack().get_path('utility') + "/data/pcd_22_01")
+    # # print("best spot:")
+    # # print(np.asarray(best_spots.points))
+    # offline.save_pcd_list(list(best_spots.values()), rospkg.RosPack().get_path('utility') + "/data/pcd_08_02")
     '''
 
     spots = []
     best_spots = {}
     with open(rospkg.RosPack().get_path('utility') + '/data/relation_result_spots.pkl', 'rb') as f:
             spots = pickle.load(f)
-    pcds_spots = offline.load_pcd_list(rospkg.RosPack().get_path('utility') + "/data/pcd_22_01")
+    pcds_spots = offline.load_pcd_list(rospkg.RosPack().get_path('utility') + "/data/pcd_08_02")
 
     for index, pcd in enumerate(pcds_spots):
         best_spots[spots[index]] = pcd
@@ -744,7 +760,7 @@ if __name__ == '__main__':
     #  Change the TCP for the compute
     offline.arm.set_tcp("camera_base")
 
-
+   
     
     # for index, spot in enumerate(best_spots_np):
     index = 0
@@ -753,11 +769,11 @@ if __name__ == '__main__':
         offline.all_poses_check = False
 
 
-        print(spot[0], spot[1], offline.mir_pose_angle(spot, pcd))
+        print(spot[0], spot[1],spot[2],  offline.mir_pose_angle(spot, pcd))
         
-        offline.move_robot(spot[0], spot[1], offline.mir_pose_angle(spot, pcd))
+        offline.move_robot(spot[0], spot[1], spot[2], offline.mir_pose_angle(spot, pcd))
         rospy.sleep(10)
-        offline.arm.add_machine_colision(rospkg.RosPack().get_path('utility') + "/mesh/scie1.obj")
+        offline.arm.add_machine_colision(rospkg.RosPack().get_path('utility') + "/mesh/scie_3.obj")
         rospy.sleep(10)
 
         # compute transform machine to base
@@ -784,8 +800,8 @@ if __name__ == '__main__':
     # Other part:
     rospy.init_node('offline_strategie', anonymous=True)
 
-    pcd_path = rospkg.RosPack().get_path('utility') + "/mesh/scie1.ply"
-    path_relation = rospkg.RosPack().get_path('utility') + "/data/relation.pkl"
+    pcd_path = rospkg.RosPack().get_path('utility') + "/mesh/scie_3.ply"
+    path_relation = rospkg.RosPack().get_path('utility') + "/data/relation_scie_3.pkl"
 
     offline = OfflineStrategy(pcd_path, path_relation)
 
@@ -793,20 +809,28 @@ if __name__ == '__main__':
     # best_spots, pcds_spots = offline.select_best_spot(offline.relation, offline.pcd_machine)
     # print("best spot:")
     # print(best_spots)
-    # offline.save_pcd_list(pcds_spots, "pcd_22_01")
+    # offline.save_pcd_list(pcds_spots, "pcd_08_02")
 
-    best_spots = [[ 1.09341357,  1.8552466, 1],
-                        [ 0.79341357, -0.4447534, 1],
-                        [-0.55658643, 1.0052466, 1],
-                        [ 2.29341357, 0.5552466, 1],
-                        [ 0.04341357, 1.9052466, 1],
-                        [ 1.44341357, -0.3947534, 1],
-                        [-0.75658643, -0.1947534, 1]]    
-    pcds_spots = offline.load_pcd_list(rospkg.RosPack().get_path('utility') + "/data/pcd_22_01")
+    # DEBUG
+    # spots = []
+    # for spot, pcd in best_spots.items():
+    #     spots.append([spot[0], spot[1],spot[2]])
+    # spots = np.asarray(spots)
+    # spots = offline.np2pcd(spots)
+    # o3d.visualization.draw_geometries([offline.mesh_machine, spots])
+
+    # END DEBUG
+    best_spots = [[0.25735600000000014, -0.691549, 1 ],
+                    [0.657356, 1.6084510000000003, 1],
+                    [1.8573560000000002, 0.30845100000000003, 1 ],
+                    [-0.6926439999999999, 0.7584510000000002, 1 ]]   
+
+    pcds_spots = offline.load_pcd_list(rospkg.RosPack().get_path('utility') + "/data/pcd_08_02")
 
 #     tf_buffer_machine = tf2_ros.Buffer()
 #     listener_machine = tf2_ros.TransformListener(tf_buffer_machine)
 #     broadcaster_machine = tf2_ros.StaticTransformBroadcaster()
+
     resultat = []
     resultat = np.asarray(resultat)
     best_spots_np = np.asarray(best_spots)
@@ -819,11 +843,11 @@ if __name__ == '__main__':
 #       
 
 #         # offline.set_machine_ref(transformed_position, broadcaster_machine )
-        print(spot[0], spot[1], offline.mir_pose_angle(spot, pcds_spots[index]))
+        # print(spot[0], spot[1], offline.mir_pose_angle(spot, pcds_spots[index]))
         spot[2] = offline.mir_pose_angle(spot, pcds_spots[index])
-        offline.move_robot(spot[0], spot[1], spot[2])
+        offline.move_robot(spot[0], spot[1], 0, spot[2])
         rospy.sleep(10)
-        offline.arm.add_machine_colision(rospkg.RosPack().get_path('utility') + "/mesh/scie1.obj")
+        offline.arm.add_machine_colision(rospkg.RosPack().get_path('utility') + "/mesh/scie_3.obj")
         rospy.sleep(10)
 
         file_name = f'/data/relation_path_arm_{index}.pkl'
@@ -850,7 +874,7 @@ if __name__ == '__main__':
         result_dict = offline.select_best_spot(offline.dict_pos2pts, offline.pcd_machine)
         best_guard = list(result_dict.keys() )
         guard_spots_pcd = list(result_dict.values())
-        print(guard_spots_pcd)
+        # print(guard_spots_pcd)
         # best_guard_np = np.asarray(guard_spots_pcd[0].points)
         # o3d.visualization.draw_geometries(guard_spots_pcd)
     
@@ -864,17 +888,17 @@ if __name__ == '__main__':
 
         guard = []
         for configuration in best_guard:
-            fkin = offline.arm.fkin(configuration)
+            fkin = offline.arm.fkin(configuration, "camera_base")
 
             # TODO transform to machine frame
             fkin = tf2_geometry_msgs.do_transform_pose(fkin.pose_stamped[0], trans_machine)
 
             pose = np.array([fkin.pose.position.x, fkin.pose.position.y, fkin.pose.position.z])
-            print(pose)
+            # print(pose)
             guard.append(pose)
 
         # guard = np.array(guard).tolist()
-        print(guard)
+        # print(guard)
 
         guard = offline.np2pcd(guard)
         guard.paint_uniform_color([1, 0, 0])
@@ -908,7 +932,7 @@ if __name__ == '__main__':
             line_set.points = o3d.utility.Vector3dVector(guard_np)
             line_set.lines = o3d.utility.Vector2iVector(lines)
             line_set.colors = o3d.utility.Vector3dVector(colors)
-            # o3d.visualization.draw_geometries([guard, offline.pcd_machine, line_set])
+            o3d.visualization.draw_geometries([guard, offline.pcd_machine, line_set])
 
     o3d.visualization.draw_geometries(resultat)
     # file_name = rospkg.RosPack().get_path('utility') + "/data/final_result.pcd"
@@ -922,4 +946,4 @@ if __name__ == '__main__':
     print("ok")
    
    
-   '''
+   

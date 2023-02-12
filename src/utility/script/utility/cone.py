@@ -23,7 +23,7 @@ from geometry_msgs.msg import PoseStamped
 result_pub = rospy.Publisher('/pcl_result', PointCloud2, queue_size=10)
 
 # Load the machne in pcd
-machine_path = rospkg.RosPack().get_path('utility') + "/mesh/scie1.ply"
+machine_path = rospkg.RosPack().get_path('utility') + "/mesh/scie_3.ply"
 machine_pcd = o3d.io.read_point_cloud(machine_path)
 machine_pcd_initial = machine_pcd.voxel_down_sample(voxel_size=0.05)
 
@@ -60,7 +60,7 @@ cone_pcd = o3d.geometry.PointCloud()
 cone_pcd.points = o3d.utility.Vector3dVector(cone_np)
 
 # Debug
-debug = True
+debug = False
 
 if debug:
     
@@ -191,7 +191,7 @@ def callback(msg):
             mesh_cone_t = copy.deepcopy(mesh_cone).transform(mat)
 
             cone_t.paint_uniform_color([0, 0, 1])
-            o3d.visualization.draw_geometries([machine_pcd, pts_include_pcd, cone_t, mesh_cone_t])
+            o3d.visualization.draw_geometries([machine_pcd_initial, pts_include_pcd, cone_t, mesh_cone_t])
 
         
         

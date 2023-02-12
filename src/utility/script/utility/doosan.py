@@ -74,6 +74,7 @@ class Doosan:
 
     def set_tcp(self, name):
         self.move_group.set_end_effector_link(name)
+        rospy.loginfo(self.move_group.get_end_effector_link())
 
     def MMDegToMRad(self, pos):
         pos[0] = pos[0] / 1000
@@ -139,7 +140,7 @@ class Doosan:
             print("Service call failed: s")
 
 
-    def fkin(self, poses):
+    def fkin(self, poses, eef_link_name):
         """
 
         :param poses:
@@ -158,7 +159,7 @@ class Doosan:
             robot.joint_state.position = poses
             msg = GetPositionFK()
             fkin_srv = rospy.ServiceProxy('/dsr01m1013/compute_fk', GetPositionFK)
-            result = fkin_srv(fk_link_names=['link6'], robot_state=robot)
+            result = fkin_srv(fk_link_names=[eef_link_name], robot_state=robot)
             return result
         except rospy.ServiceException as e:
             print("Service call failed: s")
@@ -210,7 +211,24 @@ class Doosan:
         # # Note: there is no equivalent function for clear_joint_value_targets()
         self.move_group.clear_pose_targets()
         return is_plan_valid
+        
 
+    def cartesian_path(self, waypoints):
+
+
+        # We want the Cartesian path to be interpolated at a resolution of 1 cm
+        # which is why we will specify 0.01 as the eef_step in Cartesian
+        # translation.  We will disable the jump threshold by setting it to 0.0,
+        # ignoring the check for infeasible jumps in joint space, which is sufficient
+        # for this tutorial.
+        (plan, fraction) = self.move_group.compute_cartesian_path(
+            waypoints, 0.01, 0.0  # waypoints to follow  # eef_step
+        )  # jump_threshold
+        # Note: We are just planning, not asking move_group to actually move the robot yet:
+        self.move_group.execute(plan, wait=True)
+        return plan, fraction
+
+    
     def get_pos_x(self):
         """
         :return: a list for tcp position in rad and metre
@@ -345,14 +363,14 @@ class Doosan:
         :return:
         """
         machine_pose = geometry_msgs.msg.PoseStamped()
-        machine_pose.header.frame_id = 'map'
-        machine_pose.pose.position.x = 16.6
-        machine_pose.pose.position.y = 3.6
-        machine_pose.pose.position.z = -0.2
-        machine_pose.pose.orientation.x = 0.707
-        machine_pose.pose.orientation.y = 0  # -0.707
-        machine_pose.pose.orientation.z = 0  # -0.707
-        machine_pose.pose.orientation.w = 0.707
+        machine_pose.header.frame_id = 'machine'
+        machine_pose.pose.position.x = 0# 16.6#
+        machine_pose.pose.position.y =0  #3.6 #
+        machine_pose.pose.position.z = 0 #-0.2 #
+        machine_pose.pose.orientation.x =0#.4999998   #0.707 #
+        machine_pose.pose.orientation.y =0#.4999998  # 0#
+        machine_pose.pose.orientation.z = 0#.4996018  #0
+        machine_pose.pose.orientation.w =  1#0.5003982   #0.707#
         self.scene.add_mesh("machine", machine_pose, mesh_path)
 
     def is_plan_valid(self, joints):
