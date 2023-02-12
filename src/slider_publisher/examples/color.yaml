@@ -1,0 +1,49 @@
+/min_hue:
+    type: std_msgs/Int32
+    int:
+        to: data
+        min: 0
+        max: 255
+        default: 4
+
+/min_saturation:
+    type: std_msgs/Int32
+    int:
+        to: data
+        min: 0
+        max: 255
+        default: 4
+
+/min_value:
+    type: std_msgs/Int32
+    int:
+        to: data
+        min: 0
+        max: 255
+        default: 4
+
+/max_hue:
+    type: std_msgs/Int32
+    int:
+        to: data
+        min: 0
+        max: 255
+        default: 4
+
+/max_saturation:
+    type: std_msgs/Int32
+    int:
+        to: data
+        min: 0
+        max: 255
+        default: 4
+
+/max_value:
+    type: std_msgs/Int32
+    int:
+        to: data
+        min: 0
+        max: 255
+        default: 4
+
+        
