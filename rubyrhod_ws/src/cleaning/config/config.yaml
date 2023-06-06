@@ -1,0 +1,52 @@
+debug: false
+generate_guards: true
+guards_limit: 50
+guards_pcd: /data/final_guards
+observed_pcd: /data/observed_pdc
+machine2ar_calibration: scie2ar6_calibration_mat
+machine_mesh: /mesh/scie_3.obj
+machine_pcd: /mesh/scie_3.ply
+potential_guard: 2
+reachability_map: /mesh/reachability_map.pcd
+relation_guards: /data/relation_path_arm_
+relation_spot: /data/relation_saw.pkl
+result_pcd: /data/final_result
+scie2ar6_calibration_mat:
+- - 0.999824930022843
+  - 0.0
+  - -0.018711207999943347
+  - -0.8251627177186572
+- - 0.0
+  - 1.0
+  - 0.0
+  - -0.0524471788338875
+- - 0.018711207999943347
+  - 0.0
+  - 0.999824930022843
+  - -0.956239983059406
+- - 0.0
+  - 0.0
+  - 0.0
+  - 1.0
+sort_spots: true
+spot_limit: 25
+spots: /data/relation_result_spots.pkls
+spots_pcds: /data/pcd_17_04_saw
+table2ar2_calibration_mat:
+- - 0.9972773283665013
+  - -0.06408157594352347
+  - 0.03648947726082053
+  - 0.08336138881899191
+- - 0.06729985875326293
+  - 0.9931861255790659
+  - -0.09514225648488034
+  - 0.9152489689435612
+- - -0.030143976810705724
+  - 0.09733895202763551
+  - 0.994794686897853
+  - -1.0366598910813083
+- - 0.0
+  - 0.0
+  - 0.0
+  - 1.0
+trajectorie: /data/offline_trajectory_saw.pkl

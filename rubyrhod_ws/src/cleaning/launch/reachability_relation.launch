@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+    <rosparam file="$(find cleaning)/config/config.yaml" />
+
+<!--    <include file="$(find dsr_control)/launch/dsr_moveit.launch"></include>-->
+    <node pkg="cleaning" name="reachability_relation" type="reachability_relation.py" output="screen"/>
+
+</launch>

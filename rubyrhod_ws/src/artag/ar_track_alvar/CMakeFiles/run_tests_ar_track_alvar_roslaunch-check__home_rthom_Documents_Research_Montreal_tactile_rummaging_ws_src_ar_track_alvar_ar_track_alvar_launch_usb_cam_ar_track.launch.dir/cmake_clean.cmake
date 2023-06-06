@@ -1,0 +1,8 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/run_tests_ar_track_alvar_roslaunch-check__home_rthom_Documents_Research_Montreal_tactile_rummaging_ws_src_ar_track_alvar_ar_track_alvar_launch_usb_cam_ar_track.launch"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang )
+  include(CMakeFiles/run_tests_ar_track_alvar_roslaunch-check__home_rthom_Documents_Research_Montreal_tactile_rummaging_ws_src_ar_track_alvar_ar_track_alvar_launch_usb_cam_ar_track.launch.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

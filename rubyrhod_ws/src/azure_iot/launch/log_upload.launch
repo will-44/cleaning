@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <machine name="taxis" address="192.168.120.186" env-loader="/home/taxis/Sycobot/rubyrhod_ws/devel/env.sh" user="taxis" password="qwerty"/>
+    <!-- Rosbag recording -->
+    <node pkg="utility" name="rosbag_log_node" type="rosbag_log_node.py" output="screen"  machine="taxis"/>
+    <!-- Upload to Azure -->
+    <node pkg="azure_iot" name="azure_rosbag_upload_node" type="azure_rosbag_upload_node.py" output="screen"  machine="taxis"/>
+
+    <!-- Start recording -->
+    <node pkg="rostopic" type="rostopic" name="rostopic" args="pub /log_node/cmd std_msgs/String log_start"  machine="taxis"/>
+</launch>

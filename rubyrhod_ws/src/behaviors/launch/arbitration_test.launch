@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<!-- this launch starts 2 basic behaviors one constantly publishing True (with a higher priority) and the other False to the test topic
+, there is also an arbitration node launched to make sure the highest priority behavior is the one accessing the topic -->
+<launch>
+
+  <group>
+    <remap from="test" to="bhvr_test1/test"/>
+    <node pkg="behaviors" name="bhvr_test1" type="bhvr_test1.py" output="screen"/>
+    <param name="/bhvr_test1/test/abtr_priority" value="100"/>
+  </group>
+
+  <group>
+    <remap from="test" to="bhvr_test2/test"/>
+    <node pkg="behaviors" name="bhvr_test2" type="bhvr_test2.py" output="screen"/>
+    <param name="/bhvr_test2/test/abtr_priority" value="0"/>
+  </group>
+
+  <node args="standalone abtr_priority/GenericNodelet" name="abtr_test" pkg="nodelet" type="nodelet">
+    <remap from="abtr_cmd" to="/test"/>
+    <remap from="priority" to="/test/priority"/>
+    <remap from="cmd/register" to="/test/register"/>
+    <rosparam>{'registrations': ['/bhvr_test1/test', '/bhvr_test2/test']}</rosparam>
+  </node>
+</launch>

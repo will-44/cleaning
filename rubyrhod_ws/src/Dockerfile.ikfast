@@ -1,0 +1,25 @@
+FROM personalrobotics/ros-openrave
+
+# select bash as default shell
+SHELL ["/bin/bash", "-c"]
+
+# install catkin
+RUN apt update #&& apt install python3-catkin-tools python3-wstool -y
+RUN source /opt/ros/indigo/setup.bash
+#RUN sudo apt-get install ros-${ROS_DISTRO}-moveit-kinematics -y
+RUN sudo apt install ros-indigo-xacro -y
+RUN sudo apt install nano -y
+RUN sudo apt install ros-indigo-collada-urdf -y
+#export MYROBOT_NAME="leeloo"
+
+#RUN mkdir -p /urs/src/rubyrhod_ws/src/
+RUN mkdir -p /urs/src/rubyrhod_ws/src/
+##RUN #mkdir -p /urs/src/rubyrhod_ws/build/
+#RUN mkdir -p /urs/src/rubyrhod_ws/devel/
+WORKDIR /urs/src/rubyrhod_ws/
+#COPY ./ ./src/behaviors/description/robot.urdf
+COPY ./doosan-robot/dsr_description/xacro/macro.m1013.blue_ikfast.xacro ./
+
+#RUN rosrun xacro xacro -o leeloo.urdf macro.m1013.blue_ikfast.xacro
+
+#RUN rosrun collada_urdf urdf_to_collada leeloo.urdf leeloo.dae

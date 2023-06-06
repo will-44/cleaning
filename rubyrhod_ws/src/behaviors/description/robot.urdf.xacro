@@ -1,0 +1,60 @@
+<?xml version="1.0" ?>
+<robot name="sycobot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<!-- MIR -->
+    <!-- MiR100 base -->
+<!--     <xacro:include filename="$(find mir_description)/urdf/include/mir_100_v1.urdf.xacro" />-->
+<!--     <xacro:include filename="$(find mir_description)/urdf/include/common.gazebo.xacro" />-->
+
+<!--     <xacro:arg name="tf_prefix" default="" />-->
+<!--    <xacro:mir_100 prefix=""/>-->
+
+
+
+	<!-- DOOSAN -->
+<!--  	 <xacro:include filename="$(find dsr_description)/config/macro.gazebo.xacro" />-->
+<!--	 <xacro:include filename="$(find dsr_description)/config/macro.transmission.xacro" />-->
+<!--	 <xacro:include filename="$(find dsr_description)/config/macro.materials.xacro" />-->
+
+<!--    <xacro:include filename="$(find dsr_description)/xacro/macro.m1013.blue.xacro" />-->
+<!--    <xacro:m1013 namespace=""/>-->
+
+
+
+	<!-- STRUCTURE -->
+    <xacro:include filename="$(find vention)/urdf/vention.urdf"/>
+
+
+
+    <!-- MIR fixed joint-->
+<!--     <joint name="mir_fixed" type="fixed">-->
+<!--        <origin xyz="0 0 0" rpy="0 0 0"/>-->
+<!--        <parent link="surface"/>-->
+<!--        <child link="structure_vention"/>-->
+<!--    </joint>-->
+
+
+<!--    <joint name="structure_doosan" type="fixed">-->
+<!--        <parent link="plate_arm"/>-->
+<!--        <child link="base_0"/>-->
+<!--        <origin xyz="0 0 0" rpy="0 0 0"/>-->
+<!--    </joint>-->
+
+<!--    <joint name="mir_odom" type="fixed">-->
+<!--        <parent link="map"/>-->
+<!--        <child link="base_footprint"/>-->
+<!--        <origin xyz="0 0 0" rpy="0 0 0"/>-->
+<!--    </joint>-->
+
+<!--	<joint name="doosan_robotiq" type="fixed">-->
+<!--        <parent link="link6"/>-->
+<!--        <child link="robotiq_arg2f_base_link"/>-->
+<!--        <origin xyz="0 0 0" rpy="0 0 0"/>-->
+<!--    </joint>-->
+
+	<!-- GRIPPER -->
+<!--	<xacro:include filename="$(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model.xacro"/>-->
+
+
+
+</robot>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<launch>
+    <!-- Twin to rosparam propagation -->
+    <node pkg="azure_iot" type="azure_twin_rosparams.py" name="azure_twin_to_rosparams" output="screen"/>
+    <!-- Displaying the value of the rosparams -->
+    <node pkg="utility" type="rosparam_kinova_demo.py" name="rosparams_kinova_demo" output="screen"/>
+</launch>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<launch>
+    <!-- heartbeat (is on) -->
+    <node pkg="azure_iot" name="azure_heartbeat" type="azure_heartbeat.py" args="-p 10" output="screen"/>
+    <!-- uptime (is moving) -->
+    <node pkg="azure_iot" name="azure_uptime_telemetry" type="azure_uptime_telemetry.py" args="-p 10" output="screen"/>
+</launch>

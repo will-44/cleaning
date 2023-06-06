@@ -1,0 +1,54 @@
+FROM osrf/ros:noetic-desktop-full as requirement
+
+# select bash as default shell
+SHELL ["/bin/bash", "-c"]
+
+# installing complementary tools
+RUN apt-get update && \
+    apt-get install python3 -y \
+    python3-pip -y
+
+# Environment setup
+RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+
+RUN apt-get update && apt-get install python3-rosdep -y \
+    python3-rosinstall-generator -y \
+    python3-catkin-tools -y
+
+RUN rosdep update
+
+COPY rubyrhod_ws/src/REQUIREMENT.bash /REQUIREMENT.bash
+
+RUN cat /REQUIREMENT.bash
+
+RUN source /REQUIREMENT.bash
+
+COPY rubyrhod_ws/src/kortex_api-2.5.0.post6-py3-none-any.whl /kortex_api-2.5.0.post6-py3-none-any.whl
+
+RUN pip install kortex_api-2.5.0.post6-py3-none-any.whl
+
+FROM requirement as dependencies
+
+# importing rubyrhod_ws, will be used to get ros dependencies
+COPY rubyrhod_ws rubyrhod_ws
+
+WORKDIR /rubyrhod_ws
+
+# Get packages dependencies and store in a file
+RUN source /opt/ros/noetic/setup.bash && \
+    echo 'apt-get install -y' \
+    $( \
+        rosdep resolve $(rosdep keys --from-paths src --ignore-src | sort) | \
+        sed '/^#ROSDEP/d' | \
+        sed '/#apt/d' | \
+        sed ':a;N;$!ba;s/\n/ /g' \
+    ) > /dependencies.bash
+
+FROM requirement as env
+
+# Importing dependency list from intermediate image
+COPY --from=dependencies /dependencies.bash /dependencies.bash
+
+RUN cat dependencies.bash
+
+RUN chmod +x dependencies.bash && ./dependencies.bash

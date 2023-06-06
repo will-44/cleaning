@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<launch>
+    <!-- Twin to rosparam propagation -->
+    <node pkg="azure_iot" type="azure_twin_rosparams.py" name="azure_twin_to_rosparams" output="screen"/>
+    <!-- Displaying the value of the rosparams -->
+    <node pkg="utility" type="rosparam_demo.py" name="rosparams_demo_rosparam1_rosparam2" args="rosparam1 rosparam2" output="screen"/>
+    <node pkg="utility" type="rosparam_demo.py" name="rosparams_demo_rosparam2_rosparam3" args="rosparam2 rosparam3" output="screen"/>
+    <node pkg="utility" type="rosparam_demo.py" name="rosparams_demo_rosparam1_rosparam3" args="rosparam1 rosparam3" output="screen"/>
+</launch>

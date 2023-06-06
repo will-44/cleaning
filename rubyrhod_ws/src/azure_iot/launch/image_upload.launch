@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<launch>
+    <!-- Image recording -->
+    <node pkg="utility" name="image_saver" type="image_saver.py" args="camera -d 5" output="screen"/>
+    <!-- Upload to Azure -->
+    <node pkg="azure_iot" name="azure_image_upload_node" type="azure_image_upload_node.py" output="screen"/>
+</launch>

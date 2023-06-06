@@ -1,0 +1,1047 @@
+[0.000000] (-) TimerEvent: {}
+[0.000095] (ar_track_alvar_msgs) JobQueued: {'identifier': 'ar_track_alvar_msgs', 'dependencies': OrderedDict()}
+[0.000122] (ar_track_alvar) JobQueued: {'identifier': 'ar_track_alvar', 'dependencies': OrderedDict([('ar_track_alvar_msgs', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs')])}
+[0.000144] (ar_track_alvar_msgs) JobStarted: {'identifier': 'ar_track_alvar_msgs'}
+[0.015761] (ar_track_alvar_msgs) JobProgress: {'identifier': 'ar_track_alvar_msgs', 'progress': 'cmake'}
+[0.016173] (ar_track_alvar_msgs) Command: {'cmd': ['/usr/bin/cmake', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/ar_track_alvar_msgs', '-DCATKIN_INSTALL_INTO_PREFIX_ROOT=0', '-DCMAKE_INSTALL_PREFIX=/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs'], 'cwd': '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'rthom'), ('SSH_AGENT_PID', '1794'), ('ROS_PACKAGE_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src:/opt/ros/noetic/share'), ('XDG_SESSION_TYPE', 'x11'), ('ROS_ETC_DIR', '/opt/ros/noetic/etc/ros'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib:/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu'), ('HOME', '/home/rthom'), ('OLDPWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1590'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('ROS_DISTRO', 'noetic'), ('LOGNAME', 'rthom'), ('JOURNAL_STREAM', '8:48995'), ('_', '/home/rthom/.local/bin/colcon'), ('ROS_VERSION', '1'), ('PKG_CONFIG_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/pkgconfig:/opt/ros/noetic/lib/pkgconfig:/opt/ros/noetic/lib/x86_64-linux-gnu/pkgconfig'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'rthom'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('WINDOWPATH', '2'), ('PATH', '/opt/ros/noetic/bin:/home/rthom/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/rachel-laptop:@/tmp/.ICE-unix/1837,unix/rachel-laptop:/tmp/.ICE-unix/1837'), ('INVOCATION_ID', '3a681935d03c4ed5a3bc84878ade06e1'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/5f87545f_0130_4369_8b17_253e62f9137e'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_CA.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('ROSLISP_PACKAGE_DIRECTORIES', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/share/common-lisp'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.89'), ('ROS_ROOT', '/opt/ros/noetic/share/ros'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('ROS_MASTER_URI', 'http://localhost:11311'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel:/opt/ros/noetic')]), 'shell': False}
+[0.071278] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- The C compiler identification is GNU 9.3.0\n'}
+[0.099186] (-) TimerEvent: {}
+[0.120868] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 9.3.0\n'}
+[0.126367] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc\n'}
+[0.178405] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc -- works\n'}
+[0.179413] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.199275] (-) TimerEvent: {}
+[0.229613] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.247547] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.248167] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.253397] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++\n'}
+[0.299366] (-) TimerEvent: {}
+[0.321446] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ -- works\n'}
+[0.323063] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.391276] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[0.399444] (-) TimerEvent: {}
+[0.405766] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[0.406536] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[0.408641] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Using CATKIN_DEVEL_PREFIX: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs/devel\n'}
+[0.408848] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Using CMAKE_PREFIX_PATH: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel;/opt/ros/noetic\n'}
+[0.409044] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- This workspace overlays: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel;/opt/ros/noetic\n'}
+[0.429801] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") \n'}
+[0.429970] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[0.430038] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Using Debian Python package layout\n'}
+[0.460017] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Found PY_em: /usr/lib/python3/dist-packages/em.py  \n'}
+[0.460195] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Using empy: /usr/lib/python3/dist-packages/em.py\n'}
+[0.499523] (-) TimerEvent: {}
+[0.571675] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Using CATKIN_ENABLE_TESTING: ON\n'}
+[0.571830] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Call enable_testing()\n'}
+[0.573391] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Using CATKIN_TEST_RESULTS_DIR: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs/test_results\n'}
+[0.599637] (-) TimerEvent: {}
+[0.699886] (-) TimerEvent: {}
+[0.800143] (-) TimerEvent: {}
+[0.821614] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Forcing gtest/gmock from source, though one was otherwise available.\n'}
+[0.821819] (ar_track_alvar_msgs) StdoutLine: {'line': b"-- Found gtest sources under '/usr/src/googletest': gtests will be built\n"}
+[0.821889] (ar_track_alvar_msgs) StdoutLine: {'line': b"-- Found gmock sources under '/usr/src/googletest': gmock will be built\n"}
+[0.846770] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found version "3.8.10") \n'}
+[0.848693] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[0.852933] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Using Python nosetests: /usr/bin/nosetests3\n'}
+[0.900264] (-) TimerEvent: {}
+[0.904054] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- catkin 0.8.10\n'}
+[0.904208] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- BUILD_SHARED_LIBS is on\n'}
+[1.000358] (-) TimerEvent: {}
+[1.069020] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy\n'}
+[1.100466] (-) TimerEvent: {}
+[1.200697] (-) TimerEvent: {}
+[1.250326] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- ar_track_alvar_msgs: 2 messages, 0 services\n'}
+[1.300807] (-) TimerEvent: {}
+[1.386992] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Configuring done\n'}
+[1.400879] (-) TimerEvent: {}
+[1.401016] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Generating done\n'}
+[1.404457] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Build files have been written to: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs\n'}
+[1.409037] (ar_track_alvar_msgs) CommandEnded: {'returncode': 0}
+[1.409546] (ar_track_alvar_msgs) JobProgress: {'identifier': 'ar_track_alvar_msgs', 'progress': 'build'}
+[1.410131] (ar_track_alvar_msgs) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs', '--', '-j12', '-l12'], 'cwd': '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'rthom'), ('SSH_AGENT_PID', '1794'), ('ROS_PACKAGE_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src:/opt/ros/noetic/share'), ('XDG_SESSION_TYPE', 'x11'), ('ROS_ETC_DIR', '/opt/ros/noetic/etc/ros'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib:/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu'), ('HOME', '/home/rthom'), ('OLDPWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1590'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('ROS_DISTRO', 'noetic'), ('LOGNAME', 'rthom'), ('JOURNAL_STREAM', '8:48995'), ('_', '/home/rthom/.local/bin/colcon'), ('ROS_VERSION', '1'), ('PKG_CONFIG_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/pkgconfig:/opt/ros/noetic/lib/pkgconfig:/opt/ros/noetic/lib/x86_64-linux-gnu/pkgconfig'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'rthom'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('WINDOWPATH', '2'), ('PATH', '/opt/ros/noetic/bin:/home/rthom/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/rachel-laptop:@/tmp/.ICE-unix/1837,unix/rachel-laptop:/tmp/.ICE-unix/1837'), ('INVOCATION_ID', '3a681935d03c4ed5a3bc84878ade06e1'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/5f87545f_0130_4369_8b17_253e62f9137e'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_CA.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('ROSLISP_PACKAGE_DIRECTORIES', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/share/common-lisp'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.89'), ('ROS_ROOT', '/opt/ros/noetic/share/ros'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('ROS_MASTER_URI', 'http://localhost:11311'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel:/opt/ros/noetic')]), 'shell': False}
+[1.448371] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target std_msgs_generate_messages_cpp\x1b[0m\n'}
+[1.448682] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target _ar_track_alvar_msgs_generate_messages_check_deps_AlvarMarker\x1b[0m\n'}
+[1.448951] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target std_msgs_generate_messages_py\x1b[0m\n'}
+[1.449634] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target geometry_msgs_generate_messages_py\x1b[0m\n'}
+[1.450052] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target geometry_msgs_generate_messages_nodejs\x1b[0m\n'}
+[1.450283] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target std_msgs_generate_messages_eus\x1b[0m\n'}
+[1.450777] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target _ar_track_alvar_msgs_generate_messages_check_deps_AlvarMarkers\x1b[0m\n'}
+[1.450962] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target std_msgs_generate_messages_lisp\x1b[0m\n'}
+[1.451131] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target std_msgs_generate_messages_nodejs\x1b[0m\n'}
+[1.453169] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target geometry_msgs_generate_messages_cpp\x1b[0m\n'}
+[1.453640] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target geometry_msgs_generate_messages_lisp\x1b[0m\n'}
+[1.460314] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target geometry_msgs_generate_messages_eus\x1b[0m\n'}
+[1.465631] (ar_track_alvar_msgs) StdoutLine: {'line': b'[  0%] Built target std_msgs_generate_messages_py\n'}
+[1.465914] (ar_track_alvar_msgs) StdoutLine: {'line': b'[  0%] Built target geometry_msgs_generate_messages_nodejs\n'}
+[1.466110] (ar_track_alvar_msgs) StdoutLine: {'line': b'[  0%] Built target geometry_msgs_generate_messages_py\n'}
+[1.466346] (ar_track_alvar_msgs) StdoutLine: {'line': b'[  0%] Built target std_msgs_generate_messages_nodejs\n'}
+[1.466508] (ar_track_alvar_msgs) StdoutLine: {'line': b'[  0%] Built target std_msgs_generate_messages_cpp\n'}
+[1.467247] (ar_track_alvar_msgs) StdoutLine: {'line': b'[  0%] Built target std_msgs_generate_messages_eus\n'}
+[1.467458] (ar_track_alvar_msgs) StdoutLine: {'line': b'[  0%] Built target std_msgs_generate_messages_lisp\n'}
+[1.467978] (ar_track_alvar_msgs) StdoutLine: {'line': b'[  0%] Built target geometry_msgs_generate_messages_cpp\n'}
+[1.472016] (ar_track_alvar_msgs) StdoutLine: {'line': b'[  0%] Built target geometry_msgs_generate_messages_lisp\n'}
+[1.475861] (ar_track_alvar_msgs) StdoutLine: {'line': b'[  0%] Built target geometry_msgs_generate_messages_eus\n'}
+[1.497276] (ar_track_alvar_msgs) StdoutLine: {'line': b'[  0%] Built target _ar_track_alvar_msgs_generate_messages_check_deps_AlvarMarker\n'}
+[1.500983] (-) TimerEvent: {}
+[1.504339] (ar_track_alvar_msgs) StdoutLine: {'line': b'[  0%] Built target _ar_track_alvar_msgs_generate_messages_check_deps_AlvarMarkers\n'}
+[1.521362] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages_nodejs\x1b[0m\n'}
+[1.521776] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages_lisp\x1b[0m\n'}
+[1.522060] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages_cpp\x1b[0m\n'}
+[1.524975] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages_eus\x1b[0m\n'}
+[1.525882] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages_py\x1b[0m\n'}
+[1.538976] (ar_track_alvar_msgs) StdoutLine: {'line': b'[ 25%] \x1b[34m\x1b[1mGenerating C++ code from ar_track_alvar_msgs/AlvarMarker.msg\x1b[0m\n'}
+[1.539271] (ar_track_alvar_msgs) StdoutLine: {'line': b'[ 25%] \x1b[34m\x1b[1mGenerating Lisp code from ar_track_alvar_msgs/AlvarMarker.msg\x1b[0m\n'}
+[1.539478] (ar_track_alvar_msgs) StdoutLine: {'line': b'[ 33%] \x1b[34m\x1b[1mGenerating Javascript code from ar_track_alvar_msgs/AlvarMarker.msg\x1b[0m\n'}
+[1.539759] (ar_track_alvar_msgs) StdoutLine: {'line': b'[ 41%] \x1b[34m\x1b[1mGenerating C++ code from ar_track_alvar_msgs/AlvarMarkers.msg\x1b[0m\n'}
+[1.539968] (ar_track_alvar_msgs) StdoutLine: {'line': b'[ 25%] \x1b[34m\x1b[1mGenerating Lisp code from ar_track_alvar_msgs/AlvarMarkers.msg\x1b[0m\n'}
+[1.540401] (ar_track_alvar_msgs) StdoutLine: {'line': b'[ 50%] \x1b[34m\x1b[1mGenerating Javascript code from ar_track_alvar_msgs/AlvarMarkers.msg\x1b[0m\n'}
+[1.541909] (ar_track_alvar_msgs) StdoutLine: {'line': b'[ 58%] \x1b[34m\x1b[1mGenerating EusLisp code from ar_track_alvar_msgs/AlvarMarker.msg\x1b[0m\n'}
+[1.543986] (ar_track_alvar_msgs) StdoutLine: {'line': b'[ 66%] \x1b[34m\x1b[1mGenerating Python from MSG ar_track_alvar_msgs/AlvarMarker\x1b[0m\n'}
+[1.547313] (ar_track_alvar_msgs) StdoutLine: {'line': b'[ 75%] \x1b[34m\x1b[1mGenerating EusLisp code from ar_track_alvar_msgs/AlvarMarkers.msg\x1b[0m\n'}
+[1.551290] (ar_track_alvar_msgs) StdoutLine: {'line': b'[ 83%] \x1b[34m\x1b[1mGenerating EusLisp manifest code for ar_track_alvar_msgs\x1b[0m\n'}
+[1.551687] (ar_track_alvar_msgs) StdoutLine: {'line': b'[ 91%] \x1b[34m\x1b[1mGenerating Python from MSG ar_track_alvar_msgs/AlvarMarkers\x1b[0m\n'}
+[1.602717] (-) TimerEvent: {}
+[1.639047] (ar_track_alvar_msgs) StdoutLine: {'line': b'[ 91%] Built target ar_track_alvar_msgs_generate_messages_lisp\n'}
+[1.641971] (ar_track_alvar_msgs) StdoutLine: {'line': b'[ 91%] Built target ar_track_alvar_msgs_generate_messages_nodejs\n'}
+[1.702822] (-) TimerEvent: {}
+[1.803268] (-) TimerEvent: {}
+[1.833219] (ar_track_alvar_msgs) StdoutLine: {'line': b'[ 91%] Built target ar_track_alvar_msgs_generate_messages_cpp\n'}
+[1.903363] (-) TimerEvent: {}
+[1.903631] (ar_track_alvar_msgs) StdoutLine: {'line': b'[100%] \x1b[34m\x1b[1mGenerating Python msg __init__.py for ar_track_alvar_msgs\x1b[0m\n'}
+[2.003460] (-) TimerEvent: {}
+[2.103901] (-) TimerEvent: {}
+[2.137685] (ar_track_alvar_msgs) StdoutLine: {'line': b'[100%] Built target ar_track_alvar_msgs_generate_messages_py\n'}
+[2.204003] (-) TimerEvent: {}
+[2.304305] (-) TimerEvent: {}
+[2.320423] (ar_track_alvar_msgs) StdoutLine: {'line': b'[100%] Built target ar_track_alvar_msgs_generate_messages_eus\n'}
+[2.327368] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages\x1b[0m\n'}
+[2.335215] (ar_track_alvar_msgs) StdoutLine: {'line': b'[100%] Built target ar_track_alvar_msgs_generate_messages\n'}
+[2.344678] (ar_track_alvar_msgs) CommandEnded: {'returncode': 0}
+[2.369425] (ar_track_alvar_msgs) JobProgress: {'identifier': 'ar_track_alvar_msgs', 'progress': "build target 'tests'"}
+[2.369614] (ar_track_alvar_msgs) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs', '--target', 'tests', '--', '-j12', '-l12'], 'cwd': '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'rthom'), ('SSH_AGENT_PID', '1794'), ('ROS_PACKAGE_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src:/opt/ros/noetic/share'), ('XDG_SESSION_TYPE', 'x11'), ('ROS_ETC_DIR', '/opt/ros/noetic/etc/ros'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib:/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu'), ('HOME', '/home/rthom'), ('OLDPWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1590'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('ROS_DISTRO', 'noetic'), ('LOGNAME', 'rthom'), ('JOURNAL_STREAM', '8:48995'), ('_', '/home/rthom/.local/bin/colcon'), ('ROS_VERSION', '1'), ('PKG_CONFIG_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/pkgconfig:/opt/ros/noetic/lib/pkgconfig:/opt/ros/noetic/lib/x86_64-linux-gnu/pkgconfig'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'rthom'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('WINDOWPATH', '2'), ('PATH', '/opt/ros/noetic/bin:/home/rthom/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/rachel-laptop:@/tmp/.ICE-unix/1837,unix/rachel-laptop:/tmp/.ICE-unix/1837'), ('INVOCATION_ID', '3a681935d03c4ed5a3bc84878ade06e1'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/5f87545f_0130_4369_8b17_253e62f9137e'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_CA.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('ROSLISP_PACKAGE_DIRECTORIES', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/share/common-lisp'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.89'), ('ROS_ROOT', '/opt/ros/noetic/share/ros'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('ROS_MASTER_URI', 'http://localhost:11311'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel:/opt/ros/noetic')]), 'shell': False}
+[2.404398] (-) TimerEvent: {}
+[2.407048] (ar_track_alvar_msgs) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target tests\x1b[0m\n'}
+[2.414100] (ar_track_alvar_msgs) StdoutLine: {'line': b'Built target tests\n'}
+[2.421666] (ar_track_alvar_msgs) CommandEnded: {'returncode': 0}
+[2.447601] (ar_track_alvar_msgs) JobProgress: {'identifier': 'ar_track_alvar_msgs', 'progress': 'install'}
+[2.456452] (ar_track_alvar_msgs) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs'], 'cwd': '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'rthom'), ('SSH_AGENT_PID', '1794'), ('ROS_PACKAGE_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src:/opt/ros/noetic/share'), ('XDG_SESSION_TYPE', 'x11'), ('ROS_ETC_DIR', '/opt/ros/noetic/etc/ros'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib:/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu'), ('HOME', '/home/rthom'), ('OLDPWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1590'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('ROS_DISTRO', 'noetic'), ('LOGNAME', 'rthom'), ('JOURNAL_STREAM', '8:48995'), ('_', '/home/rthom/.local/bin/colcon'), ('ROS_VERSION', '1'), ('PKG_CONFIG_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/pkgconfig:/opt/ros/noetic/lib/pkgconfig:/opt/ros/noetic/lib/x86_64-linux-gnu/pkgconfig'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'rthom'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('WINDOWPATH', '2'), ('PATH', '/opt/ros/noetic/bin:/home/rthom/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/rachel-laptop:@/tmp/.ICE-unix/1837,unix/rachel-laptop:/tmp/.ICE-unix/1837'), ('INVOCATION_ID', '3a681935d03c4ed5a3bc84878ade06e1'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/5f87545f_0130_4369_8b17_253e62f9137e'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_CA.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('ROSLISP_PACKAGE_DIRECTORIES', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/share/common-lisp'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.89'), ('ROS_ROOT', '/opt/ros/noetic/share/ros'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('ROS_MASTER_URI', 'http://localhost:11311'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel:/opt/ros/noetic')]), 'shell': False}
+[2.463174] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[2.463463] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/ar_track_alvar_msgs/msg/AlvarMarker.msg\n'}
+[2.463668] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/ar_track_alvar_msgs/msg/AlvarMarkers.msg\n'}
+[2.463811] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/ar_track_alvar_msgs/cmake/ar_track_alvar_msgs-msg-paths.cmake\n'}
+[2.463967] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/include/ar_track_alvar_msgs\n'}
+[2.464105] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/include/ar_track_alvar_msgs/AlvarMarker.h\n'}
+[2.464220] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/include/ar_track_alvar_msgs/AlvarMarkers.h\n'}
+[2.464363] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/roseus/ros/ar_track_alvar_msgs\n'}
+[2.464506] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/roseus/ros/ar_track_alvar_msgs/msg\n'}
+[2.464647] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/roseus/ros/ar_track_alvar_msgs/msg/AlvarMarkers.l\n'}
+[2.464792] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/roseus/ros/ar_track_alvar_msgs/msg/AlvarMarker.l\n'}
+[2.464933] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/roseus/ros/ar_track_alvar_msgs/manifest.l\n'}
+[2.465068] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/common-lisp/ros/ar_track_alvar_msgs\n'}
+[2.465179] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/common-lisp/ros/ar_track_alvar_msgs/msg\n'}
+[2.465292] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/common-lisp/ros/ar_track_alvar_msgs/msg/_package_AlvarMarker.lisp\n'}
+[2.465415] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/common-lisp/ros/ar_track_alvar_msgs/msg/AlvarMarker.lisp\n'}
+[2.465538] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/common-lisp/ros/ar_track_alvar_msgs/msg/ar_track_alvar_msgs-msg.asd\n'}
+[2.465643] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/common-lisp/ros/ar_track_alvar_msgs/msg/_package_AlvarMarkers.lisp\n'}
+[2.465736] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/common-lisp/ros/ar_track_alvar_msgs/msg/_package.lisp\n'}
+[2.465834] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/common-lisp/ros/ar_track_alvar_msgs/msg/AlvarMarkers.lisp\n'}
+[2.465951] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/gennodejs/ros/ar_track_alvar_msgs\n'}
+[2.466059] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/gennodejs/ros/ar_track_alvar_msgs/msg\n'}
+[2.466158] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/gennodejs/ros/ar_track_alvar_msgs/msg/AlvarMarkers.js\n'}
+[2.466262] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/gennodejs/ros/ar_track_alvar_msgs/msg/AlvarMarker.js\n'}
+[2.466367] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/gennodejs/ros/ar_track_alvar_msgs/msg/_index.js\n'}
+[2.466449] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/gennodejs/ros/ar_track_alvar_msgs/_index.js\n'}
+[2.492417] (ar_track_alvar_msgs) StdoutLine: {'line': b"Listing '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs/devel/lib/python3/dist-packages/ar_track_alvar_msgs'...\n"}
+[2.492600] (ar_track_alvar_msgs) StdoutLine: {'line': b"Compiling '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs/devel/lib/python3/dist-packages/ar_track_alvar_msgs/__init__.py'...\n"}
+[2.492713] (ar_track_alvar_msgs) StdoutLine: {'line': b"Listing '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs/devel/lib/python3/dist-packages/ar_track_alvar_msgs/msg'...\n"}
+[2.492811] (ar_track_alvar_msgs) StdoutLine: {'line': b"Compiling '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs/devel/lib/python3/dist-packages/ar_track_alvar_msgs/msg/_AlvarMarker.py'...\n"}
+[2.492907] (ar_track_alvar_msgs) StdoutLine: {'line': b"Compiling '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs/devel/lib/python3/dist-packages/ar_track_alvar_msgs/msg/_AlvarMarkers.py'...\n"}
+[2.492994] (ar_track_alvar_msgs) StdoutLine: {'line': b"Compiling '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar_msgs/devel/lib/python3/dist-packages/ar_track_alvar_msgs/msg/__init__.py'...\n"}
+[2.495371] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages/ar_track_alvar_msgs\n'}
+[2.495578] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages/ar_track_alvar_msgs/__pycache__\n'}
+[2.495748] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages/ar_track_alvar_msgs/__pycache__/__init__.cpython-38.pyc\n'}
+[2.495877] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages/ar_track_alvar_msgs/__init__.py\n'}
+[2.496009] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages/ar_track_alvar_msgs/msg\n'}
+[2.496130] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages/ar_track_alvar_msgs/msg/__pycache__\n'}
+[2.496283] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages/ar_track_alvar_msgs/msg/__pycache__/__init__.cpython-38.pyc\n'}
+[2.496430] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages/ar_track_alvar_msgs/msg/__pycache__/_AlvarMarkers.cpython-38.pyc\n'}
+[2.496578] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages/ar_track_alvar_msgs/msg/__pycache__/_AlvarMarker.cpython-38.pyc\n'}
+[2.496739] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages/ar_track_alvar_msgs/msg/_AlvarMarker.py\n'}
+[2.496877] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages/ar_track_alvar_msgs/msg/__init__.py\n'}
+[2.497000] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages/ar_track_alvar_msgs/msg/_AlvarMarkers.py\n'}
+[2.497116] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/pkgconfig/ar_track_alvar_msgs.pc\n'}
+[2.497245] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/ar_track_alvar_msgs/cmake/ar_track_alvar_msgs-msg-extras.cmake\n'}
+[2.497398] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/ar_track_alvar_msgs/cmake/ar_track_alvar_msgsConfig.cmake\n'}
+[2.497515] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/ar_track_alvar_msgs/cmake/ar_track_alvar_msgsConfig-version.cmake\n'}
+[2.497632] (ar_track_alvar_msgs) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share/ar_track_alvar_msgs/package.xml\n'}
+[2.498467] (ar_track_alvar_msgs) CommandEnded: {'returncode': 0}
+[2.504523] (-) TimerEvent: {}
+[2.583379] (ar_track_alvar_msgs) JobEnded: {'identifier': 'ar_track_alvar_msgs', 'rc': 0}
+[2.591795] (ar_track_alvar) JobStarted: {'identifier': 'ar_track_alvar'}
+[2.596228] (ar_track_alvar) JobProgress: {'identifier': 'ar_track_alvar', 'progress': 'cmake'}
+[2.596584] (ar_track_alvar) Command: {'cmd': ['/usr/bin/cmake', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/ar_track_alvar', '-DCATKIN_INSTALL_INTO_PREFIX_ROOT=0', '-DCMAKE_INSTALL_PREFIX=/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar'], 'cwd': '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'rthom'), ('SSH_AGENT_PID', '1794'), ('ROS_PACKAGE_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src:/opt/ros/noetic/share'), ('XDG_SESSION_TYPE', 'x11'), ('ROS_ETC_DIR', '/opt/ros/noetic/etc/ros'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib:/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu'), ('HOME', '/home/rthom'), ('OLDPWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1590'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('ROS_DISTRO', 'noetic'), ('LOGNAME', 'rthom'), ('JOURNAL_STREAM', '8:48995'), ('_', '/home/rthom/.local/bin/colcon'), ('ROS_VERSION', '1'), ('PKG_CONFIG_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/pkgconfig:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/pkgconfig:/opt/ros/noetic/lib/pkgconfig:/opt/ros/noetic/lib/x86_64-linux-gnu/pkgconfig'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'rthom'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('WINDOWPATH', '2'), ('PATH', '/opt/ros/noetic/bin:/home/rthom/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/rachel-laptop:@/tmp/.ICE-unix/1837,unix/rachel-laptop:/tmp/.ICE-unix/1837'), ('INVOCATION_ID', '3a681935d03c4ed5a3bc84878ade06e1'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/5f87545f_0130_4369_8b17_253e62f9137e'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_CA.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('ROSLISP_PACKAGE_DIRECTORIES', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/share/common-lisp'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.89'), ('ROS_ROOT', '/opt/ros/noetic/share/ros'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('ROS_MASTER_URI', 'http://localhost:11311'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel:/opt/ros/noetic')]), 'shell': False}
+[2.604624] (-) TimerEvent: {}
+[2.653305] (ar_track_alvar) StdoutLine: {'line': b'-- The C compiler identification is GNU 9.3.0\n'}
+[2.703398] (ar_track_alvar) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 9.3.0\n'}
+[2.704676] (-) TimerEvent: {}
+[2.709048] (ar_track_alvar) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc\n'}
+[2.759579] (ar_track_alvar) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc -- works\n'}
+[2.760295] (ar_track_alvar) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[2.804785] (-) TimerEvent: {}
+[2.811788] (ar_track_alvar) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[2.825602] (ar_track_alvar) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[2.825992] (ar_track_alvar) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[2.829049] (ar_track_alvar) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++\n'}
+[2.894062] (ar_track_alvar) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ -- works\n'}
+[2.895229] (ar_track_alvar) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[2.904875] (-) TimerEvent: {}
+[2.960523] (ar_track_alvar) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[2.975570] (ar_track_alvar) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[2.976258] (ar_track_alvar) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[2.978380] (ar_track_alvar) StdoutLine: {'line': b'-- Using CATKIN_DEVEL_PREFIX: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/devel\n'}
+[2.978576] (ar_track_alvar) StdoutLine: {'line': b'-- Using CMAKE_PREFIX_PATH: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs;/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel;/opt/ros/noetic\n'}
+[2.978657] (ar_track_alvar) StdoutLine: {'line': b'-- This workspace overlays: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs;/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel;/opt/ros/noetic\n'}
+[2.998943] (ar_track_alvar) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") \n'}
+[2.999081] (ar_track_alvar) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[2.999244] (ar_track_alvar) StdoutLine: {'line': b'-- Using Debian Python package layout\n'}
+[3.004976] (-) TimerEvent: {}
+[3.028563] (ar_track_alvar) StdoutLine: {'line': b'-- Found PY_em: /usr/lib/python3/dist-packages/em.py  \n'}
+[3.028765] (ar_track_alvar) StdoutLine: {'line': b'-- Using empy: /usr/lib/python3/dist-packages/em.py\n'}
+[3.105070] (-) TimerEvent: {}
+[3.141832] (ar_track_alvar) StdoutLine: {'line': b'-- Using CATKIN_ENABLE_TESTING: ON\n'}
+[3.141988] (ar_track_alvar) StdoutLine: {'line': b'-- Call enable_testing()\n'}
+[3.143609] (ar_track_alvar) StdoutLine: {'line': b'-- Using CATKIN_TEST_RESULTS_DIR: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/test_results\n'}
+[3.205173] (-) TimerEvent: {}
+[3.305442] (-) TimerEvent: {}
+[3.390676] (ar_track_alvar) StdoutLine: {'line': b'-- Forcing gtest/gmock from source, though one was otherwise available.\n'}
+[3.390836] (ar_track_alvar) StdoutLine: {'line': b"-- Found gtest sources under '/usr/src/googletest': gtests will be built\n"}
+[3.390906] (ar_track_alvar) StdoutLine: {'line': b"-- Found gmock sources under '/usr/src/googletest': gmock will be built\n"}
+[3.405547] (-) TimerEvent: {}
+[3.414044] (ar_track_alvar) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found version "3.8.10") \n'}
+[3.415950] (ar_track_alvar) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[3.420204] (ar_track_alvar) StdoutLine: {'line': b'-- Using Python nosetests: /usr/bin/nosetests3\n'}
+[3.474127] (ar_track_alvar) StdoutLine: {'line': b'-- catkin 0.8.10\n'}
+[3.474301] (ar_track_alvar) StdoutLine: {'line': b'-- BUILD_SHARED_LIBS is on\n'}
+[3.505658] (-) TimerEvent: {}
+[3.605905] (-) TimerEvent: {}
+[3.706172] (-) TimerEvent: {}
+[3.745940] (ar_track_alvar) StdoutLine: {'line': b'-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy\n'}
+[3.806289] (-) TimerEvent: {}
+[3.906537] (-) TimerEvent: {}
+[4.006784] (-) TimerEvent: {}
+[4.107000] (-) TimerEvent: {}
+[4.207221] (-) TimerEvent: {}
+[4.281686] (ar_track_alvar) StdoutLine: {'line': b'-- Found OpenCV: /usr (found version "4.2.0") \n'}
+[4.283828] (ar_track_alvar) StdoutLine: {'line': b'-- Found TinyXML: /usr/lib/x86_64-linux-gnu/libtinyxml.so  \n'}
+[4.307328] (-) TimerEvent: {}
+[4.407534] (-) TimerEvent: {}
+[4.469576] (ar_track_alvar) StdoutLine: {'line': b'-- Configuring done\n'}
+[4.507622] (-) TimerEvent: {}
+[4.607878] (-) TimerEvent: {}
+[4.708097] (-) TimerEvent: {}
+[4.742764] (ar_track_alvar) StdoutLine: {'line': b'-- Generating done\n'}
+[4.758291] (ar_track_alvar) StdoutLine: {'line': b'-- Build files have been written to: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar\n'}
+[4.766103] (ar_track_alvar) CommandEnded: {'returncode': 0}
+[4.766935] (ar_track_alvar) JobProgress: {'identifier': 'ar_track_alvar', 'progress': 'build'}
+[4.767281] (ar_track_alvar) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar', '--', '-j12', '-l12'], 'cwd': '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'rthom'), ('SSH_AGENT_PID', '1794'), ('ROS_PACKAGE_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src:/opt/ros/noetic/share'), ('XDG_SESSION_TYPE', 'x11'), ('ROS_ETC_DIR', '/opt/ros/noetic/etc/ros'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib:/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu'), ('HOME', '/home/rthom'), ('OLDPWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1590'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('ROS_DISTRO', 'noetic'), ('LOGNAME', 'rthom'), ('JOURNAL_STREAM', '8:48995'), ('_', '/home/rthom/.local/bin/colcon'), ('ROS_VERSION', '1'), ('PKG_CONFIG_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/pkgconfig:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/pkgconfig:/opt/ros/noetic/lib/pkgconfig:/opt/ros/noetic/lib/x86_64-linux-gnu/pkgconfig'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'rthom'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('WINDOWPATH', '2'), ('PATH', '/opt/ros/noetic/bin:/home/rthom/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/rachel-laptop:@/tmp/.ICE-unix/1837,unix/rachel-laptop:/tmp/.ICE-unix/1837'), ('INVOCATION_ID', '3a681935d03c4ed5a3bc84878ade06e1'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/5f87545f_0130_4369_8b17_253e62f9137e'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_CA.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('ROSLISP_PACKAGE_DIRECTORIES', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/share/common-lisp'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.89'), ('ROS_ROOT', '/opt/ros/noetic/share/ros'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('ROS_MASTER_URI', 'http://localhost:11311'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel:/opt/ros/noetic')]), 'shell': False}
+[4.808243] (-) TimerEvent: {}
+[4.812172] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target nodelet_generate_messages_py\x1b[0m\n'}
+[4.812544] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target bond_generate_messages_nodejs\x1b[0m\n'}
+[4.812790] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target pcl_msgs_generate_messages_py\x1b[0m\n'}
+[4.812953] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target tf2_msgs_generate_messages_cpp\x1b[0m\n'}
+[4.813108] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target nodelet_generate_messages_nodejs\x1b[0m\n'}
+[4.813303] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target nodelet_generate_messages_eus\x1b[0m\n'}
+[4.813559] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target std_srvs_generate_messages_nodejs\x1b[0m\n'}
+[4.813724] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rosgraph_msgs_generate_messages_nodejs\x1b[0m\n'}
+[4.814014] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target pcl_ros_gencfg\x1b[0m\n'}
+[4.815304] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target pcl_msgs_generate_messages_lisp\x1b[0m\n'}
+[4.828607] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target pcl_msgs_generate_messages_eus\x1b[0m\n'}
+[4.829025] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target nodelet_generate_messages_py\n'}
+[4.829243] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target tf2_msgs_generate_messages_cpp\n'}
+[4.829402] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target pcl_msgs_generate_messages_nodejs\x1b[0m\n'}
+[4.829550] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target pcl_msgs_generate_messages_py\n'}
+[4.829768] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target pcl_ros_gencfg\n'}
+[4.830035] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target pcl_msgs_generate_messages_lisp\n'}
+[4.830209] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target std_srvs_generate_messages_nodejs\n'}
+[4.830353] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target nodelet_generate_messages_nodejs\n'}
+[4.830480] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target bond_generate_messages_nodejs\n'}
+[4.839383] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target nodelet_generate_messages_eus\n'}
+[4.840387] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target rosgraph_msgs_generate_messages_nodejs\n'}
+[4.844995] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rosgraph_msgs_generate_messages_cpp\x1b[0m\n'}
+[4.845366] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rosgraph_msgs_generate_messages_eus\x1b[0m\n'}
+[4.846179] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target geometry_msgs_generate_messages_nodejs\x1b[0m\n'}
+[4.846615] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target roscpp_generate_messages_nodejs\x1b[0m\n'}
+[4.846823] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target actionlib_generate_messages_eus\x1b[0m\n'}
+[4.846980] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target roscpp_generate_messages_eus\x1b[0m\n'}
+[4.848687] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target pcl_msgs_generate_messages_nodejs\n'}
+[4.853724] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target pcl_msgs_generate_messages_eus\n'}
+[4.854093] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target dynamic_reconfigure_generate_messages_eus\x1b[0m\n'}
+[4.859895] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target geometry_msgs_generate_messages_cpp\x1b[0m\n'}
+[4.860805] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target dynamic_reconfigure_generate_messages_cpp\x1b[0m\n'}
+[4.861780] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target rosgraph_msgs_generate_messages_eus\n'}
+[4.862415] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target rosgraph_msgs_generate_messages_cpp\n'}
+[4.862647] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target roscpp_generate_messages_nodejs\n'}
+[4.862852] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target roscpp_generate_messages_eus\n'}
+[4.864387] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target actionlib_generate_messages_eus\n'}
+[4.866396] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target geometry_msgs_generate_messages_nodejs\n'}
+[4.867757] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages_cpp\x1b[0m\n'}
+[4.874595] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages_lisp\x1b[0m\n'}
+[4.876566] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target visualization_msgs_generate_messages_eus\x1b[0m\n'}
+[4.876905] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target geometry_msgs_generate_messages_cpp\n'}
+[4.878382] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target actionlib_msgs_generate_messages_py\x1b[0m\n'}
+[4.878596] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target visualization_msgs_generate_messages_nodejs\x1b[0m\n'}
+[4.878740] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target dynamic_reconfigure_generate_messages_eus\n'}
+[4.879903] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target dynamic_reconfigure_generate_messages_cpp\n'}
+[4.880821] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rosgraph_msgs_generate_messages_py\x1b[0m\n'}
+[4.888127] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target ar_track_alvar_msgs_generate_messages_cpp\n'}
+[4.889769] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target ar_track_alvar_msgs_generate_messages_lisp\n'}
+[4.890115] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target dynamic_reconfigure_generate_messages_py\x1b[0m\n'}
+[4.890540] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target rosgraph_msgs_generate_messages_lisp\x1b[0m\n'}
+[4.890759] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target actionlib_msgs_generate_messages_eus\x1b[0m\n'}
+[4.892295] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target std_srvs_generate_messages_cpp\x1b[0m\n'}
+[4.895226] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target std_msgs_generate_messages_lisp\x1b[0m\n'}
+[4.896017] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target visualization_msgs_generate_messages_nodejs\n'}
+[4.896272] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target visualization_msgs_generate_messages_eus\n'}
+[4.903868] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target rosgraph_msgs_generate_messages_py\n'}
+[4.904298] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target actionlib_msgs_generate_messages_py\n'}
+[4.904471] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target nodelet_generate_messages_lisp\x1b[0m\n'}
+[4.904616] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages_py\x1b[0m\n'}
+[4.904979] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target std_msgs_generate_messages_nodejs\x1b[0m\n'}
+[4.908340] (-) TimerEvent: {}
+[4.909771] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target dynamic_reconfigure_generate_messages_py\n'}
+[4.910122] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target actionlib_msgs_generate_messages_eus\n'}
+[4.910385] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target rosgraph_msgs_generate_messages_lisp\n'}
+[4.910967] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target std_srvs_generate_messages_cpp\n'}
+[4.911797] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target geometry_msgs_generate_messages_lisp\x1b[0m\n'}
+[4.919246] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target std_msgs_generate_messages_lisp\n'}
+[4.919580] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages_eus\x1b[0m\n'}
+[4.920915] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target nodelet_generate_messages_lisp\n'}
+[4.922512] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target ar_track_alvar_msgs_generate_messages_py\n'}
+[4.922872] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target tf_generate_messages_py\x1b[0m\n'}
+[4.923256] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target std_msgs_generate_messages_nodejs\n'}
+[4.924968] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target actionlib_msgs_generate_messages_nodejs\x1b[0m\n'}
+[4.925563] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target actionlib_msgs_generate_messages_lisp\x1b[0m\n'}
+[4.925852] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages_nodejs\x1b[0m\n'}
+[4.930758] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target sensor_msgs_generate_messages_py\x1b[0m\n'}
+[4.933822] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target geometry_msgs_generate_messages_lisp\n'}
+[4.934116] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target ar_track_alvar_gencfg\x1b[0m\n'}
+[4.938186] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target ar_track_alvar_msgs_generate_messages_eus\n'}
+[4.938515] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target bond_generate_messages_lisp\x1b[0m\n'}
+[4.938895] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target geometry_msgs_generate_messages_py\x1b[0m\n'}
+[4.939845] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target tf2_msgs_generate_messages_eus\x1b[0m\n'}
+[4.941811] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target nodelet_topic_tools_gencfg\x1b[0m\n'}
+[4.949426] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target tf_generate_messages_py\n'}
+[4.949760] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target actionlib_msgs_generate_messages_lisp\n'}
+[4.949935] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target ar_track_alvar_msgs_generate_messages_nodejs\n'}
+[4.950469] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target actionlib_msgs_generate_messages_nodejs\n'}
+[4.952820] (ar_track_alvar) StdoutLine: {'line': b'[  0%] Built target sensor_msgs_generate_messages_py\n'}
+[4.955871] (ar_track_alvar) StdoutLine: {'line': b'[  2%] \x1b[34m\x1b[1mGenerating dynamic reconfigure files from cfg/Params.cfg: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/devel/include/ar_track_alvar/ParamsConfig.h /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/devel/lib/python3/dist-packages/ar_track_alvar/cfg/ParamsConfig.py\x1b[0m\n'}
+[4.956416] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target sensor_msgs_generate_messages_eus\x1b[0m\n'}
+[4.958962] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target geometry_msgs_generate_messages_py\n'}
+[4.959373] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target tf2_msgs_generate_messages_eus\n'}
+[4.963107] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target tf_generate_messages_eus\x1b[0m\n'}
+[4.963503] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target bond_generate_messages_eus\x1b[0m\n'}
+[4.964532] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target bond_generate_messages_lisp\n'}
+[4.964932] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target visualization_msgs_generate_messages_cpp\x1b[0m\n'}
+[4.966669] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target nodelet_topic_tools_gencfg\n'}
+[4.979650] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target sensor_msgs_generate_messages_eus\n'}
+[4.979995] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target tf_generate_messages_eus\n'}
+[4.980242] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target bond_generate_messages_eus\n'}
+[4.980403] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target dynamic_reconfigure_generate_messages_nodejs\x1b[0m\n'}
+[4.980561] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target roscpp_generate_messages_py\x1b[0m\n'}
+[4.980900] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target geometry_msgs_generate_messages_eus\x1b[0m\n'}
+[4.981208] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target sensor_msgs_generate_messages_nodejs\x1b[0m\n'}
+[4.981881] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target bond_generate_messages_cpp\x1b[0m\n'}
+[4.983077] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target visualization_msgs_generate_messages_cpp\n'}
+[4.992532] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target std_msgs_generate_messages_py\x1b[0m\n'}
+[4.993038] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target dynamic_reconfigure_gencfg\x1b[0m\n'}
+[4.994288] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target tf2_msgs_generate_messages_py\x1b[0m\n'}
+[4.995342] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target sensor_msgs_generate_messages_cpp\x1b[0m\n'}
+[4.995859] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target pcl_msgs_generate_messages_cpp\x1b[0m\n'}
+[4.999425] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target dynamic_reconfigure_generate_messages_nodejs\n'}
+[5.000813] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target roscpp_generate_messages_py\n'}
+[5.003308] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target bond_generate_messages_cpp\n'}
+[5.006068] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target geometry_msgs_generate_messages_eus\n'}
+[5.006705] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target sensor_msgs_generate_messages_nodejs\n'}
+[5.007881] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target roscpp_generate_messages_cpp\x1b[0m\n'}
+[5.008412] (-) TimerEvent: {}
+[5.012948] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target tf2_msgs_generate_messages_py\n'}
+[5.013217] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target std_msgs_generate_messages_py\n'}
+[5.013396] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target dynamic_reconfigure_gencfg\n'}
+[5.014265] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target pcl_msgs_generate_messages_cpp\n'}
+[5.018253] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target sensor_msgs_generate_messages_cpp\n'}
+[5.020285] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target dynamic_reconfigure_generate_messages_lisp\x1b[0m\n'}
+[5.022945] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target std_msgs_generate_messages_eus\x1b[0m\n'}
+[5.023211] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target std_srvs_generate_messages_eus\x1b[0m\n'}
+[5.023428] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target std_srvs_generate_messages_lisp\x1b[0m\n'}
+[5.032213] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target roscpp_generate_messages_cpp\n'}
+[5.033860] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target topic_tools_generate_messages_cpp\x1b[0m\n'}
+[5.034533] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target topic_tools_generate_messages_eus\x1b[0m\n'}
+[5.036229] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target dynamic_reconfigure_generate_messages_lisp\n'}
+[5.036639] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target visualization_msgs_generate_messages_py\x1b[0m\n'}
+[5.037373] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target roscpp_generate_messages_lisp\x1b[0m\n'}
+[5.038623] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target std_msgs_generate_messages_eus\n'}
+[5.038862] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target std_srvs_generate_messages_lisp\n'}
+[5.042340] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target std_srvs_generate_messages_eus\n'}
+[5.051693] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target topic_tools_generate_messages_eus\n'}
+[5.052037] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target tf_generate_messages_cpp\x1b[0m\n'}
+[5.052296] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target topic_tools_generate_messages_lisp\x1b[0m\n'}
+[5.052915] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target roscpp_generate_messages_lisp\n'}
+[5.053160] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target visualization_msgs_generate_messages_py\n'}
+[5.053324] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target topic_tools_generate_messages_cpp\n'}
+[5.057599] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target topic_tools_generate_messages_py\x1b[0m\n'}
+[5.060844] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target tf_generate_messages_lisp\x1b[0m\n'}
+[5.061164] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target tf_generate_messages_nodejs\x1b[0m\n'}
+[5.062163] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target topic_tools_generate_messages_nodejs\x1b[0m\n'}
+[5.066019] (ar_track_alvar) StdoutLine: {'line': b'Generating reconfiguration files for Params in ar_track_alvar\n'}
+[5.066397] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target actionlib_generate_messages_lisp\x1b[0m\n'}
+[5.068312] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target tf_generate_messages_cpp\n'}
+[5.069001] (ar_track_alvar) StdoutLine: {'line': b'Wrote header file in /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/devel/include/ar_track_alvar/ParamsConfig.h\n'}
+[5.069879] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target actionlib_generate_messages_nodejs\x1b[0m\n'}
+[5.070094] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target std_srvs_generate_messages_py\x1b[0m\n'}
+[5.072565] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target topic_tools_generate_messages_lisp\n'}
+[5.074243] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target topic_tools_generate_messages_py\n'}
+[5.074581] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target actionlib_msgs_generate_messages_cpp\x1b[0m\n'}
+[5.080466] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target actionlib_generate_messages_py\x1b[0m\n'}
+[5.082570] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target tf2_msgs_generate_messages_lisp\x1b[0m\n'}
+[5.083539] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target tf_generate_messages_lisp\n'}
+[5.084591] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target actionlib_generate_messages_lisp\n'}
+[5.084902] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target tf_generate_messages_nodejs\n'}
+[5.086947] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target topic_tools_generate_messages_nodejs\n'}
+[5.087233] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target std_srvs_generate_messages_py\n'}
+[5.089280] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target nodelet_generate_messages_cpp\x1b[0m\n'}
+[5.096677] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target actionlib_generate_messages_nodejs\n'}
+[5.098776] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target sensor_msgs_generate_messages_lisp\x1b[0m\n'}
+[5.101310] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target tf2_msgs_generate_messages_nodejs\x1b[0m\n'}
+[5.101634] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target visualization_msgs_generate_messages_lisp\x1b[0m\n'}
+[5.101800] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target std_msgs_generate_messages_cpp\x1b[0m\n'}
+[5.106881] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target nodelet_generate_messages_cpp\n'}
+[5.108495] (-) TimerEvent: {}
+[5.108733] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target actionlib_msgs_generate_messages_cpp\n'}
+[5.109086] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target tf2_msgs_generate_messages_lisp\n'}
+[5.109864] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target actionlib_generate_messages_py\n'}
+[5.118592] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target std_msgs_generate_messages_cpp\n'}
+[5.118892] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target visualization_msgs_generate_messages_lisp\n'}
+[5.120538] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target sensor_msgs_generate_messages_lisp\n'}
+[5.121004] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target ar_track_alvar_gencfg\n'}
+[5.121250] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target tf2_msgs_generate_messages_nodejs\n'}
+[5.121670] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target bond_generate_messages_py\x1b[0m\n'}
+[5.121848] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target actionlib_generate_messages_cpp\x1b[0m\n'}
+[5.130819] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target bond_generate_messages_py\n'}
+[5.131049] (ar_track_alvar) StdoutLine: {'line': b'[  2%] Built target actionlib_generate_messages_cpp\n'}
+[5.140956] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target ar_track_alvar\x1b[0m\n'}
+[5.141865] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target kinect_filtering\x1b[0m\n'}
+[5.208603] (-) TimerEvent: {}
+[5.221451] (ar_track_alvar) StdoutLine: {'line': b'[  4%] \x1b[32mBuilding CXX object CMakeFiles/kinect_filtering.dir/src/kinect_filtering.cpp.o\x1b[0m\n'}
+[5.300047] (ar_track_alvar) StdoutLine: {'line': b'[  6%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Bitset.cpp.o\x1b[0m\n'}
+[5.301899] (ar_track_alvar) StdoutLine: {'line': b'[  8%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/CaptureDevice.cpp.o\x1b[0m\n'}
+[5.302438] (ar_track_alvar) StdoutLine: {'line': b'[ 10%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Camera.cpp.o\x1b[0m\n'}
+[5.304007] (ar_track_alvar) StdoutLine: {'line': b'[ 14%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/CaptureFactory_unix.cpp.o\x1b[0m\n'}
+[5.304280] (ar_track_alvar) StdoutLine: {'line': b'[ 14%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/CvTestbed.cpp.o\x1b[0m\n'}
+[5.304627] (ar_track_alvar) StdoutLine: {'line': b'[ 17%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/DirectoryIterator.cpp.o\x1b[0m\n'}
+[5.304870] (ar_track_alvar) StdoutLine: {'line': b'[ 21%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/DirectoryIterator_unix.cpp.o\x1b[0m\n'}
+[5.305070] (ar_track_alvar) StdoutLine: {'line': b'[ 21%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/ConnectedComponents.cpp.o\x1b[0m\n'}
+[5.305889] (ar_track_alvar) StdoutLine: {'line': b'[ 23%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/CaptureFactory.cpp.o\x1b[0m\n'}
+[5.307866] (ar_track_alvar) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Draw.cpp.o\x1b[0m\n'}
+[5.308700] (-) TimerEvent: {}
+[5.316155] (ar_track_alvar) StdoutLine: {'line': b'[ 27%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/FileFormatUtils.cpp.o\x1b[0m\n'}
+[5.408825] (-) TimerEvent: {}
+[5.509330] (-) TimerEvent: {}
+[5.609840] (-) TimerEvent: {}
+[5.714050] (-) TimerEvent: {}
+[5.764083] (ar_track_alvar) StdoutLine: {'line': b'[ 29%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Filter.cpp.o\x1b[0m\n'}
+[5.814161] (-) TimerEvent: {}
+[5.876445] (ar_track_alvar) StdoutLine: {'line': b'[ 31%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Kalman.cpp.o\x1b[0m\n'}
+[5.914277] (-) TimerEvent: {}
+[5.959780] (ar_track_alvar) StdoutLine: {'line': b'[ 34%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Line.cpp.o\x1b[0m\n'}
+[6.014393] (-) TimerEvent: {}
+[6.026739] (ar_track_alvar) StdoutLine: {'line': b'[ 36%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Marker.cpp.o\x1b[0m\n'}
+[6.114509] (-) TimerEvent: {}
+[6.214989] (-) TimerEvent: {}
+[6.315483] (-) TimerEvent: {}
+[6.415879] (-) TimerEvent: {}
+[6.516390] (-) TimerEvent: {}
+[6.571646] (ar_track_alvar) StdoutLine: {'line': b'[ 38%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/MarkerDetector.cpp.o\x1b[0m\n'}
+[6.616509] (-) TimerEvent: {}
+[6.717005] (-) TimerEvent: {}
+[6.817405] (-) TimerEvent: {}
+[6.917820] (-) TimerEvent: {}
+[6.960273] (ar_track_alvar) StdoutLine: {'line': b'[ 40%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/MultiMarker.cpp.o\x1b[0m\n'}
+[7.017937] (-) TimerEvent: {}
+[7.051432] (ar_track_alvar) StdoutLine: {'line': b'[ 42%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/MultiMarkerBundle.cpp.o\x1b[0m\n'}
+[7.118059] (-) TimerEvent: {}
+[7.218562] (-) TimerEvent: {}
+[7.319064] (-) TimerEvent: {}
+[7.359081] (ar_track_alvar) StdoutLine: {'line': b'[ 44%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/MultiMarkerInitializer.cpp.o\x1b[0m\n'}
+[7.419172] (-) TimerEvent: {}
+[7.519634] (-) TimerEvent: {}
+[7.620025] (-) TimerEvent: {}
+[7.720423] (-) TimerEvent: {}
+[7.820915] (-) TimerEvent: {}
+[7.921398] (-) TimerEvent: {}
+[8.021887] (-) TimerEvent: {}
+[8.106763] (ar_track_alvar) StdoutLine: {'line': b'[ 46%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Mutex.cpp.o\x1b[0m\n'}
+[8.122051] (-) TimerEvent: {}
+[8.161676] (ar_track_alvar) StdoutLine: {'line': b'[ 48%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Mutex_unix.cpp.o\x1b[0m\n'}
+[8.222170] (-) TimerEvent: {}
+[8.276217] (ar_track_alvar) StdoutLine: {'line': b'[ 51%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Optimization.cpp.o\x1b[0m\n'}
+[8.322285] (-) TimerEvent: {}
+[8.422760] (-) TimerEvent: {}
+[8.523163] (-) TimerEvent: {}
+[8.623530] (-) TimerEvent: {}
+[8.723999] (-) TimerEvent: {}
+[8.743776] (ar_track_alvar) StdoutLine: {'line': b'[ 53%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Plugin.cpp.o\x1b[0m\n'}
+[8.824114] (-) TimerEvent: {}
+[8.924479] (-) TimerEvent: {}
+[9.024840] (-) TimerEvent: {}
+[9.125213] (-) TimerEvent: {}
+[9.160879] (ar_track_alvar) StdoutLine: {'line': b'[ 55%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Plugin_unix.cpp.o\x1b[0m\n'}
+[9.225325] (-) TimerEvent: {}
+[9.325807] (-) TimerEvent: {}
+[9.426306] (-) TimerEvent: {}
+[9.526673] (-) TimerEvent: {}
+[9.627170] (-) TimerEvent: {}
+[9.727669] (-) TimerEvent: {}
+[9.810964] (ar_track_alvar) StdoutLine: {'line': b'[ 57%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Pose.cpp.o\x1b[0m\n'}
+[9.827804] (-) TimerEvent: {}
+[9.852411] (ar_track_alvar) StdoutLine: {'line': b'[ 59%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Rotation.cpp.o\x1b[0m\n'}
+[9.927921] (-) TimerEvent: {}
+[10.028337] (-) TimerEvent: {}
+[10.128719] (-) TimerEvent: {}
+[10.229116] (-) TimerEvent: {}
+[10.329517] (-) TimerEvent: {}
+[10.419612] (ar_track_alvar) StdoutLine: {'line': b'[ 61%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Threads.cpp.o\x1b[0m\n'}
+[10.429629] (-) TimerEvent: {}
+[10.530120] (-) TimerEvent: {}
+[10.559431] (ar_track_alvar) StdoutLine: {'line': b'[ 63%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Threads_unix.cpp.o\x1b[0m\n'}
+[10.630242] (-) TimerEvent: {}
+[10.730651] (-) TimerEvent: {}
+[10.801184] (ar_track_alvar) StdoutLine: {'line': b'[ 65%] \x1b[32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Util.cpp.o\x1b[0m\n'}
+[10.830767] (-) TimerEvent: {}
+[10.931190] (-) TimerEvent: {}
+[11.031587] (-) TimerEvent: {}
+[11.131970] (-) TimerEvent: {}
+[11.232367] (-) TimerEvent: {}
+[11.332738] (-) TimerEvent: {}
+[11.435708] (-) TimerEvent: {}
+[11.536134] (-) TimerEvent: {}
+[11.636516] (-) TimerEvent: {}
+[11.736818] (-) TimerEvent: {}
+[11.837096] (-) TimerEvent: {}
+[11.937405] (-) TimerEvent: {}
+[12.037684] (-) TimerEvent: {}
+[12.138037] (-) TimerEvent: {}
+[12.238392] (-) TimerEvent: {}
+[12.338751] (-) TimerEvent: {}
+[12.439114] (-) TimerEvent: {}
+[12.539458] (-) TimerEvent: {}
+[12.639813] (-) TimerEvent: {}
+[12.740185] (-) TimerEvent: {}
+[12.840552] (-) TimerEvent: {}
+[12.940916] (-) TimerEvent: {}
+[13.041272] (-) TimerEvent: {}
+[13.141621] (-) TimerEvent: {}
+[13.241984] (-) TimerEvent: {}
+[13.342359] (-) TimerEvent: {}
+[13.442724] (-) TimerEvent: {}
+[13.543084] (-) TimerEvent: {}
+[13.643415] (-) TimerEvent: {}
+[13.743753] (-) TimerEvent: {}
+[13.844123] (-) TimerEvent: {}
+[13.944396] (-) TimerEvent: {}
+[14.044740] (-) TimerEvent: {}
+[14.145095] (-) TimerEvent: {}
+[14.245429] (-) TimerEvent: {}
+[14.345766] (-) TimerEvent: {}
+[14.446095] (-) TimerEvent: {}
+[14.546429] (-) TimerEvent: {}
+[14.646778] (-) TimerEvent: {}
+[14.747163] (-) TimerEvent: {}
+[14.847506] (-) TimerEvent: {}
+[14.947842] (-) TimerEvent: {}
+[15.048220] (-) TimerEvent: {}
+[15.148585] (-) TimerEvent: {}
+[15.248965] (-) TimerEvent: {}
+[15.349335] (-) TimerEvent: {}
+[15.449696] (-) TimerEvent: {}
+[15.550095] (-) TimerEvent: {}
+[15.650371] (-) TimerEvent: {}
+[15.750730] (-) TimerEvent: {}
+[15.851088] (-) TimerEvent: {}
+[15.951445] (-) TimerEvent: {}
+[16.051787] (-) TimerEvent: {}
+[16.152157] (-) TimerEvent: {}
+[16.252520] (-) TimerEvent: {}
+[16.352872] (-) TimerEvent: {}
+[16.453259] (-) TimerEvent: {}
+[16.553620] (-) TimerEvent: {}
+[16.654054] (-) TimerEvent: {}
+[16.754641] (-) TimerEvent: {}
+[16.855371] (-) TimerEvent: {}
+[16.955741] (-) TimerEvent: {}
+[17.056100] (-) TimerEvent: {}
+[17.156453] (-) TimerEvent: {}
+[17.256809] (-) TimerEvent: {}
+[17.357177] (-) TimerEvent: {}
+[17.457535] (-) TimerEvent: {}
+[17.557885] (-) TimerEvent: {}
+[17.658252] (-) TimerEvent: {}
+[17.758602] (-) TimerEvent: {}
+[17.858969] (-) TimerEvent: {}
+[17.959329] (-) TimerEvent: {}
+[18.059677] (-) TimerEvent: {}
+[18.160054] (-) TimerEvent: {}
+[18.260474] (-) TimerEvent: {}
+[18.360890] (-) TimerEvent: {}
+[18.461253] (-) TimerEvent: {}
+[18.561615] (-) TimerEvent: {}
+[18.661982] (-) TimerEvent: {}
+[18.762343] (-) TimerEvent: {}
+[18.862707] (-) TimerEvent: {}
+[18.963073] (-) TimerEvent: {}
+[19.063416] (-) TimerEvent: {}
+[19.163763] (-) TimerEvent: {}
+[19.264119] (-) TimerEvent: {}
+[19.364472] (-) TimerEvent: {}
+[19.464820] (-) TimerEvent: {}
+[19.565177] (-) TimerEvent: {}
+[19.670379] (-) TimerEvent: {}
+[19.759900] (ar_track_alvar) StdoutLine: {'line': b'[ 68%] \x1b[32m\x1b[1mLinking CXX shared library devel/lib/libkinect_filtering.so\x1b[0m\n'}
+[19.770977] (-) TimerEvent: {}
+[19.871344] (-) TimerEvent: {}
+[19.971714] (-) TimerEvent: {}
+[20.072263] (-) TimerEvent: {}
+[20.172634] (-) TimerEvent: {}
+[20.273017] (-) TimerEvent: {}
+[20.373395] (-) TimerEvent: {}
+[20.473792] (-) TimerEvent: {}
+[20.574210] (-) TimerEvent: {}
+[20.674617] (-) TimerEvent: {}
+[20.775012] (-) TimerEvent: {}
+[20.875387] (-) TimerEvent: {}
+[20.975751] (-) TimerEvent: {}
+[21.076113] (-) TimerEvent: {}
+[21.100496] (ar_track_alvar) StdoutLine: {'line': b'[ 68%] Built target kinect_filtering\n'}
+[21.176220] (-) TimerEvent: {}
+[21.276554] (-) TimerEvent: {}
+[21.376899] (-) TimerEvent: {}
+[21.477250] (-) TimerEvent: {}
+[21.577601] (-) TimerEvent: {}
+[21.677888] (-) TimerEvent: {}
+[21.778161] (-) TimerEvent: {}
+[21.878440] (-) TimerEvent: {}
+[21.978714] (-) TimerEvent: {}
+[22.078996] (-) TimerEvent: {}
+[22.179275] (-) TimerEvent: {}
+[22.279533] (-) TimerEvent: {}
+[22.379788] (-) TimerEvent: {}
+[22.480042] (-) TimerEvent: {}
+[22.580271] (-) TimerEvent: {}
+[22.680507] (-) TimerEvent: {}
+[22.780763] (-) TimerEvent: {}
+[22.881011] (-) TimerEvent: {}
+[22.981249] (-) TimerEvent: {}
+[23.081506] (-) TimerEvent: {}
+[23.181757] (-) TimerEvent: {}
+[23.282005] (-) TimerEvent: {}
+[23.382256] (-) TimerEvent: {}
+[23.482517] (-) TimerEvent: {}
+[23.582764] (-) TimerEvent: {}
+[23.683013] (-) TimerEvent: {}
+[23.765992] (ar_track_alvar) StdoutLine: {'line': b'[ 70%] \x1b[32m\x1b[1mLinking CXX shared library devel/lib/libar_track_alvar.so\x1b[0m\n'}
+[23.783127] (-) TimerEvent: {}
+[23.883343] (-) TimerEvent: {}
+[23.983561] (-) TimerEvent: {}
+[24.083808] (-) TimerEvent: {}
+[24.184072] (-) TimerEvent: {}
+[24.263717] (ar_track_alvar) StdoutLine: {'line': b'[ 70%] Built target ar_track_alvar\n'}
+[24.274710] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target individualMarkersNoKinect\x1b[0m\n'}
+[24.274982] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target individualMarkers\x1b[0m\n'}
+[24.275147] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target createMarker\x1b[0m\n'}
+[24.275872] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target findMarkerBundlesNoKinect\x1b[0m\n'}
+[24.277039] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target trainMarkerBundle\x1b[0m\n'}
+[24.278849] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target medianFilter\x1b[0m\n'}
+[24.284150] (-) TimerEvent: {}
+[24.333833] (ar_track_alvar) StdoutLine: {'line': b'[ 72%] \x1b[32mBuilding CXX object CMakeFiles/medianFilter.dir/src/medianFilter.cpp.o\x1b[0m\n'}
+[24.378103] (ar_track_alvar) StdoutLine: {'line': b'[ 74%] \x1b[32mBuilding CXX object CMakeFiles/createMarker.dir/src/SampleMarkerCreator.cpp.o\x1b[0m\n'}
+[24.383346] (ar_track_alvar) StdoutLine: {'line': b'[ 76%] \x1b[32mBuilding CXX object CMakeFiles/individualMarkers.dir/nodes/IndividualMarkers.cpp.o\x1b[0m\n'}
+[24.383936] (ar_track_alvar) StdoutLine: {'line': b'[ 78%] \x1b[32mBuilding CXX object CMakeFiles/findMarkerBundlesNoKinect.dir/nodes/FindMarkerBundlesNoKinect.cpp.o\x1b[0m\n'}
+[24.384160] (-) TimerEvent: {}
+[24.403833] (ar_track_alvar) StdoutLine: {'line': b'[ 80%] \x1b[32mBuilding CXX object CMakeFiles/individualMarkersNoKinect.dir/nodes/IndividualMarkersNoKinect.cpp.o\x1b[0m\n'}
+[24.414269] (ar_track_alvar) StdoutLine: {'line': b'[ 82%] \x1b[32mBuilding CXX object CMakeFiles/trainMarkerBundle.dir/nodes/TrainMarkerBundle.cpp.o\x1b[0m\n'}
+[24.484277] (-) TimerEvent: {}
+[24.584625] (-) TimerEvent: {}
+[24.684957] (-) TimerEvent: {}
+[24.785304] (-) TimerEvent: {}
+[24.885654] (-) TimerEvent: {}
+[24.986002] (-) TimerEvent: {}
+[25.086350] (-) TimerEvent: {}
+[25.186700] (-) TimerEvent: {}
+[25.287095] (-) TimerEvent: {}
+[25.387455] (-) TimerEvent: {}
+[25.487808] (-) TimerEvent: {}
+[25.588171] (-) TimerEvent: {}
+[25.688523] (-) TimerEvent: {}
+[25.774434] (ar_track_alvar) StdoutLine: {'line': b'[ 85%] \x1b[32m\x1b[1mLinking CXX shared library devel/lib/libmedianFilter.so\x1b[0m\n'}
+[25.788632] (-) TimerEvent: {}
+[25.888979] (-) TimerEvent: {}
+[25.989341] (-) TimerEvent: {}
+[26.089731] (-) TimerEvent: {}
+[26.190074] (-) TimerEvent: {}
+[26.290417] (-) TimerEvent: {}
+[26.393038] (-) TimerEvent: {}
+[26.493418] (-) TimerEvent: {}
+[26.593780] (-) TimerEvent: {}
+[26.694143] (-) TimerEvent: {}
+[26.794523] (-) TimerEvent: {}
+[26.894895] (-) TimerEvent: {}
+[26.995288] (-) TimerEvent: {}
+[27.050643] (ar_track_alvar) StdoutLine: {'line': b'[ 85%] Built target medianFilter\n'}
+[27.067475] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target findMarkerBundles\x1b[0m\n'}
+[27.095395] (-) TimerEvent: {}
+[27.195746] (-) TimerEvent: {}
+[27.233941] (ar_track_alvar) StdoutLine: {'line': b'[ 87%] \x1b[32mBuilding CXX object CMakeFiles/findMarkerBundles.dir/nodes/FindMarkerBundles.cpp.o\x1b[0m\n'}
+[27.295860] (-) TimerEvent: {}
+[27.396358] (-) TimerEvent: {}
+[27.496878] (-) TimerEvent: {}
+[27.597314] (-) TimerEvent: {}
+[27.697834] (-) TimerEvent: {}
+[27.798297] (-) TimerEvent: {}
+[27.898691] (-) TimerEvent: {}
+[27.999230] (-) TimerEvent: {}
+[28.099671] (-) TimerEvent: {}
+[28.200118] (-) TimerEvent: {}
+[28.300562] (-) TimerEvent: {}
+[28.401062] (-) TimerEvent: {}
+[28.501549] (-) TimerEvent: {}
+[28.602140] (-) TimerEvent: {}
+[28.702847] (-) TimerEvent: {}
+[28.803559] (-) TimerEvent: {}
+[28.903958] (-) TimerEvent: {}
+[29.004467] (-) TimerEvent: {}
+[29.105008] (-) TimerEvent: {}
+[29.205492] (-) TimerEvent: {}
+[29.306047] (-) TimerEvent: {}
+[29.406384] (-) TimerEvent: {}
+[29.506742] (-) TimerEvent: {}
+[29.607098] (-) TimerEvent: {}
+[29.707452] (-) TimerEvent: {}
+[29.807808] (-) TimerEvent: {}
+[29.908184] (-) TimerEvent: {}
+[30.008539] (-) TimerEvent: {}
+[30.108954] (-) TimerEvent: {}
+[30.209395] (-) TimerEvent: {}
+[30.309778] (-) TimerEvent: {}
+[30.410136] (-) TimerEvent: {}
+[30.510491] (-) TimerEvent: {}
+[30.610951] (-) TimerEvent: {}
+[30.711379] (-) TimerEvent: {}
+[30.811851] (-) TimerEvent: {}
+[30.912293] (-) TimerEvent: {}
+[31.012736] (-) TimerEvent: {}
+[31.113137] (-) TimerEvent: {}
+[31.213498] (-) TimerEvent: {}
+[31.313843] (-) TimerEvent: {}
+[31.414211] (-) TimerEvent: {}
+[31.514568] (-) TimerEvent: {}
+[31.614909] (-) TimerEvent: {}
+[31.715293] (-) TimerEvent: {}
+[31.815633] (-) TimerEvent: {}
+[31.915980] (-) TimerEvent: {}
+[32.016309] (-) TimerEvent: {}
+[32.116643] (-) TimerEvent: {}
+[32.216974] (-) TimerEvent: {}
+[32.317375] (-) TimerEvent: {}
+[32.417850] (-) TimerEvent: {}
+[32.518282] (-) TimerEvent: {}
+[32.618633] (-) TimerEvent: {}
+[32.719013] (-) TimerEvent: {}
+[32.819418] (-) TimerEvent: {}
+[32.919835] (-) TimerEvent: {}
+[33.020193] (-) TimerEvent: {}
+[33.120595] (-) TimerEvent: {}
+[33.220992] (-) TimerEvent: {}
+[33.321351] (-) TimerEvent: {}
+[33.421715] (-) TimerEvent: {}
+[33.523614] (-) TimerEvent: {}
+[33.623987] (-) TimerEvent: {}
+[33.724369] (-) TimerEvent: {}
+[33.824751] (-) TimerEvent: {}
+[33.925239] (-) TimerEvent: {}
+[34.025655] (-) TimerEvent: {}
+[34.126077] (-) TimerEvent: {}
+[34.226873] (-) TimerEvent: {}
+[34.331038] (-) TimerEvent: {}
+[34.431818] (-) TimerEvent: {}
+[34.532377] (-) TimerEvent: {}
+[34.632887] (-) TimerEvent: {}
+[34.733279] (-) TimerEvent: {}
+[34.833913] (-) TimerEvent: {}
+[34.934439] (-) TimerEvent: {}
+[35.034801] (-) TimerEvent: {}
+[35.135214] (-) TimerEvent: {}
+[35.235601] (-) TimerEvent: {}
+[35.335997] (-) TimerEvent: {}
+[35.436510] (-) TimerEvent: {}
+[35.537145] (-) TimerEvent: {}
+[35.637538] (-) TimerEvent: {}
+[35.737939] (-) TimerEvent: {}
+[35.838332] (-) TimerEvent: {}
+[35.938783] (-) TimerEvent: {}
+[36.039233] (-) TimerEvent: {}
+[36.139671] (-) TimerEvent: {}
+[36.240226] (-) TimerEvent: {}
+[36.341051] (-) TimerEvent: {}
+[36.441448] (-) TimerEvent: {}
+[36.541797] (-) TimerEvent: {}
+[36.642160] (-) TimerEvent: {}
+[36.742547] (-) TimerEvent: {}
+[36.842908] (-) TimerEvent: {}
+[36.943330] (-) TimerEvent: {}
+[37.043757] (-) TimerEvent: {}
+[37.144119] (-) TimerEvent: {}
+[37.244470] (-) TimerEvent: {}
+[37.344840] (-) TimerEvent: {}
+[37.445203] (-) TimerEvent: {}
+[37.545564] (-) TimerEvent: {}
+[37.645996] (-) TimerEvent: {}
+[37.746356] (-) TimerEvent: {}
+[37.846710] (-) TimerEvent: {}
+[37.947076] (-) TimerEvent: {}
+[38.047431] (-) TimerEvent: {}
+[38.147788] (-) TimerEvent: {}
+[38.248156] (-) TimerEvent: {}
+[38.348535] (-) TimerEvent: {}
+[38.448902] (-) TimerEvent: {}
+[38.549268] (-) TimerEvent: {}
+[38.649645] (-) TimerEvent: {}
+[38.750067] (-) TimerEvent: {}
+[38.850545] (-) TimerEvent: {}
+[38.950952] (-) TimerEvent: {}
+[39.051346] (-) TimerEvent: {}
+[39.151695] (-) TimerEvent: {}
+[39.252062] (-) TimerEvent: {}
+[39.352413] (-) TimerEvent: {}
+[39.452790] (-) TimerEvent: {}
+[39.553219] (-) TimerEvent: {}
+[39.621541] (ar_track_alvar) StdoutLine: {'line': b'[ 89%] \x1b[32m\x1b[1mLinking CXX executable devel/lib/ar_track_alvar/trainMarkerBundle\x1b[0m\n'}
+[39.653332] (-) TimerEvent: {}
+[39.753698] (-) TimerEvent: {}
+[39.854055] (-) TimerEvent: {}
+[39.954409] (-) TimerEvent: {}
+[40.054792] (-) TimerEvent: {}
+[40.155178] (-) TimerEvent: {}
+[40.255628] (-) TimerEvent: {}
+[40.356234] (-) TimerEvent: {}
+[40.442477] (ar_track_alvar) StdoutLine: {'line': b'[ 91%] \x1b[32m\x1b[1mLinking CXX executable devel/lib/ar_track_alvar/createMarker\x1b[0m\n'}
+[40.456344] (-) TimerEvent: {}
+[40.556693] (-) TimerEvent: {}
+[40.657073] (-) TimerEvent: {}
+[40.757431] (-) TimerEvent: {}
+[40.857797] (-) TimerEvent: {}
+[40.958152] (-) TimerEvent: {}
+[41.058493] (-) TimerEvent: {}
+[41.158844] (-) TimerEvent: {}
+[41.259235] (-) TimerEvent: {}
+[41.359600] (-) TimerEvent: {}
+[41.373853] (ar_track_alvar) StdoutLine: {'line': b'[ 91%] Built target trainMarkerBundle\n'}
+[41.459714] (-) TimerEvent: {}
+[41.560063] (-) TimerEvent: {}
+[41.646129] (ar_track_alvar) StdoutLine: {'line': b'[ 93%] \x1b[32m\x1b[1mLinking CXX executable devel/lib/ar_track_alvar/findMarkerBundlesNoKinect\x1b[0m\n'}
+[41.660180] (-) TimerEvent: {}
+[41.760627] (-) TimerEvent: {}
+[41.861257] (-) TimerEvent: {}
+[41.961665] (-) TimerEvent: {}
+[41.988525] (ar_track_alvar) StdoutLine: {'line': b'[ 93%] Built target createMarker\n'}
+[42.061771] (-) TimerEvent: {}
+[42.162448] (-) TimerEvent: {}
+[42.263279] (-) TimerEvent: {}
+[42.363670] (-) TimerEvent: {}
+[42.464200] (-) TimerEvent: {}
+[42.564704] (-) TimerEvent: {}
+[42.665504] (-) TimerEvent: {}
+[42.766194] (-) TimerEvent: {}
+[42.866803] (-) TimerEvent: {}
+[42.967507] (-) TimerEvent: {}
+[43.067946] (-) TimerEvent: {}
+[43.168785] (-) TimerEvent: {}
+[43.269538] (-) TimerEvent: {}
+[43.370226] (-) TimerEvent: {}
+[43.470663] (-) TimerEvent: {}
+[43.571013] (-) TimerEvent: {}
+[43.671402] (-) TimerEvent: {}
+[43.771743] (-) TimerEvent: {}
+[43.872182] (-) TimerEvent: {}
+[43.972529] (-) TimerEvent: {}
+[44.072915] (-) TimerEvent: {}
+[44.173218] (-) TimerEvent: {}
+[44.273552] (-) TimerEvent: {}
+[44.373836] (-) TimerEvent: {}
+[44.474163] (-) TimerEvent: {}
+[44.574471] (-) TimerEvent: {}
+[44.674807] (-) TimerEvent: {}
+[44.775151] (-) TimerEvent: {}
+[44.871490] (ar_track_alvar) StdoutLine: {'line': b'[ 93%] Built target findMarkerBundlesNoKinect\n'}
+[44.875223] (-) TimerEvent: {}
+[44.975445] (-) TimerEvent: {}
+[45.075713] (-) TimerEvent: {}
+[45.133899] (ar_track_alvar) StdoutLine: {'line': b'[ 95%] \x1b[32m\x1b[1mLinking CXX executable devel/lib/ar_track_alvar/individualMarkers\x1b[0m\n'}
+[45.175814] (-) TimerEvent: {}
+[45.188890] (ar_track_alvar) StdoutLine: {'line': b'[ 97%] \x1b[32m\x1b[1mLinking CXX executable devel/lib/ar_track_alvar/individualMarkersNoKinect\x1b[0m\n'}
+[45.275956] (-) TimerEvent: {}
+[45.376284] (-) TimerEvent: {}
+[45.476585] (-) TimerEvent: {}
+[45.576936] (-) TimerEvent: {}
+[45.677280] (-) TimerEvent: {}
+[45.777597] (-) TimerEvent: {}
+[45.877919] (-) TimerEvent: {}
+[45.978232] (-) TimerEvent: {}
+[46.078555] (-) TimerEvent: {}
+[46.178891] (-) TimerEvent: {}
+[46.279246] (-) TimerEvent: {}
+[46.379501] (-) TimerEvent: {}
+[46.479760] (-) TimerEvent: {}
+[46.494865] (ar_track_alvar) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable devel/lib/ar_track_alvar/findMarkerBundles\x1b[0m\n'}
+[46.579895] (-) TimerEvent: {}
+[46.680201] (-) TimerEvent: {}
+[46.780485] (-) TimerEvent: {}
+[46.822049] (ar_track_alvar) StdoutLine: {'line': b'[100%] Built target individualMarkersNoKinect\n'}
+[46.880668] (-) TimerEvent: {}
+[46.981141] (-) TimerEvent: {}
+[47.081467] (-) TimerEvent: {}
+[47.181833] (-) TimerEvent: {}
+[47.223029] (ar_track_alvar) StdoutLine: {'line': b'[100%] Built target individualMarkers\n'}
+[47.281998] (-) TimerEvent: {}
+[47.382542] (-) TimerEvent: {}
+[47.483157] (-) TimerEvent: {}
+[47.583743] (-) TimerEvent: {}
+[47.684391] (-) TimerEvent: {}
+[47.784809] (-) TimerEvent: {}
+[47.885115] (-) TimerEvent: {}
+[47.985389] (-) TimerEvent: {}
+[48.085615] (-) TimerEvent: {}
+[48.185863] (-) TimerEvent: {}
+[48.286120] (-) TimerEvent: {}
+[48.386380] (-) TimerEvent: {}
+[48.486618] (-) TimerEvent: {}
+[48.520235] (ar_track_alvar) StdoutLine: {'line': b'[100%] Built target findMarkerBundles\n'}
+[48.529727] (ar_track_alvar) CommandEnded: {'returncode': 0}
+[48.586725] (-) TimerEvent: {}
+[48.622920] (ar_track_alvar) JobProgress: {'identifier': 'ar_track_alvar', 'progress': "build target 'tests'"}
+[48.623144] (ar_track_alvar) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar', '--target', 'tests', '--', '-j12', '-l12'], 'cwd': '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'rthom'), ('SSH_AGENT_PID', '1794'), ('ROS_PACKAGE_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src:/opt/ros/noetic/share'), ('XDG_SESSION_TYPE', 'x11'), ('ROS_ETC_DIR', '/opt/ros/noetic/etc/ros'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib:/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu'), ('HOME', '/home/rthom'), ('OLDPWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1590'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('ROS_DISTRO', 'noetic'), ('LOGNAME', 'rthom'), ('JOURNAL_STREAM', '8:48995'), ('_', '/home/rthom/.local/bin/colcon'), ('ROS_VERSION', '1'), ('PKG_CONFIG_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/pkgconfig:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/pkgconfig:/opt/ros/noetic/lib/pkgconfig:/opt/ros/noetic/lib/x86_64-linux-gnu/pkgconfig'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'rthom'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('WINDOWPATH', '2'), ('PATH', '/opt/ros/noetic/bin:/home/rthom/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/rachel-laptop:@/tmp/.ICE-unix/1837,unix/rachel-laptop:/tmp/.ICE-unix/1837'), ('INVOCATION_ID', '3a681935d03c4ed5a3bc84878ade06e1'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/5f87545f_0130_4369_8b17_253e62f9137e'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_CA.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('ROSLISP_PACKAGE_DIRECTORIES', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/share/common-lisp'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.89'), ('ROS_ROOT', '/opt/ros/noetic/share/ros'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('ROS_MASTER_URI', 'http://localhost:11311'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel:/opt/ros/noetic')]), 'shell': False}
+[48.672641] (ar_track_alvar) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target tests\x1b[0m\n'}
+[48.679748] (ar_track_alvar) StdoutLine: {'line': b'Built target tests\n'}
+[48.686832] (-) TimerEvent: {}
+[48.687434] (ar_track_alvar) CommandEnded: {'returncode': 0}
+[48.782974] (ar_track_alvar) JobProgress: {'identifier': 'ar_track_alvar', 'progress': 'install'}
+[48.783269] (ar_track_alvar) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar'], 'cwd': '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'rthom'), ('SSH_AGENT_PID', '1794'), ('ROS_PACKAGE_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/share:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src:/opt/ros/noetic/share'), ('XDG_SESSION_TYPE', 'x11'), ('ROS_ETC_DIR', '/opt/ros/noetic/etc/ros'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib:/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu'), ('HOME', '/home/rthom'), ('OLDPWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1590'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('ROS_DISTRO', 'noetic'), ('LOGNAME', 'rthom'), ('JOURNAL_STREAM', '8:48995'), ('_', '/home/rthom/.local/bin/colcon'), ('ROS_VERSION', '1'), ('PKG_CONFIG_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/pkgconfig:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/pkgconfig:/opt/ros/noetic/lib/pkgconfig:/opt/ros/noetic/lib/x86_64-linux-gnu/pkgconfig'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'rthom'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('WINDOWPATH', '2'), ('PATH', '/opt/ros/noetic/bin:/home/rthom/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/rachel-laptop:@/tmp/.ICE-unix/1837,unix/rachel-laptop:/tmp/.ICE-unix/1837'), ('INVOCATION_ID', '3a681935d03c4ed5a3bc84878ade06e1'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/5f87545f_0130_4369_8b17_253e62f9137e'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_CA.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('ROSLISP_PACKAGE_DIRECTORIES', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/share/common-lisp'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.89'), ('ROS_ROOT', '/opt/ros/noetic/share/ros'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('ROS_MASTER_URI', 'http://localhost:11311'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs/lib/python3/dist-packages:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs:/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel:/opt/ros/noetic')]), 'shell': False}
+[48.786908] (-) TimerEvent: {}
+[48.791398] (ar_track_alvar) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[48.791545] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/ParamsConfig.h\n'}
+[48.791761] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/python3/dist-packages/ar_track_alvar/__init__.py\n'}
+[48.816956] (ar_track_alvar) StdoutLine: {'line': b"Listing '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/devel/lib/python3/dist-packages/ar_track_alvar/cfg'...\n"}
+[48.817105] (ar_track_alvar) StdoutLine: {'line': b"Compiling '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/devel/lib/python3/dist-packages/ar_track_alvar/cfg/ParamsConfig.py'...\n"}
+[48.817186] (ar_track_alvar) StdoutLine: {'line': b"Compiling '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/devel/lib/python3/dist-packages/ar_track_alvar/cfg/__init__.py'...\n"}
+[48.820175] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/python3/dist-packages/ar_track_alvar/cfg\n'}
+[48.820312] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/python3/dist-packages/ar_track_alvar/cfg/__pycache__\n'}
+[48.820390] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/python3/dist-packages/ar_track_alvar/cfg/__pycache__/__init__.cpython-38.pyc\n'}
+[48.820465] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/python3/dist-packages/ar_track_alvar/cfg/__pycache__/ParamsConfig.cpython-38.pyc\n'}
+[48.820528] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/python3/dist-packages/ar_track_alvar/cfg/__init__.py\n'}
+[48.820597] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/python3/dist-packages/ar_track_alvar/cfg/ParamsConfig.py\n'}
+[48.820651] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/pkgconfig/ar_track_alvar.pc\n'}
+[48.820746] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar/cmake/ar_track_alvarConfig.cmake\n'}
+[48.820828] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar/cmake/ar_track_alvarConfig-version.cmake\n'}
+[48.820908] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar/package.xml\n'}
+[48.821045] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/libar_track_alvar.so\n'}
+[48.824532] (ar_track_alvar) StdoutLine: {'line': b'-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/libar_track_alvar.so" to ""\n'}
+[48.824655] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/createMarker\n'}
+[48.825246] (ar_track_alvar) StdoutLine: {'line': b'-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/createMarker" to ""\n'}
+[48.825321] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/findMarkerBundles\n'}
+[48.828518] (ar_track_alvar) StdoutLine: {'line': b'-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/findMarkerBundles" to ""\n'}
+[48.828657] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/findMarkerBundlesNoKinect\n'}
+[48.831122] (ar_track_alvar) StdoutLine: {'line': b'-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/findMarkerBundlesNoKinect" to ""\n'}
+[48.831239] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/individualMarkers\n'}
+[48.833803] (ar_track_alvar) StdoutLine: {'line': b'-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/individualMarkers" to ""\n'}
+[48.833907] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/individualMarkersNoKinect\n'}
+[48.836115] (ar_track_alvar) StdoutLine: {'line': b'-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/individualMarkersNoKinect" to ""\n'}
+[48.836223] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/libkinect_filtering.so\n'}
+[48.836986] (ar_track_alvar) StdoutLine: {'line': b'-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/libkinect_filtering.so" to ""\n'}
+[48.837090] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/libmedianFilter.so\n'}
+[48.837320] (ar_track_alvar) StdoutLine: {'line': b'-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/libmedianFilter.so" to ""\n'}
+[48.837412] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/trainMarkerBundle\n'}
+[48.838809] (ar_track_alvar) StdoutLine: {'line': b'-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/trainMarkerBundle" to ""\n'}
+[48.839024] (ar_track_alvar) StdoutLine: {'line': b'-- Up-to-date: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar\n'}
+[48.839160] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Ransac.h\n'}
+[48.839242] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Kalman.h\n'}
+[48.839348] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Filter.h\n'}
+[48.839458] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/MultiMarkerBundle.h\n'}
+[48.839555] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Threads_private.h\n'}
+[48.839628] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/ConnectedComponents.h\n'}
+[48.839720] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/IntegralImage.h\n'}
+[48.839833] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/CvTestbed.h\n'}
+[48.839907] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Mutex_private.h\n'}
+[48.839980] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/filter\n'}
+[48.840081] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/filter/kinect_filtering.h\n'}
+[48.840161] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/filter/medianFilter.h\n'}
+[48.840243] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/DirectoryIterator_private.h\n'}
+[48.840321] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Bitset.h\n'}
+[48.840401] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Alvar.h\n'}
+[48.840493] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/SfM.h\n'}
+[48.840589] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/TrifocalTensor.h\n'}
+[48.840673] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/TrackerFeatures.h\n'}
+[48.840754] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/FileFormat.h\n'}
+[48.840836] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/FernImageDetector.h\n'}
+[48.840937] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/CaptureDevice.h\n'}
+[48.841082] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Rotation.h\n'}
+[48.841158] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Shared.h\n'}
+[48.841232] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/FernPoseEstimator.h\n'}
+[48.841305] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Draw.h\n'}
+[48.841379] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/MultiMarker.h\n'}
+[48.841453] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/CaptureFactory.h\n'}
+[48.841527] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Line.h\n'}
+[48.841643] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/GlutViewer.h\n'}
+[48.841790] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Uncopyable.h\n'}
+[48.841869] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Util.h\n'}
+[48.841976] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Camera.h\n'}
+[48.842054] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Timer.h\n'}
+[48.842143] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Timer_private.h\n'}
+[48.842213] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Tracker.h\n'}
+[48.842282] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/TrackerPsa.h\n'}
+[48.842351] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/CaptureFactory_private.h\n'}
+[48.842420] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Container3d.h\n'}
+[48.842524] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Optimization.h\n'}
+[48.842593] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Threads.h\n'}
+[48.842723] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/DirectoryIterator.h\n'}
+[48.842798] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/CapturePlugin.h\n'}
+[48.842869] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Lock.h\n'}
+[48.843031] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Marker.h\n'}
+[48.843146] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/MultiMarkerFiltered.h\n'}
+[48.843231] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/UnscentedKalman.h\n'}
+[48.843314] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Platform.h\n'}
+[48.843461] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Capture.h\n'}
+[48.843545] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Pose.h\n'}
+[48.843636] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/MultiMarkerInitializer.h\n'}
+[48.843726] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Plugin.h\n'}
+[48.843826] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/MarkerDetector.h\n'}
+[48.843916] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Mutex.h\n'}
+[48.844002] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/TrackerOrientation.h\n'}
+[48.844103] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/TrackerStat.h\n'}
+[48.844222] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/AlvarException.h\n'}
+[48.844303] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Plugin_private.h\n'}
+[48.844380] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/FileFormatUtils.h\n'}
+[48.844521] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/EC.h\n'}
+[48.844598] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//bundles\n'}
+[48.844675] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//bundles/table_8_9_10.xml\n'}
+[48.844753] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//bundles/tags8and9.xml\n'}
+[48.844830] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//bundles/truthTableLeg.xml\n'}
+[48.844907] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//launch\n'}
+[48.844983] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//launch/pr2_indiv_no_kinect.launch\n'}
+[48.845059] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//launch/pr2_bundle.launch\n'}
+[48.845246] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//launch/pr2_indiv.launch\n'}
+[48.845392] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//launch/pr2_bundle_no_kinect.launch\n'}
+[48.845510] (ar_track_alvar) StdoutLine: {'line': b'-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//launch/pr2_train.launch\n'}
+[48.846886] (ar_track_alvar) CommandEnded: {'returncode': 0}
+[48.887053] (-) TimerEvent: {}
+[48.992527] (-) TimerEvent: {}
+[49.076366] (ar_track_alvar) JobEnded: {'identifier': 'ar_track_alvar', 'rc': 0}
+[49.077355] (-) EventReactorShutdown: {}

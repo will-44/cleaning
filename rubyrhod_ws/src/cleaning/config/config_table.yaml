@@ -1,0 +1,51 @@
+debug: false
+generate_guards: true
+guards_limit: 10
+guards_pcd: /data/final_guards
+machine2ar_calibration: table2ar2_calibration_mat
+machine_mesh: /mesh/table.obj
+machine_pcd: /mesh/table.ply
+potential_guard: 5
+reachability_map: /mesh/reachability_map.pcd
+relation_guards: /data/relation_path_arm_
+relation_spot: /data/relation_table.pkl
+result_pcd: /data/final_result
+scie2ar6_calibration_mat:
+- - 0.03655757
+  - -0.99915636
+  - 0.01871121
+  - -0.765162718
+- - 0.04381105
+  - 0.02030814
+  - 0.99883341
+  - -0.072447179
+- - -0.99837074
+  - -0.03569517
+  - 0.04451651
+  - -1.006239983
+- - 0.0
+  - 0.0
+  - 0.0
+  - 1.0
+sort_spots: true
+spot_limit: 100
+spots: /data/relation_result_spots.pkls
+spots_pcds: /data/pcd_15_02_table
+table2ar2_calibration_mat:
+- - 0.9972773283665013
+  - -0.06408157594352347
+  - 0.03648947726082053
+  - 0.08336138881899191
+- - 0.06729985875326293
+  - 0.9931861255790659
+  - -0.09514225648488034
+  - 0.9152489689435612
+- - -0.030143976810705724
+  - 0.09733895202763551
+  - 0.994794686897853
+  - -1.0366598910813083
+- - 0.0
+  - 0.0
+  - 0.0
+  - 1.0
+trajectorie: /data/offline_trajectory_table.pkl

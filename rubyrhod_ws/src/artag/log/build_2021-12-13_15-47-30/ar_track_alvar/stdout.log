@@ -1,0 +1,390 @@
+-- The C compiler identification is GNU 9.3.0
+-- The CXX compiler identification is GNU 9.3.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Using CATKIN_DEVEL_PREFIX: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/devel
+-- Using CMAKE_PREFIX_PATH: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs;/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel;/opt/ros/noetic
+-- This workspace overlays: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar_msgs;/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/devel;/opt/ros/noetic
+-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+-- Using PYTHON_EXECUTABLE: /usr/bin/python3
+-- Using Debian Python package layout
+-- Found PY_em: /usr/lib/python3/dist-packages/em.py  
+-- Using empy: /usr/lib/python3/dist-packages/em.py
+-- Using CATKIN_ENABLE_TESTING: ON
+-- Call enable_testing()
+-- Using CATKIN_TEST_RESULTS_DIR: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/test_results
+-- Forcing gtest/gmock from source, though one was otherwise available.
+-- Found gtest sources under '/usr/src/googletest': gtests will be built
+-- Found gmock sources under '/usr/src/googletest': gmock will be built
+-- Found PythonInterp: /usr/bin/python3 (found version "3.8.10") 
+-- Found Threads: TRUE  
+-- Using Python nosetests: /usr/bin/nosetests3
+-- catkin 0.8.10
+-- BUILD_SHARED_LIBS is on
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Found OpenCV: /usr (found version "4.2.0") 
+-- Found TinyXML: /usr/lib/x86_64-linux-gnu/libtinyxml.so  
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar
+[35m[1mScanning dependencies of target nodelet_generate_messages_py[0m
+[35m[1mScanning dependencies of target bond_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target pcl_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target tf2_msgs_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target nodelet_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target nodelet_generate_messages_eus[0m
+[35m[1mScanning dependencies of target std_srvs_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target pcl_ros_gencfg[0m
+[35m[1mScanning dependencies of target pcl_msgs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target pcl_msgs_generate_messages_eus[0m
+[  0%] Built target nodelet_generate_messages_py
+[  0%] Built target tf2_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target pcl_msgs_generate_messages_nodejs[0m
+[  0%] Built target pcl_msgs_generate_messages_py
+[  0%] Built target pcl_ros_gencfg
+[  0%] Built target pcl_msgs_generate_messages_lisp
+[  0%] Built target std_srvs_generate_messages_nodejs
+[  0%] Built target nodelet_generate_messages_nodejs
+[  0%] Built target bond_generate_messages_nodejs
+[  0%] Built target nodelet_generate_messages_eus
+[  0%] Built target rosgraph_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_eus[0m
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target roscpp_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target actionlib_generate_messages_eus[0m
+[35m[1mScanning dependencies of target roscpp_generate_messages_eus[0m
+[  0%] Built target pcl_msgs_generate_messages_nodejs
+[  0%] Built target pcl_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target dynamic_reconfigure_generate_messages_eus[0m
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target dynamic_reconfigure_generate_messages_cpp[0m
+[  0%] Built target rosgraph_msgs_generate_messages_eus
+[  0%] Built target rosgraph_msgs_generate_messages_cpp
+[  0%] Built target roscpp_generate_messages_nodejs
+[  0%] Built target roscpp_generate_messages_eus
+[  0%] Built target actionlib_generate_messages_eus
+[  0%] Built target geometry_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target visualization_msgs_generate_messages_eus[0m
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target visualization_msgs_generate_messages_nodejs[0m
+[  0%] Built target dynamic_reconfigure_generate_messages_eus
+[  0%] Built target dynamic_reconfigure_generate_messages_cpp
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_py[0m
+[  0%] Built target ar_track_alvar_msgs_generate_messages_cpp
+[  0%] Built target ar_track_alvar_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target dynamic_reconfigure_generate_messages_py[0m
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_eus[0m
+[35m[1mScanning dependencies of target std_srvs_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target std_msgs_generate_messages_lisp[0m
+[  0%] Built target visualization_msgs_generate_messages_nodejs
+[  0%] Built target visualization_msgs_generate_messages_eus
+[  0%] Built target rosgraph_msgs_generate_messages_py
+[  0%] Built target actionlib_msgs_generate_messages_py
+[35m[1mScanning dependencies of target nodelet_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target std_msgs_generate_messages_nodejs[0m
+[  0%] Built target dynamic_reconfigure_generate_messages_py
+[  0%] Built target actionlib_msgs_generate_messages_eus
+[  0%] Built target rosgraph_msgs_generate_messages_lisp
+[  0%] Built target std_srvs_generate_messages_cpp
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_lisp[0m
+[  0%] Built target std_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages_eus[0m
+[  0%] Built target nodelet_generate_messages_lisp
+[  0%] Built target ar_track_alvar_msgs_generate_messages_py
+[35m[1mScanning dependencies of target tf_generate_messages_py[0m
+[  0%] Built target std_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target ar_track_alvar_msgs_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_py[0m
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target ar_track_alvar_gencfg[0m
+[  0%] Built target ar_track_alvar_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target bond_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target tf2_msgs_generate_messages_eus[0m
+[35m[1mScanning dependencies of target nodelet_topic_tools_gencfg[0m
+[  0%] Built target tf_generate_messages_py
+[  0%] Built target actionlib_msgs_generate_messages_lisp
+[  0%] Built target ar_track_alvar_msgs_generate_messages_nodejs
+[  0%] Built target actionlib_msgs_generate_messages_nodejs
+[  0%] Built target sensor_msgs_generate_messages_py
+[  2%] [34m[1mGenerating dynamic reconfigure files from cfg/Params.cfg: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/devel/include/ar_track_alvar/ParamsConfig.h /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/devel/lib/python3/dist-packages/ar_track_alvar/cfg/ParamsConfig.py[0m
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_eus[0m
+[  2%] Built target geometry_msgs_generate_messages_py
+[  2%] Built target tf2_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target tf_generate_messages_eus[0m
+[35m[1mScanning dependencies of target bond_generate_messages_eus[0m
+[  2%] Built target bond_generate_messages_lisp
+[35m[1mScanning dependencies of target visualization_msgs_generate_messages_cpp[0m
+[  2%] Built target nodelet_topic_tools_gencfg
+[  2%] Built target sensor_msgs_generate_messages_eus
+[  2%] Built target tf_generate_messages_eus
+[  2%] Built target bond_generate_messages_eus
+[35m[1mScanning dependencies of target dynamic_reconfigure_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target roscpp_generate_messages_py[0m
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_eus[0m
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target bond_generate_messages_cpp[0m
+[  2%] Built target visualization_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target std_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target dynamic_reconfigure_gencfg[0m
+[35m[1mScanning dependencies of target tf2_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target pcl_msgs_generate_messages_cpp[0m
+[  2%] Built target dynamic_reconfigure_generate_messages_nodejs
+[  2%] Built target roscpp_generate_messages_py
+[  2%] Built target bond_generate_messages_cpp
+[  2%] Built target geometry_msgs_generate_messages_eus
+[  2%] Built target sensor_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target roscpp_generate_messages_cpp[0m
+[  2%] Built target tf2_msgs_generate_messages_py
+[  2%] Built target std_msgs_generate_messages_py
+[  2%] Built target dynamic_reconfigure_gencfg
+[  2%] Built target pcl_msgs_generate_messages_cpp
+[  2%] Built target sensor_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target dynamic_reconfigure_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target std_msgs_generate_messages_eus[0m
+[35m[1mScanning dependencies of target std_srvs_generate_messages_eus[0m
+[35m[1mScanning dependencies of target std_srvs_generate_messages_lisp[0m
+[  2%] Built target roscpp_generate_messages_cpp
+[35m[1mScanning dependencies of target topic_tools_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target topic_tools_generate_messages_eus[0m
+[  2%] Built target dynamic_reconfigure_generate_messages_lisp
+[35m[1mScanning dependencies of target visualization_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target roscpp_generate_messages_lisp[0m
+[  2%] Built target std_msgs_generate_messages_eus
+[  2%] Built target std_srvs_generate_messages_lisp
+[  2%] Built target std_srvs_generate_messages_eus
+[  2%] Built target topic_tools_generate_messages_eus
+[35m[1mScanning dependencies of target tf_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target topic_tools_generate_messages_lisp[0m
+[  2%] Built target roscpp_generate_messages_lisp
+[  2%] Built target visualization_msgs_generate_messages_py
+[  2%] Built target topic_tools_generate_messages_cpp
+[35m[1mScanning dependencies of target topic_tools_generate_messages_py[0m
+[35m[1mScanning dependencies of target tf_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target tf_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target topic_tools_generate_messages_nodejs[0m
+Generating reconfiguration files for Params in ar_track_alvar
+[35m[1mScanning dependencies of target actionlib_generate_messages_lisp[0m
+[  2%] Built target tf_generate_messages_cpp
+Wrote header file in /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/devel/include/ar_track_alvar/ParamsConfig.h
+[35m[1mScanning dependencies of target actionlib_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target std_srvs_generate_messages_py[0m
+[  2%] Built target topic_tools_generate_messages_lisp
+[  2%] Built target topic_tools_generate_messages_py
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target actionlib_generate_messages_py[0m
+[35m[1mScanning dependencies of target tf2_msgs_generate_messages_lisp[0m
+[  2%] Built target tf_generate_messages_lisp
+[  2%] Built target actionlib_generate_messages_lisp
+[  2%] Built target tf_generate_messages_nodejs
+[  2%] Built target topic_tools_generate_messages_nodejs
+[  2%] Built target std_srvs_generate_messages_py
+[35m[1mScanning dependencies of target nodelet_generate_messages_cpp[0m
+[  2%] Built target actionlib_generate_messages_nodejs
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target tf2_msgs_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target visualization_msgs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target std_msgs_generate_messages_cpp[0m
+[  2%] Built target nodelet_generate_messages_cpp
+[  2%] Built target actionlib_msgs_generate_messages_cpp
+[  2%] Built target tf2_msgs_generate_messages_lisp
+[  2%] Built target actionlib_generate_messages_py
+[  2%] Built target std_msgs_generate_messages_cpp
+[  2%] Built target visualization_msgs_generate_messages_lisp
+[  2%] Built target sensor_msgs_generate_messages_lisp
+[  2%] Built target ar_track_alvar_gencfg
+[  2%] Built target tf2_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target bond_generate_messages_py[0m
+[35m[1mScanning dependencies of target actionlib_generate_messages_cpp[0m
+[  2%] Built target bond_generate_messages_py
+[  2%] Built target actionlib_generate_messages_cpp
+[35m[1mScanning dependencies of target ar_track_alvar[0m
+[35m[1mScanning dependencies of target kinect_filtering[0m
+[  4%] [32mBuilding CXX object CMakeFiles/kinect_filtering.dir/src/kinect_filtering.cpp.o[0m
+[  6%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Bitset.cpp.o[0m
+[  8%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/CaptureDevice.cpp.o[0m
+[ 10%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Camera.cpp.o[0m
+[ 14%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/CaptureFactory_unix.cpp.o[0m
+[ 14%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/CvTestbed.cpp.o[0m
+[ 17%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/DirectoryIterator.cpp.o[0m
+[ 21%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/DirectoryIterator_unix.cpp.o[0m
+[ 21%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/ConnectedComponents.cpp.o[0m
+[ 23%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/CaptureFactory.cpp.o[0m
+[ 25%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Draw.cpp.o[0m
+[ 27%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/FileFormatUtils.cpp.o[0m
+[ 29%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Filter.cpp.o[0m
+[ 31%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Kalman.cpp.o[0m
+[ 34%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Line.cpp.o[0m
+[ 36%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Marker.cpp.o[0m
+[ 38%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/MarkerDetector.cpp.o[0m
+[ 40%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/MultiMarker.cpp.o[0m
+[ 42%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/MultiMarkerBundle.cpp.o[0m
+[ 44%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/MultiMarkerInitializer.cpp.o[0m
+[ 46%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Mutex.cpp.o[0m
+[ 48%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Mutex_unix.cpp.o[0m
+[ 51%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Optimization.cpp.o[0m
+[ 53%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Plugin.cpp.o[0m
+[ 55%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Plugin_unix.cpp.o[0m
+[ 57%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Pose.cpp.o[0m
+[ 59%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Rotation.cpp.o[0m
+[ 61%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Threads.cpp.o[0m
+[ 63%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Threads_unix.cpp.o[0m
+[ 65%] [32mBuilding CXX object CMakeFiles/ar_track_alvar.dir/src/Util.cpp.o[0m
+[ 68%] [32m[1mLinking CXX shared library devel/lib/libkinect_filtering.so[0m
+[ 68%] Built target kinect_filtering
+[ 70%] [32m[1mLinking CXX shared library devel/lib/libar_track_alvar.so[0m
+[ 70%] Built target ar_track_alvar
+[35m[1mScanning dependencies of target individualMarkersNoKinect[0m
+[35m[1mScanning dependencies of target individualMarkers[0m
+[35m[1mScanning dependencies of target createMarker[0m
+[35m[1mScanning dependencies of target findMarkerBundlesNoKinect[0m
+[35m[1mScanning dependencies of target trainMarkerBundle[0m
+[35m[1mScanning dependencies of target medianFilter[0m
+[ 72%] [32mBuilding CXX object CMakeFiles/medianFilter.dir/src/medianFilter.cpp.o[0m
+[ 74%] [32mBuilding CXX object CMakeFiles/createMarker.dir/src/SampleMarkerCreator.cpp.o[0m
+[ 76%] [32mBuilding CXX object CMakeFiles/individualMarkers.dir/nodes/IndividualMarkers.cpp.o[0m
+[ 78%] [32mBuilding CXX object CMakeFiles/findMarkerBundlesNoKinect.dir/nodes/FindMarkerBundlesNoKinect.cpp.o[0m
+[ 80%] [32mBuilding CXX object CMakeFiles/individualMarkersNoKinect.dir/nodes/IndividualMarkersNoKinect.cpp.o[0m
+[ 82%] [32mBuilding CXX object CMakeFiles/trainMarkerBundle.dir/nodes/TrainMarkerBundle.cpp.o[0m
+[ 85%] [32m[1mLinking CXX shared library devel/lib/libmedianFilter.so[0m
+[ 85%] Built target medianFilter
+[35m[1mScanning dependencies of target findMarkerBundles[0m
+[ 87%] [32mBuilding CXX object CMakeFiles/findMarkerBundles.dir/nodes/FindMarkerBundles.cpp.o[0m
+[ 89%] [32m[1mLinking CXX executable devel/lib/ar_track_alvar/trainMarkerBundle[0m
+[ 91%] [32m[1mLinking CXX executable devel/lib/ar_track_alvar/createMarker[0m
+[ 91%] Built target trainMarkerBundle
+[ 93%] [32m[1mLinking CXX executable devel/lib/ar_track_alvar/findMarkerBundlesNoKinect[0m
+[ 93%] Built target createMarker
+[ 93%] Built target findMarkerBundlesNoKinect
+[ 95%] [32m[1mLinking CXX executable devel/lib/ar_track_alvar/individualMarkers[0m
+[ 97%] [32m[1mLinking CXX executable devel/lib/ar_track_alvar/individualMarkersNoKinect[0m
+[100%] [32m[1mLinking CXX executable devel/lib/ar_track_alvar/findMarkerBundles[0m
+[100%] Built target individualMarkersNoKinect
+[100%] Built target individualMarkers
+[100%] Built target findMarkerBundles
+[35m[1mScanning dependencies of target tests[0m
+Built target tests
+-- Install configuration: ""
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/ParamsConfig.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/python3/dist-packages/ar_track_alvar/__init__.py
+Listing '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/devel/lib/python3/dist-packages/ar_track_alvar/cfg'...
+Compiling '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/devel/lib/python3/dist-packages/ar_track_alvar/cfg/ParamsConfig.py'...
+Compiling '/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/build/ar_track_alvar/devel/lib/python3/dist-packages/ar_track_alvar/cfg/__init__.py'...
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/python3/dist-packages/ar_track_alvar/cfg
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/python3/dist-packages/ar_track_alvar/cfg/__pycache__
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/python3/dist-packages/ar_track_alvar/cfg/__pycache__/__init__.cpython-38.pyc
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/python3/dist-packages/ar_track_alvar/cfg/__pycache__/ParamsConfig.cpython-38.pyc
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/python3/dist-packages/ar_track_alvar/cfg/__init__.py
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/python3/dist-packages/ar_track_alvar/cfg/ParamsConfig.py
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/pkgconfig/ar_track_alvar.pc
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar/cmake/ar_track_alvarConfig.cmake
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar/cmake/ar_track_alvarConfig-version.cmake
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar/package.xml
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/libar_track_alvar.so
+-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/libar_track_alvar.so" to ""
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/createMarker
+-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/createMarker" to ""
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/findMarkerBundles
+-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/findMarkerBundles" to ""
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/findMarkerBundlesNoKinect
+-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/findMarkerBundlesNoKinect" to ""
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/individualMarkers
+-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/individualMarkers" to ""
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/individualMarkersNoKinect
+-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/individualMarkersNoKinect" to ""
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/libkinect_filtering.so
+-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/libkinect_filtering.so" to ""
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/libmedianFilter.so
+-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/libmedianFilter.so" to ""
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/trainMarkerBundle
+-- Set runtime path of "/home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/lib/ar_track_alvar/trainMarkerBundle" to ""
+-- Up-to-date: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Ransac.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Kalman.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Filter.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/MultiMarkerBundle.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Threads_private.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/ConnectedComponents.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/IntegralImage.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/CvTestbed.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Mutex_private.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/filter
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/filter/kinect_filtering.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/filter/medianFilter.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/DirectoryIterator_private.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Bitset.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Alvar.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/SfM.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/TrifocalTensor.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/TrackerFeatures.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/FileFormat.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/FernImageDetector.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/CaptureDevice.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Rotation.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Shared.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/FernPoseEstimator.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Draw.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/MultiMarker.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/CaptureFactory.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Line.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/GlutViewer.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Uncopyable.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Util.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Camera.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Timer.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Timer_private.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Tracker.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/TrackerPsa.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/CaptureFactory_private.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Container3d.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Optimization.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Threads.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/DirectoryIterator.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/CapturePlugin.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Lock.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Marker.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/MultiMarkerFiltered.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/UnscentedKalman.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Platform.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Capture.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Pose.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/MultiMarkerInitializer.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Plugin.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/MarkerDetector.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Mutex.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/TrackerOrientation.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/TrackerStat.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/AlvarException.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/Plugin_private.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/FileFormatUtils.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/include/ar_track_alvar/EC.h
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//bundles
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//bundles/table_8_9_10.xml
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//bundles/tags8and9.xml
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//bundles/truthTableLeg.xml
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//launch
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//launch/pr2_indiv_no_kinect.launch
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//launch/pr2_bundle.launch
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//launch/pr2_indiv.launch
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//launch/pr2_bundle_no_kinect.launch
+-- Installing: /home/rthom/Documents/Research/Montreal/tactile_rummaging_ws/src/ar_track_alvar/install/ar_track_alvar/share/ar_track_alvar//launch/pr2_train.launch

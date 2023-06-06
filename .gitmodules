@@ -1,26 +1,32 @@
-[submodule "src/mir_robot"]
-	path = src/mir_robot
+[submodule "rubyrhod_ws/src/mir_robot"]
+	path = rubyrhod_ws/src/mir_robot
 	url = https://github.com/dfki-ric/mir_robot.git
-[submodule "src/serial"]
-	path = src/serial
+[submodule "rubyrhod_ws/src/serial"]
+	path = rubyrhod_ws/src/serial
 	url = https://github.com/wjwwood/serial.git
-[submodule "src/robotiq"]
-	path = src/robotiq
-	url = https://github.com/ros-industrial/robotiq.git
-[submodule "src/doosan-robot"]
-	path = src/doosan-robot
+[submodule "rubyrhod_ws/src/artag"]
+	path = rubyrhod_ws/src/artag
+	url = https://github.com/Sycodal/artag.git
+[submodule "rubyrhod_ws/src/doosan-robot"]
+	path = rubyrhod_ws/src/doosan-robot
 	url = https://github.com/Sycodal/doosan-robot.git
 	branch = noetic-devel
-[submodule "src/artag"]
-	path = src/artag
-	url = https://github.com/Sycodal/artag.git
-[submodule "src/realsense-ros"]
-	path = src/realsense-ros
+[submodule "rubyrhod_ws/src/realsense-ros"]
+	path = rubyrhod_ws/src/realsense-ros
 	url = https://github.com/Sycodal/realsense-ros.git
-[submodule "src/moveit_calibration"]
-	path = src/moveit_calibration
+[submodule "rubyrhod_ws/src/moveit_calibration"]
+	path = rubyrhod_ws/src/moveit_calibration
 	url = https://github.com/ros-planning/moveit_calibration.git
-
-[submodule "src/Azure_Kinect_ROS_Driver"]
-	path = src/Azure_Kinect_ROS_Driver
+[submodule "rubyrhod_ws/src/ROS-TCP-Endpoint"]
+	path = rubyrhod_ws/src/ROS-TCP-Endpoint
+	url = https://github.com/Sycodal/ROS-TCP-Endpoint.git
+[submodule "rubyrhod_ws/src/robotiq_85_gripper"]
+	path = rubyrhod_ws/src/robotiq_85_gripper
+	url = https://github.com/alexandre-bernier/robotiq_85_gripper.git
+[submodule "rubyrhod_ws/src/Azure_Kinect_ROS_Driver"]
+	path = rubyrhod_ws/src/Azure_Kinect_ROS_Driver
 	url = https://github.com/will-44/Azure_Kinect_ROS_Driver.git
+	branch = doosan
+[submodule "rubyrhod_ws/src/utility/dep/kortex"]
+	path = rubyrhod_ws/src/utility/dep/kortex
+	url = https://github.com/Kinovarobotics/kortex.git
