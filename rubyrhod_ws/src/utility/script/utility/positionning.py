@@ -1,38 +1,20 @@
 #!/usr/bin/env python3
 
-import pickle
-
-import geometry_msgs.msg
-import numpy as np
-import rospkg
 import rospy
+import tf
 import tf2_geometry_msgs
 import tf2_ros
-from scipy.spatial.transform import Rotation as R
-from geometry_msgs.msg import PoseStamped, Pose
-from open3d_ros_helper import open3d_ros_helper as o3d_ros
 from ros_numpy import numpify
-from sensor_msgs.msg import Image
-from sensor_msgs.msg import JointState
-from std_msgs.msg import Bool
-from std_msgs.msg import Float64MultiArray
-from utility.doosan import Doosan
-from utility.rviz_tool import display_marker_array
-from tf.transformations import euler_from_quaternion
-from visualization_msgs.msg import Marker
-
-from data_manager import DataManager
-from open3d_tools import Open3dTool
-from robot import Robot
-from utility.srv import DetectDust
-from python_tsp.distances import euclidean_distance_matrix
-
+from scipy.spatial.transform import Rotation as R
 
 
 class Positionning:
     def __init__(self):
         self.artag = rospy.get_param("ar_tag")
-
+        # TF reader
+        self.tf_buffer = tf2_ros.Buffer()
+        # Start the TF listen and store to buffer (10s buffer)
+        self.listener = tf2_ros.TransformListener(self.tf_buffer)
         return
 
     def get_artag_position(self):
@@ -48,8 +30,90 @@ class Positionning:
                                                                   rospy.Duration(1.0))
         except(tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
             rospy.loginfo("pb dans la transformation")
+            return
         mat_machine2base = numpify(trans_artag2base.transform)
-        rot = R.from_matrix(mat_machine2base)
+        rot = R.from_matrix(mat_machine2base[:3, :3])
         angle = rot.as_euler('xyz', degrees=False)
-        rospy.loginfo("x: %f, y: %f, theta: %f", mat_machine2base[0][2], mat_machine2base[1][2], angle[2])
+        rospy.loginfo("x: %f, y: %f, theta: %f", mat_machine2base[0][3], mat_machine2base[1][3], angle[2])
         return
+
+if __name__ == '__main__':
+
+    rospy.init_node('positionning', anonymous=True)
+    pos = Positionning()
+    while not rospy.is_shutdown():
+        rospy.sleep(0.2)
+        pos.get_artag_position()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,29 +1,33 @@
-debug: false
+ar_tag: ar_marker_2
+compute_best_spots: true
+compute_relation_guards: true
+debug: true
 generate_guards: true
 guards_limit: 50
 guards_pcd: /data/final_guards
-observed_pcd: /data/observed_pdc
 machine2ar_calibration: scie2ar6_calibration_mat
-machine_mesh: /mesh/scie_3.obj
-machine_pcd: /mesh/scie_3.ply
+machine_mesh: /mesh/table_coro.obj
+machine_pcd: /mesh/table_coro_fill.ply
+observable_concavity: /data/observed_concavity
+observed_pcd: /data/observed_pdc
 potential_guard: 2
 reachability_map: /mesh/reachability_map.pcd
 relation_guards: /data/relation_path_arm_
-relation_spot: /data/relation_saw.pkl
+relation_spot: /data/relation_coro.pkl
 result_pcd: /data/final_result
 scie2ar6_calibration_mat:
-- - 0.999824930022843
-  - 0.0
-  - -0.018711207999943347
-  - -0.8251627177186572
-- - 0.0
-  - 1.0
-  - 0.0
-  - -0.0524471788338875
-- - 0.018711207999943347
-  - 0.0
-  - 0.999824930022843
-  - -0.956239983059406
+- - -0.9995857457968185
+  - -0.027734899091643755
+  - 0.00768844406850743
+  - -0.8607933585359786
+- - 0.027168053068934703
+  - -0.9974501773171279
+  - -0.06599273189127518
+  - 0.030253419205516163
+- - 0.009499141659211974
+  - -0.06575651406823903
+  - 0.9977904825990934
+  - -1.0165813680281603
 - - 0.0
   - 0.0
   - 0.0
@@ -50,8 +54,3 @@ table2ar2_calibration_mat:
   - 0.0
   - 1.0
 trajectorie: /data/offline_trajectory_saw.pkl
-observable_concavity: /data/observed_concavity
-
-compute_best_spots: true
-compute_relation_guards: true
-ar_tag: ar_marker_6

@@ -27,10 +27,10 @@
         <node pkg="cleaning" type="init_octomap.py" name="init_octomap" ns="/dsr01m1013" if="$(eval arg('mode') == 'real')" output="screen">
             <param  name="robot_description" value="/dsr01m1013/robot_description" />
         </node>
-<!--     <include file="$(find dsr_control)/launch/dsr_moveit.launch"> -->
-<!--         <arg name="host" value="192.168.120.50" /> -->
-<!--         <arg name="mode" value="$arg('mode')"/> -->
-<!--     </include> -->
+     <include file="$(find dsr_control)/launch/dsr_moveit.launch">
+         <arg name="host" value="192.168.137.100" />
+         <arg name="mode" value="real"/>
+     </include>
 
     <node pkg="cleaning" name="collision_depth" type="collisions_filter" output="screen" if="$(eval arg('mode') == 'real')"/>
 

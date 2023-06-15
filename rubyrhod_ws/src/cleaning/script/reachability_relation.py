@@ -20,7 +20,7 @@ class ReachabilityRelation:
         self.poses_av_tup = []
 
         self.robot_length = 0.7  # TODO doing test to verify this value
-
+        self.arm_base_hight = 0.7
         self.debug = debug
 
         if self.debug:
@@ -64,7 +64,9 @@ class ReachabilityRelation:
         poses_plan[:, 2] = 0
         pcd = o3d.geometry.PointCloud()
         pcd.points = o3d.utility.Vector3dVector(poses_plan)
-        pcd = pcd.translate(center - pcd.get_center())
+        trans = center - pcd.get_center()
+        trans[2] = self.arm_base_hight
+        pcd = pcd.translate(trans)
 
         return pcd
 
@@ -103,6 +105,9 @@ class ReachabilityRelation:
         '''
         reachability_relation = {}
         reach_map_trans = copy.deepcopy(self.reachability_map)
+        reach_map_trans.paint_uniform_color([0,1,0])
+        self.base_poses_pcd.paint_uniform_color([1,0,0])
+        self.mesh.paint_uniform_color([0,0,1])
         if self.debug:
             self.vis.add_geometry(reach_map_trans)
             self.vis.add_geometry(self.base_poses_pcd)
@@ -113,7 +118,7 @@ class ReachabilityRelation:
         # we check all possible positions
         for pose in reachability_relation.keys():
             # transform RM to actual base pose, we suppose the position as 1m up to the floor
-            reach_map_trans = reach_map_trans.translate([pose[0], pose[1], 1], relative=False)
+            reach_map_trans = reach_map_trans.translate([pose[0], pose[1], self.arm_base_hight], relative=False)
             reach_map_vox_trans = o3d.geometry.VoxelGrid.create_from_point_cloud(reach_map_trans,
                                                                                  voxel_size=0.08)
 
