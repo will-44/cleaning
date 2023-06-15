@@ -18,6 +18,7 @@ sudo pip3 install opencv-python
 sudo pip3 install open3d
 sudo pip3 install alive-progress
 sudo pip3 install pyserial
+sudo pip3 install pyclustering
 
 # Install k4a SDK from their repository.
 # Bit of a hack, see https://github.com/microsoft/Azure-Kinect-Sensor-SDK/issues/1263

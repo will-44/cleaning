@@ -50,3 +50,8 @@ table2ar2_calibration_mat:
   - 0.0
   - 1.0
 trajectorie: /data/offline_trajectory_saw.pkl
+observable_concavity: /data/observed_concavity
+
+compute_best_spots: true
+compute_relation_guards: true
+ar_tag: ar_marker_6

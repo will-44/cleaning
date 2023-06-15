@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
+import random
 
 import numpy as np
 import open3d as o3d
+from pyclustering.cluster import cluster_visualizer
+from pyclustering.cluster.dbscan import dbscan
 
 
 class Open3dTool:
@@ -28,6 +31,7 @@ class Open3dTool:
         z_mean = np.mean(pcd_np[:, 2])
 
         return [x_mean, y_mean, z_mean]
+
     def generate_pcd_guard(self, pcd_init, dist=0.4):
         """
         get pcd and generate guards with the same normal
@@ -116,3 +120,68 @@ class Open3dTool:
         pcd = self.np2pcd(xyz)
 
         return pcd
+
+    def fuse_pcds(self, pcd_list):
+        # Fuse the pcd
+        final_pcd = o3d.geometry.PointCloud()
+        somme = 0
+        for pcd in pcd_list:
+            pcd_np = np.asarray(pcd.points)
+            somme += 1  # len(pcd_np)
+            final_pcd_np = np.asarray(final_pcd.points)
+
+            # give colors
+            pcd.paint_uniform_color([random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)])
+
+            p3_load = np.concatenate((pcd_np, final_pcd_np), axis=0)
+            final_pcd.points = o3d.utility.Vector3dVector(p3_load)
+        return final_pcd
+
+    def generate_rays_vectors(self, origine, destinations):
+        rays = []
+        lineset = o3d.t.geometry.LineSet()
+        line = [[origine[0], origine[1], origine[2]]]
+        line_indice = []
+        line_color = []
+        for index, dest_pt in enumerate(destinations):
+            rays.append([origine[0], origine[1], origine[2], dest_pt[0] - origine[0], dest_pt[1] - origine[1],
+                         dest_pt[2] - origine[2]])  # compute direction vector
+            line.append([dest_pt[0], dest_pt[1], dest_pt[2]])
+            line_indice.append([0, index + 1])  # index+1, wrong index was causing random color for some lines
+            line_color.append([1.0, 0.0, 0.0])
+        rays = o3d.core.Tensor(np.asarray(rays), dtype=o3d.core.Dtype.Float32)
+        return rays, line, line_color, line_indice
+
+    def clusterise_dbscan(self, points, eps=0.5, neighbors=3):
+        # Create DBSCAN algorithm.
+        dbscan_instance = dbscan(points, eps, neighbors)  # Params to twik
+
+        # Start processing by DBSCAN.
+        dbscan_instance.process()
+
+        # Obtain results of clustering.
+        clusters = dbscan_instance.get_clusters()
+        noise = dbscan_instance.get_noise()
+        # Visualize clustering results
+        visualizer = cluster_visualizer()
+        visualizer.append_clusters(clusters, points)
+        visualizer.append_cluster(noise, points, marker='x')
+        # visualizer.show()
+        return clusters
+
+    def euler2polar(self, x, y, z):
+        rayons = np.sqrt(np.power(x, 2) + np.power(y, 2) + np.power(z, 2))
+        thetas = np.arccos(z / rayons)
+        phis = np.arctan2(y, x)
+        return rayons, thetas, phis
+    def polar2euler(self, theta, phi, rayon):
+        x = rayon * np.sin(theta) * np.cos(phi)
+        y = rayon * np.sin(theta) * np.sin(phi)
+        z = rayon * np.cos(theta)
+        return np.array([x, y, z])
+    def compare_pcd(self, initial_pcd, goal_pcd, precision=0.0001):
+        dists = initial_pcd.compute_point_cloud_distance(goal_pcd)
+        dists = np.asarray(dists)
+        ind = np.where(dists > precision)[0]
+        diff_pcd = initial_pcd.select_by_index(ind)
+        return diff_pcd

@@ -21,6 +21,7 @@ class MachineCalibration:
 
         self.broadcaster_artag2machine = tf2_ros.StaticTransformBroadcaster()
         self.broadcaster_map2machine = tf2_ros.StaticTransformBroadcaster()
+        self.artag = rospy.get_param("ar_tag")
 
     def set_mesh_pos(self):
         arm = Doosan()
@@ -44,7 +45,7 @@ class MachineCalibration:
         """
         arm = Doosan()
         try:
-            trans_surface2artag = self.tf_buffer.lookup_transform('ar_marker_6', "machine", rospy.Time(),
+            trans_surface2artag = self.tf_buffer.lookup_transform(self.artag, "machine", rospy.Time(),
                                                                   rospy.Duration(1.0))
         except(tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
             rospy.loginfo("pb dans la transformation")
@@ -97,14 +98,14 @@ class MachineCalibration:
         # send tf
         static_transform_stamped = TransformStamped()
         static_transform_stamped.header.stamp = rospy.Time.now()
-        static_transform_stamped.header.frame_id = "ar_marker_6"
+        static_transform_stamped.header.frame_id = self.artag
         static_transform_stamped.child_frame_id = "machine"
         static_transform_stamped.transform = trans_artag2machine
 
         self.broadcaster_artag2machine.sendTransform(static_transform_stamped)
         # input()
         try:
-            trans_surface2artag = self.tf_buffer.lookup_transform('surface', "ar_marker_6", rospy.Time(),
+            trans_surface2artag = self.tf_buffer.lookup_transform('surface', self.artag, rospy.Time(),
                                                                   rospy.Duration(90))
         except(tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
             rospy.loginfo("pb dans la transformation")

@@ -21,7 +21,7 @@ class DataManager:
         """
         for i, pcd in enumerate(pcd_list):
             file_name = f"{file_name_prefix}_{str(i).zfill(3)}.pcd"
-            rospy.loginfo(file_name)
+            # rospy.loginfo(file_name)
             o3d.io.write_point_cloud(file_name, pcd)
 
     def load_pcd_list(self, file_name_prefix):
