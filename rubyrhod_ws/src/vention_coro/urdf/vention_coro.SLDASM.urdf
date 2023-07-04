@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="vention_coro">
+  <link
+    name="footprint_link">
+    <inertial>
+      <origin
+        xyz="1.79393071842651 0.297034309634098 0.108881965676957"
+        rpy="0 0 0" />
+      <mass
+        value="10.0413409004563" />
+      <inertia
+        ixx="0.0719209419452194"
+        ixy="-0.000181606483997931"
+        ixz="-6.84090096017132E-05"
+        iyy="0.0833511730209509"
+        iyz="-2.95653187315697E-06"
+        izz="0.0822842123436643" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://vention_coro/meshes/footprint_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://vention_coro/meshes/footprint_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="surface">
+    <inertial>
+      <origin
+        xyz="1.92312561708707E-09 0.00560028791638656 3.69420782853069E-09"
+        rpy="0 0 0" />
+      <mass
+        value="0.441513794474777" />
+      <inertia
+        ixx="0.0021724230362444"
+        ixy="7.50784946522587E-13"
+        ixz="-9.24204893927414E-07"
+        iyy="0.00433553756927177"
+        iyz="1.38023844737153E-12"
+        izz="0.00217242292501513" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://vention_coro/meshes/surface.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.337254901960784 0.529411764705882 0.756862745098039 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://vention_coro/meshes/surface.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="surface_joint"
+    type="fixed">
+    <origin
+      xyz="1.7989 -0.10632 0.70167"
+      rpy="1.5708 0 1.5708" />
+    <parent
+      link="footprint_link" />
+    <child
+      link="surface" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+</robot>

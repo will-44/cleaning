@@ -11,8 +11,8 @@
 				<mass value="4.12"/>
 				<origin xyz="-3.4e-05   -0.004815    0.048482"/>
 				<inertia ixx="0.016331" ixy="-6.4837e-06" ixz="2.0048e-06" iyy="0.014945"
-					iyz="-0.00051686"
-					izz="0.022577"/>
+						 iyz="-0.00051686"
+						 izz="0.022577"/>
 			</inertial>
 			<visual>
 				<origin rpy="0 0 0" xyz="0 0 0" />
@@ -35,14 +35,14 @@
 				<mass value="7.8"/>
 				<origin xyz="0.000119      0.0428   -0.006383"/>
 				<inertia ixx="0.04506" ixy="4.1126e-05" ixz="-5.2533e-05" iyy="0.029679"
-					iyz="-0.0019959"
-					izz="0.047056"/>
+						 iyz="-0.0019959"
+						 izz="0.047056"/>
 			</inertial>
-            <collision>
-                <geometry>
-                    <cylinder radius="0.1" length="0.2"/>
-                </geometry>
-            </collision>
+			<collision>
+				<geometry>
+					<cylinder radius="0.1" length="0.2"/>
+				</geometry>
+			</collision>
 			<visual>
 				<origin rpy="0 0 0" xyz="0 0 0" />
 				<geometry>
@@ -64,15 +64,15 @@
 				<mass value="10.83"/>
 				<origin xyz="0.25973    -5.3e-05     0.15782"/>
 				<inertia ixx="0.037586" ixy="-0.00036999" ixz="-0.0069927" iyy="0.84943"
-					iyz="4.0201e-05"
-					izz="0.85021"/>
+						 iyz="4.0201e-05"
+						 izz="0.85021"/>
 			</inertial>
-            <collision>
-                <origin rpy="0 -1.571 0" xyz="0.3 0 0.1525" />
-                <geometry>
-                    <cylinder radius="0.08" length="0.75"/>
-                </geometry>
-            </collision>
+			<collision>
+				<origin rpy="0 -1.571 0" xyz="0.3 0 0.1525" />
+				<geometry>
+					<cylinder radius="0.08" length="0.75"/>
+				</geometry>
+			</collision>
 			<visual>
 				<origin rpy="0 0 0" xyz="0 0 0" />
 				<geometry>
@@ -106,10 +106,10 @@
 				<mass value="3.68"/>
 				<origin xyz="-1.5e-05   -0.006702    0.044608"/>
 				<inertia ixx="0.018748" ixy="7.8071e-06" ixz="-5.0324e-06" iyy="0.018972"
-					iyz="-0.00099342"
-					izz="0.011502"/>
+						 iyz="-0.00099342"
+						 izz="0.011502"/>
 			</inertial>
-            <visual>
+			<visual>
 				<origin rpy="0 0 0" xyz="0 0 0" />
 				<geometry>
 					<mesh filename="package://dsr_description/meshes/m1013_white/MF1013_3_0.dae" scale="0.001 0.001 0.001" />
@@ -130,14 +130,14 @@
 				<mass value="3.82"/>
 				<origin xyz="7.1e-05    0.091879    -0.18252"/>
 				<inertia ixx="0.19063" ixy="-1.8037e-05" ixz="-3.8576e-05" iyy="0.17268" iyz="-0.052996"
-					izz="0.030386"/>
+						 izz="0.030386"/>
 			</inertial>
-            <collision>
-                <origin rpy="-0.55 0 0" xyz="0 0.07 -0.3" />
-                <geometry>
-                    <cylinder radius="0.07" length="0.4"/>
-                </geometry>
-            </collision>
+			<collision>
+				<origin rpy="-0.55 0 0" xyz="0 0.07 -0.3" />
+				<geometry>
+					<cylinder radius="0.07" length="0.4"/>
+				</geometry>
+			</collision>
 			<visual>
 				<origin rpy="0 0 0" xyz="0 0 0" />
 				<geometry>
@@ -165,21 +165,21 @@
 				<mass value="2.82"/>
 				<origin xyz="-0.000273    0.003651    0.032088"/>
 				<inertia ixx="0.015583" ixy="2.135e-05" ixz="-5.1895e-06" iyy="0.011519"
-					iyz="0.00042553"
-					izz="0.0088671"/>
+						 iyz="0.00042553"
+						 izz="0.0088671"/>
 			</inertial>
-            <collision>
-                <origin rpy="1.571 0 0" xyz="0 0 0" />
-                <geometry>
-                    <cylinder radius="0.08" length="0.15"/>
-                </geometry>
-            </collision>
 			<collision>
-                <origin rpy="0 0 0" xyz="0 0 0.15" />
-                <geometry>
-                    <cylinder radius="0.08" length="0.15"/>
-                </geometry>
-            </collision>
+				<origin rpy="1.571 0 0" xyz="0 0 0" />
+				<geometry>
+					<cylinder radius="0.08" length="0.15"/>
+				</geometry>
+			</collision>
+			<collision>
+				<origin rpy="0 0 0" xyz="0 0 0.15" />
+				<geometry>
+					<cylinder radius="0.08" length="0.15"/>
+				</geometry>
+			</collision>
 			<visual>
 				<origin rpy="0 0 0" xyz="0 0 0" />
 				<geometry>
@@ -201,8 +201,8 @@
 				<mass value="1.16"/>
 				<origin xyz="-0.000292       7e-06     -0.0539"/>
 				<inertia ixx="0.0048282" ixy="4.1298e-06" ixz="6.9879e-06" iyy="0.0059519"
-					iyz="4.252e-06"
-					izz="0.0061263"/>
+						 iyz="4.252e-06"
+						 izz="0.0061263"/>
 			</inertial>
 			<visual>
 				<origin rpy="0 0 0" xyz="0 0 0" />

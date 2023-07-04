@@ -33,6 +33,7 @@ from sensor_msgs.msg import JointState
 import math
 
 from std_srvs.srv import Empty
+import xml.etree.ElementTree as ET
 
 
 class Doosan:
@@ -53,34 +54,31 @@ class Doosan:
         # Add the mir as a box
         mir_pose = geometry_msgs.msg.PoseStamped()
         mir_pose.header.frame_id = "world"  # world frame (careful with the simu to real)
-        mir_pose.pose.position.x = 0.1
+        mir_pose.pose.position.x = 0
         mir_pose.pose.position.y = 0.0
-        mir_pose.pose.position.z = -0.5
+        mir_pose.pose.position.z = -0.35
         mir_pose.pose.orientation.x = 0.0  # 0.0
         mir_pose.pose.orientation.y = 0.0  # 0.0
-        mir_pose.pose.orientation.z = 0.707  # 0.0
-        mir_pose.pose.orientation.w = 0.707  # 1.0
+        mir_pose.pose.orientation.z = 0  # 0.0
+        mir_pose.pose.orientation.w = 0  # 1.0
         mir_name = "mir"
-        self.scene.attach_box('world', mir_name, mir_pose, size=(0.75, 0.95, 0.40))
+        self.scene.attach_box('world', mir_name, mir_pose, size=(0.50, 0.40, 0.7))
         # Add the controler doosan as a box
-        controler_pose = geometry_msgs.msg.PoseStamped()
-        controler_pose.header.frame_id = "world"  # world frame (careful with the simu to real)
-        controler_pose.pose.position.x = -0.1
-        controler_pose.pose.position.y = 0.0
-        controler_pose.pose.position.z = -0.2
-        controler_pose.pose.orientation.x = 0.0  # 0.0
-        controler_pose.pose.orientation.y = 0.0  # 0.0
-        controler_pose.pose.orientation.z = 0.0  # 1.57
-        controler_pose.pose.orientation.w = 1.0  # 1.0
-        controler_name = "controler"
-        self.scene.attach_box('world', controler_name, controler_pose, size=(0.40, 0.50, 0.40))
+        # controler_pose = geometry_msgs.msg.PoseStamped()
+        # controler_pose.header.frame_id = "world"  # world frame (careful with the simu to real)
+        # controler_pose.pose.position.x = -0.1
+        # controler_pose.pose.position.y = 0.0
+        # controler_pose.pose.position.z = -0.2
+        # controler_pose.pose.orientation.x = 0.0  # 0.0
+        # controler_pose.pose.orientation.y = 0.0  # 0.0
+        # controler_pose.pose.orientation.z = 0.0  # 1.57
+        # controler_pose.pose.orientation.w = 1.0  # 1.0
+        # controler_name = "controler"
+        # self.scene.attach_box('world', controler_name, controler_pose, size=(0.40, 0.50, 0.40))
         # lower, upper
-        self.joint_limit = [[-1.5708, 0.785398],
-                            [-6.2832, 6.2832],
-                            [-2.7925, 2.7925],
-                            [0, 6.2832],
-                            [-1.74533, 1.57],
-                            [-3.1415, 0]]
+        self.joint_limit = np.array(self.get_joint_limit())
+        self.joint_index_max = self.get_joint_limit_index(np.mean(self.joint_limit, axis=1))
+        # print(self.joint_index_max)
         # Joint state sub
         # self.joint_state_sub = rospy.Subscriber("/dsr01m1013/joint_states", JointState, self.callback_depth)
         # self.joint_state = 0
@@ -610,3 +608,20 @@ class Doosan:
         mani = np.sqrt(np.linalg.det(jac @ jac.T))
         # print(mani)
         return mani
+
+    def get_joint_limit(self):
+        # tree =
+        # Charger le fichier URDF
+        root = ET.fromstring(rospy.get_param("/dsr01m1013/robot_description"))
+        # root = tree.getroot()
+
+        # Parcourir les éléments du fichier URDF
+        joint_limits = []
+        for joint in root.iter("joint"):
+            # Vérifier si le joint a une limite
+            if joint.find("limit") is not None:
+                limit = joint.find("limit")
+                lower_limit = float(limit.attrib["lower"])
+                upper_limit = float(limit.attrib["upper"])
+                joint_limits.append([lower_limit, upper_limit])
+        return joint_limits

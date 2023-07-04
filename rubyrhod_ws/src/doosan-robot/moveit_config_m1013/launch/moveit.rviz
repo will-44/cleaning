@@ -5,6 +5,8 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /MotionPlanning1
+        - /TF1
+        - /TF1/Frames1
         - /DepthCloud1/Auto Size1
         - /DepthCloud2/Auto Size1
       Splitter Ratio: 0.7425600290298462
@@ -135,6 +137,11 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          vacuum_sphere:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           vacuum_tcp:
             Alpha: 1
             Show Axes: false
@@ -257,6 +264,11 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          vacuum_sphere:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           vacuum_tcp:
             Alpha: 1
             Show Axes: false
@@ -280,8 +292,10 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
+        ar_marker_2:
+          Value: true
         base_0:
-          Value: false
+          Value: true
         camera_base:
           Value: false
         camera_body:
@@ -289,6 +303,10 @@ Visualization Manager:
         camera_depth:
           Value: false
         camera_visor:
+          Value: false
+        depth_camera_link:
+          Value: false
+        imu_link:
           Value: false
         link1:
           Value: false
@@ -302,12 +320,24 @@ Visualization Manager:
           Value: false
         link6:
           Value: false
+        machine:
+          Value: true
+        plate_arm:
+          Value: false
+        rgb_camera_link:
+          Value: false
+        structure_vention:
+          Value: false
+        surface:
+          Value: false
         vacuum_base_link:
           Value: false
         vacuum_safe_tcp:
-          Value: true
+          Value: false
+        vacuum_sphere:
+          Value: false
         vacuum_tcp:
-          Value: true
+          Value: false
         vacuum_tube:
           Value: false
         world:
@@ -317,28 +347,39 @@ Visualization Manager:
       Name: TF
       Show Arrows: true
       Show Axes: true
-      Show Names: false
+      Show Names: true
       Tree:
-        world:
-          base_0:
-            link1:
-              link2:
-                link3:
-                  link4:
-                    link5:
-                      link6:
-                        camera_base:
-                          camera_body:
-                            {}
-                          camera_depth:
-                            {}
-                          camera_visor:
-                            {}
-                        vacuum_base_link:
-                          vacuum_tube:
-                            vacuum_tcp:
-                              vacuum_safe_tcp:
-                                {}
+        surface:
+          structure_vention:
+            plate_arm:
+              world:
+                base_0:
+                  link1:
+                    link2:
+                      link3:
+                        link4:
+                          link5:
+                            link6:
+                              camera_base:
+                                camera_body:
+                                  {}
+                                camera_depth:
+                                  {}
+                                camera_visor:
+                                  {}
+                                depth_camera_link:
+                                  imu_link:
+                                    {}
+                                  rgb_camera_link:
+                                    ar_marker_2:
+                                      machine:
+                                        {}
+                              vacuum_base_link:
+                                vacuum_tube:
+                                  vacuum_sphere:
+                                    vacuum_tcp:
+                                      vacuum_safe_tcp:
+                                        {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -554,6 +595,11 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        vacuum_sphere:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         vacuum_tcp:
           Alpha: 1
           Show Axes: false
@@ -624,9 +670,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.7047961354255676
+      Pitch: 0.4747968912124634
       Target Frame: world
-      Yaw: 1.2381621599197388
+      Yaw: 1.063159465789795
     Saved: ~
 Window Geometry:
   Displays:
@@ -642,7 +688,7 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000200000000000002a200000416fc0200000009fb000000100044006900730070006c006100790073010000003d000001f3000000c900fffffffb0000000800480065006c00700000000342000000bb0000006e00fffffffb0000000a0056006900650077007300000003b0000000b0000000a400fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000001600000016fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000002360000021d0000018800fffffffb000000280020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000000000000000fb0000003c005400720061006a006500630074006f007200790020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff00000016000000160000000200000490000001a7fc0100000002fb0000000a0049006d00610067006500000002a8000004900000005e00fffffffb0000000a0049006d00610067006501000002a8000004900000005e00ffffff000004900000026900000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000200000000000002a200000416fc0200000009fb000000100044006900730070006c006100790073010000003d000001f3000000c900fffffffb0000000800480065006c00700000000342000000bb0000006e00fffffffb0000000a0056006900650077007300000003b0000000b0000000a400fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000001600000016fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000002360000021d0000017d00fffffffb000000280020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000000000000000fb0000003c005400720061006a006500630074006f007200790020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff00000016000000160000000200000490000001a7fc0100000002fb0000000a0049006d00610067006500000002a8000004900000005e00fffffffb0000000a0049006d00610067006501000002a8000004900000005e00ffffff000004900000026900000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Trajectory - Trajectory Slider:
     collapsed: false
   Views:

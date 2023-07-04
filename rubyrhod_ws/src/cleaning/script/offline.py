@@ -35,7 +35,7 @@ import math
 
 class Offline:
 
-    def __init__(self, path_machine, relation_path, debug=False):
+    def __init__(self, path_machine, path_mesh, relation_path, debug=False):
 
         self.data_manager = DataManager()
         self.open3d_tool = Open3dTool()
@@ -45,7 +45,7 @@ class Offline:
 
         # PCD and Mesh of the machine
         self.pcd_machine = o3d.io.read_point_cloud(path_machine)
-        self.mesh_machine = o3d.io.read_triangle_mesh(path_machine)
+        self.mesh_machine = o3d.io.read_triangle_mesh(path_mesh)
 
         self.relation = self.data_manager.load_var_pickle(relation_path)
 
@@ -144,7 +144,10 @@ class Offline:
             # create the Indice dictionnary
             relation_indice = {}
             for elem in relation.keys():
-                I = round(self.arm.get_manipulability(list(elem)) * self.arm.get_joint_limit_index(list(elem)) * len(relation[elem]), 4)
+                I = round(math.pow(self.arm.get_manipulability(list(elem)) *
+                          self.arm.get_joint_limit_index(list(elem))/self.arm.joint_index_max, 1) *
+                          math.pow(len(relation[elem])/len(self.pcd_machine.points), 0.5), 4)
+                print(I)
                 relation_indice[I] = elem
 
             best_key = max(relation_indice.keys())
@@ -502,8 +505,8 @@ if __name__ == '__main__':
     debug = rospy.get_param("/debug", default=False)
     pcd_path = rospkg.RosPack().get_path('cleaning') + rospy.get_param("/machine_pcd")
     path_relation = rospkg.RosPack().get_path('cleaning') + rospy.get_param("/relation_spot")
-
-    offline = Offline(pcd_path, path_relation)
+    mesh_path = rospkg.RosPack().get_path('cleaning') + rospy.get_param("/machine_ply")
+    offline = Offline(pcd_path, mesh_path, path_relation)
 
     # answer = input("Do you want to generate the mobile base spots ? (around 1H) y/n: ")
     # if answer == "y" or answer == "yes":

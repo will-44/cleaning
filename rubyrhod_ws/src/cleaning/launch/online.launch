@@ -11,12 +11,6 @@
 
     <include file="$(find ar_track_alvar)/launch/usb_cam_ar_track.launch" if="$(eval arg('mode') == 'real')"></include>
 
-    <include file="$(find mir_driver)/launch/mir.launch" if="$(eval arg('mode') == 'real')">
-        <arg name="mir_hostname" value="192.168.120.209" />
-    </include>
-
-    <node pkg="utility" name="mir_node" type="mir_node.py" output="screen" if="$(eval arg('mode') == 'real')"/>
-    <arg name="arg_name" default="desired_value"/>
 
     <node pkg="cleaning" type="machine_calibration.py" name="machine_calibration"
           if="$(eval arg('mode') == 'real')"  output="screen" args="toto" ns="/dsr01m1013">
@@ -42,8 +36,8 @@
 <!--     </node> -->
     <node pkg="cleaning" name="telemetrie" type="telemetrie.py" output="screen"/>
 
-    <arg name="command_args" value="-d $(find cleaning)/config/mir.rviz" />
-    <node name="mir_rviz"  pkg="rviz" type="rviz" respawn="false" args="$(arg command_args)" output="screen" if="$(eval arg('mode') == 'real')"/>
+<!--    <arg name="command_args" value="-d $(find cleaning)/config/mir.rviz" />-->
+<!--    <node name="mir_rviz"  pkg="rviz" type="rviz" respawn="false" args="$(arg command_args)" output="screen" if="$(eval arg('mode') == 'real')"/>-->
 
 
 

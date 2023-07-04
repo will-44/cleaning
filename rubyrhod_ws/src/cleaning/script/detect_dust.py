@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import sys
+
+import rospkg
 import rospy
 import cv2
 from std_msgs.msg import String, Float64MultiArray, Int32
@@ -22,21 +24,14 @@ class detectDust:
         self.dust_pixels_pub = rospy.Publisher("/dust_pixels", Floats, queue_size=1)
         self.bridge = CvBridge()
 
-        if callback_activate:
-            self.image_sub = rospy.Subscriber("/rgb/image_raw", Image, self.callback)
 
-            self.max_hue_sub = rospy.Subscriber("/max_hue", Int32, self.callback_max_hue)
-            self.max_value_sub = rospy.Subscriber("/max_value", Int32, self.callback_max_value)
-            self.max_saturation_sub = rospy.Subscriber("/max_saturation", Int32, self.callback_max_saturation)
-
-            self.min_hue_sub = rospy.Subscriber("/min_hue", Int32, self.callback_mim_hue)
-            self.min_value_sub = rospy.Subscriber("/min_value", Int32, self.callback_mim_value)
-            self.min_saturation_sub = rospy.Subscriber("/min_saturation", Int32, self.callback_mim_saturation)
-
-            self.depth_sub = rospy.Subscriber("/depth_to_rgb/image_raw", Image, self.callback_depth)
 
         self.depth = 0
         self.camera_info = rospy.wait_for_message("/rgb/camera_info", CameraInfo, timeout=10)
+        path_mask = rospkg.RosPack().get_path('cleaning') + "/img/mask_depth.png"  # Path to the mask image
+        mask_tool = cv2.imread(path_mask)  # Load the mask image
+        self.mask_tool = cv2.cvtColor(mask_tool, cv2.COLOR_BGR2GRAY)  # Convert the mask image to grayscale
+
         try:
             self.intrinsec = np.reshape(self.camera_info.K, (3, 3))
             print(self.intrinsec)
@@ -50,6 +45,19 @@ class detectDust:
         self.max_saturation = 255
         self.min_value = 56
         self.max_value = 133
+
+        if callback_activate:
+            self.image_sub = rospy.Subscriber("/rgb/image_raw", Image, self.callback)
+
+            self.max_hue_sub = rospy.Subscriber("/max_hue", Int32, self.callback_max_hue)
+            self.max_value_sub = rospy.Subscriber("/max_value", Int32, self.callback_max_value)
+            self.max_saturation_sub = rospy.Subscriber("/max_saturation", Int32, self.callback_max_saturation)
+
+            self.min_hue_sub = rospy.Subscriber("/min_hue", Int32, self.callback_mim_hue)
+            self.min_value_sub = rospy.Subscriber("/min_value", Int32, self.callback_mim_value)
+            self.min_saturation_sub = rospy.Subscriber("/min_saturation", Int32, self.callback_mim_saturation)
+
+            self.depth_sub = rospy.Subscriber("/depth_to_rgb/image_raw", Image, self.callback_depth)
 
     def callback_depth(self, msg):
         self.depth = self.bridge.imgmsg_to_cv2(msg, "16UC1")
@@ -102,15 +110,22 @@ class detectDust:
 
         hsv_image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
 
-        lo_color = (self.min_hue, self.min_saturation, self.min_value)
-        hi_color = (self.max_hue, self.max_saturation, self.max_value)
+        # Remove dead zone cause of the tool
+        hsv_image[self.mask_tool != 0] = [0, 0, 0]
+
+        # lo_color = (self.min_hue, self.min_saturation, self.min_value)
+        # hi_color = (self.max_hue, self.max_saturation, self.max_value)
         # print(lo_color)
         # For Canplex
-        lo_color = (36, 158, 28)#(34, 106, 56)
-        hi_color = (92, 255, 133)
+        # lo_color = (36, 158, 28)#(34, 106, 56)
+        # hi_color = (92, 255, 133)
         # For Sycodal
         # lo_color = (25, 106, 56)
         # hi_color = (92, 255, 133)
+        #
+        # For ETS
+        lo_color = (32, 81, 24)
+        hi_color = (81, 255, 133)
         mask = cv2.inRange(hsv_image, lo_color, hi_color)
 
         kernel_dilate = np.ones((10, 10), 'uint8')

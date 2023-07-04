@@ -146,7 +146,7 @@ if __name__ == '__main__':
     rospy.sleep(1)
     is_sim = True
     dont_move = True
-    is_detect_dust = False
+    is_detect_dust = True
 
     # strat.arm.dsr_resume()
 
@@ -161,15 +161,15 @@ if __name__ == '__main__':
     index_mir = 0
     for spot in strat.base_trajectory:
         # Debug
-        modif_spot = [[1.5406690835952759, -0.5502933263778687, 3.1929985444348996],
-                      [-0.6093308925628662 - 0.25, -0.4002932906150818, 6.123876490737688],
-                      [0.5906690955162048, 0.6497067213058472 + 0.25, 4.67862561105184],
-                      [0.5406690835952759, -1.8502932786941528 - 0.25, 1.6055759290465765]]
-        actual_spot = modif_spot[index_mir]
-        index_mir += 1
+        # modif_spot = [[1.5406690835952759, -0.5502933263778687, 3.1929985444348996],
+        #               [-0.6093308925628662 - 0.25, -0.4002932906150818, 6.123876490737688],
+        #               [0.5906690955162048, 0.6497067213058472 + 0.25, 4.67862561105184],
+        #               [0.5406690835952759, -1.8502932786941528 - 0.25, 1.6055759290465765]]
+        # actual_spot = modif_spot[index_mir]
+        # index_mir += 1
         # End debug
 
-        print(actual_spot[0], actual_spot[1], actual_spot[2])
+        print(spot[0], spot[1], spot[2])
         strat.arm.go_home()
         while strat.arm.check_motion() != 0:
             rospy.sleep(0.8)
@@ -201,7 +201,7 @@ if __name__ == '__main__':
                 rospy.sleep(10)
                 print("continue")
             else:
-                result_mir = strat.robot.move_base(actual_spot[0], actual_spot[1], actual_spot[2])
+                result_mir = strat.robot.move_base(spot[0], spot[1], spot[2])
         # result_mir = False
         if result_mir:
             input("The mir arrived, does the vacuum ready ?")
@@ -256,9 +256,9 @@ if __name__ == '__main__':
                 while strat.arm.check_motion() != 0:
                     rospy.sleep(0.1)
                 rospy.sleep(2)
-                input("next pose:")
+                # input("next pose:")
                 # GO TO DUST
-                if is_detect_dust and not is_sim and res:
+                if is_detect_dust and res:
                     # # All collisions are clear to remove the dust collisions
                     # strat.arm.clear_collisions()
                     # Set the TCP at the end of vacuum, and we add 5cm to set up an approche point.
@@ -329,7 +329,9 @@ if __name__ == '__main__':
                             broadcaster_guard.sendTransform(static_transform_stamped)
 
                         res = strat.arm.go_to_l(dust.pose)
-
+                        # input("next dust:")
+                        while strat.arm.check_motion() != 0:
+                            rospy.sleep(0.1)
                         if res:
                             print("we go to dust")
                             # Go to the dust with compliance

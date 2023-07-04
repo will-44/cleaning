@@ -29,11 +29,11 @@ class MachineCalibration:
         collision_stamp.header.frame_id = "world"
         collision_stamp.pose.orientation.x = 0
         collision_stamp.pose.orientation.y = 0
-        collision_stamp.pose.orientation.z = 0
-        collision_stamp.pose.orientation.w = 1
-        collision_stamp.pose.position.x = 0.71+1.83
-        collision_stamp.pose.position.y = 0.68-0.05
-        collision_stamp.pose.position.z = -0.76
+        collision_stamp.pose.orientation.z = 0.707
+        collision_stamp.pose.orientation.w = 0.707
+        collision_stamp.pose.position.x = 1.83+0.3
+        collision_stamp.pose.position.y = 0.2#0.68-0.2
+        collision_stamp.pose.position.z = -0.76+0.04
 
         arm.add_machine_colision(rospkg.RosPack().get_path('cleaning') + rospy.get_param("/machine_mesh"), collision_stamp)
 

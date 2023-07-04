@@ -51,10 +51,10 @@
     name="vacuum_tube">
     <visual>
       <origin
-        xyz=" 0 0.075 0"
+        xyz=" 0 0.064 0"
         rpy="1.57 0 0" />
       <geometry>
-        <cylinder length="0.15" radius="0.015"/>
+        <cylinder length="0.128" radius="0.012"/>
       </geometry>
       <material
         name="">
@@ -64,14 +64,37 @@
     </visual>
       <collision>
       <origin
-        xyz="0 0.075 0"
+        xyz="0 0.064 0"
         rpy="1.57 0 0" />
       <geometry>
-         <cylinder length="0.15" radius="0.02"/>
+         <cylinder length="0.128" radius="0.012"/>
       </geometry>
     </collision>
   </link>
-
+  <link
+          name="vacuum_sphere">
+    <visual>
+      <origin
+              xyz=" 0 0.02 0"
+              rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.024"/>
+      </geometry>
+      <material
+              name="">
+        <color
+                rgba="0.96078 0.96078 0.96471 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+              xyz="0 0.02 0"
+              rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.024"/>
+      </geometry>
+    </collision>
+  </link>
 
    <link
     name="vacuum_tcp">
@@ -85,7 +108,7 @@
     name="tube_joint"
     type="fixed">
     <origin
-      xyz="0 0.105 0"
+      xyz="0 0.1 0"
       rpy="0 0 0" />
     <parent
       link="vacuum_base_link" />
@@ -94,13 +117,25 @@
   </joint>
 
   <joint
+      name="sphere_joint"
+      type="fixed">
+    <origin
+      xyz="0 0.128 0"
+      rpy="0 0 0" />
+    <parent
+            link="vacuum_tube" />
+    <child
+            link="vacuum_sphere" />
+  </joint>
+
+  <joint
           name="tcp_joint"
           type="fixed">
     <origin
-            xyz="0 0.15 0"
+            xyz="0 0.048 0"
             rpy="0 0 0" />
     <parent
-            link="vacuum_tube" />
+            link="vacuum_sphere" />
     <child
             link="vacuum_tcp" />
   </joint>

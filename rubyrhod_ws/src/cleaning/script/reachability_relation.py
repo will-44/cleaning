@@ -19,7 +19,7 @@ class ReachabilityRelation:
         self.poses_availables_pcd = o3d.geometry.PointCloud()
         self.poses_av_tup = []
 
-        self.robot_length = 0.7  # TODO doing test to verify this value
+        self.robot_length = 0.5  # TODO doing test to verify this value
         self.arm_base_hight = 0.7
         self.debug = debug
 
@@ -151,7 +151,8 @@ if __name__ == '__main__':
     reachability_map_path = rospkg.RosPack().get_path('cleaning') + rospy.get_param("reachability_map")
     relation = ReachabilityRelation(path_machine, reachability_map_path, debug=debug)
     reachability_relation = relation.get_reachability_relation()
-
+    print("Computing finish")
+    print("Start save")
     # Save as pickle
     relation_path = rospkg.RosPack().get_path('cleaning') + rospy.get_param("relation_spot")
     data = DataManager()
