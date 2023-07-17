@@ -29,7 +29,7 @@
     </visual>
     <collision>
       <geometry>
-          <box size="0.0994 0.0996 0.023" />
+          <box size="0.1491 0.1494 0.0345" />
       </geometry>
     </collision>
   </link>
@@ -44,7 +44,7 @@
     </visual>
     <collision>
       <geometry>
-          <box size="0.026 0.103 0.039" />
+          <box size="0.039 0.1545 0.0585" />
       </geometry>
     </collision>
   </link>
@@ -59,7 +59,7 @@
     </visual>
     <collision>
       <geometry>
-          <box size="0.026 0.101 0.037" />
+          <box size="0.039 0.1515 0.0555" />
       </geometry>
     </collision>
   </link>

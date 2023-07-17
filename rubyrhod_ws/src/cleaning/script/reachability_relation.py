@@ -5,6 +5,8 @@ import rospy
 import rospkg
 import copy
 from data_manager import DataManager
+from robot import Robot
+from open3d_tools import Open3dTool
 
 '''
 This class generate all position available for the robot mobile base around the machine
@@ -13,6 +15,8 @@ This class generate all position available for the robot mobile base around the 
 
 class ReachabilityRelation:
     def __init__(self, machine_path, reachability_path, poses_gap=0.05, debug=False):
+        self.robot = Robot()
+        self.o3d_tool = Open3dTool()
         self.point_cloud = o3d.io.read_point_cloud(machine_path)
         self.poses_gap = poses_gap
         self.poses_availables = []
@@ -27,6 +31,7 @@ class ReachabilityRelation:
             self.vis = o3d.visualization.Visualizer()
             self.vis.create_window()
         self.base_poses_pcd = o3d.geometry.PointCloud()
+        self.visible_points = o3d.geometry.PointCloud()
         self.base_poses = self.get_available_poses()
         # Machine mesh
         self.mesh = o3d.io.read_point_cloud(machine_path)
@@ -44,8 +49,8 @@ class ReachabilityRelation:
         # get dimension of point cloud in meter
         dim_max = self.point_cloud.get_max_bound()
         dim_min = self.point_cloud.get_min_bound()
-        nb_pt_x = int((dim_max[0] + 4) / self.poses_gap)
-        nb_pt_y = int((dim_max[1] + 4) / self.poses_gap)
+        nb_pt_x = int((dim_max[0] + 2) / self.poses_gap)
+        nb_pt_y = int((dim_max[1] + 2) / self.poses_gap)
 
         pos_pts_x = []
         pos_pts_y = []
@@ -105,43 +110,89 @@ class ReachabilityRelation:
         '''
         reachability_relation = {}
         reach_map_trans = copy.deepcopy(self.reachability_map)
-        reach_map_trans.paint_uniform_color([0,1,0])
-        self.base_poses_pcd.paint_uniform_color([1,0,0])
-        self.mesh.paint_uniform_color([0,0,1])
+        reach_map_trans.paint_uniform_color([0, 1, 0])
+        self.base_poses_pcd.paint_uniform_color([1, 0, 0])
+        self.mesh.paint_uniform_color([0, 0, 1])
+
+        reach_map_trans_r = o3d.geometry.PointCloud()
         if self.debug:
-            self.vis.add_geometry(reach_map_trans)
+            self.vis.add_geometry(reach_map_trans_r)
             self.vis.add_geometry(self.base_poses_pcd)
-            self.vis.add_geometry(self.mesh)
+            # self.vis.add_geometry(self.mesh)
+            self.visible_points = self.mesh
+            self.vis.add_geometry(self.visible_points)
 
         for pt in self.base_poses:
             reachability_relation.update({pt: []})
         # we check all possible positions
         for pose in reachability_relation.keys():
-            # transform RM to actual base pose, we suppose the position as 1m up to the floor
+            # transform RM to actual base pose, we suppose the position as x m up to the floor and turn to orients it to the machine center
             reach_map_trans = reach_map_trans.translate([pose[0], pose[1], self.arm_base_hight], relative=False)
-            reach_map_vox_trans = o3d.geometry.VoxelGrid.create_from_point_cloud(reach_map_trans,
-                                                                                 voxel_size=0.08)
 
-            if self.debug:
-                self.vis.update_geometry(reach_map_trans)
-                self.vis.poll_events()
-                self.vis.update_renderer()
+            angle = self.robot.mir_pose_angle(pose, self.mesh)
+            # print(angle)
+            reach_map_trans_r.points = reach_map_trans.points
+            rot = reach_map_trans_r.get_rotation_matrix_from_xyz((0, 0, angle))
+            reach_map_trans_r.rotate(rot)
+
+            reach_map_vox_trans = o3d.geometry.VoxelGrid.create_from_point_cloud(reach_map_trans_r,
+                                                                                 voxel_size=0.16)
 
             # check how much the new RM include mesh points
             # Here we consider all point in the workspace to be with quality at 1
             # TODO get the real quality and compute from that
-            queries = np.asarray(self.mesh.points)
-            bool_points_reachable = reach_map_vox_trans.check_if_included(o3d.utility.Vector3dVector(queries))
+            # OLD ONE
+            # queries = np.asarray(self.mesh.points)
 
-            # We get all point that are reachable and add it in the dict
-            bool_points_reachable = np.asarray(bool_points_reachable)
-            index_point_reachable = np.where(bool_points_reachable == True)
+            # Test Voxelisation
+            # downpcd = self.mesh.voxel_down_sample(voxel_size=0.05)
+            # queries = np.asarray(downpcd.points)
+            # Test visible points
+            visible_points_new = self.get_visble_points(self.mesh, [pose[0], pose[1], self.arm_base_hight])
+            self.visible_points.points = visible_points_new.points
+            queries = np.asarray(self.visible_points.points)
 
+            # Voxel solution
+            # bool_points_reachable = reach_map_vox_trans.check_if_included(o3d.utility.Vector3dVector(queries))
+            #
+            # # We get all point that are reachable and add it in the dict
+            # bool_points_reachable = np.asarray(bool_points_reachable)
+            # index_points_reachable = np.where(bool_points_reachable == True)
+            # print(type(index_points_reachable))
+
+            # Distance solution
+            pcd, index_points_reachable = self.o3d_tool.compare_pcd(self.visible_points, reach_map_trans_r, precision=0.05)
+            index_points_reachable = (np.asarray(index_points_reachable),)
+            # print(index_points_reachable)
             reachability_relation[pose] = list(
-                map(tuple, np.take(np.around(np.asarray(self.mesh.points), decimals=5),
-                                   index_point_reachable, axis=0)[0]))
+                map(tuple, np.take(np.around(np.asarray(self.visible_points.points), decimals=5),
+                                   index_points_reachable, axis=0)[0]))
 
+            if self.debug:
+                self.vis.update_geometry(reach_map_trans_r)
+                self.vis.update_geometry(self.visible_points)
+                self.vis.poll_events()
+                self.vis.update_renderer()
+            reach_map_trans_r.paint_uniform_color([1, 0, 0])
+            # self.visible_points.paint_uniform_color([0, 1, 0])
+            # hull, _ = self.mesh.compute_convex_hull()
+            # hull_ls = o3d.geometry.LineSet.create_from_triangle_mesh(hull)
+            # hull_ls.paint_uniform_color((1, 0, 0))
+            # o3d.visualization.draw_geometries([self.base_poses_pcd, hull_ls, self.visible_points])
         return reachability_relation
+
+    def get_visble_points(self, pcd, base_pose, reach=10, interval=0.2):
+        all_index = set()
+        for offset in range(round(reach / interval)):
+            camera = [base_pose[0], base_pose[1], base_pose[2] + offset*interval]
+            radius = 70*offset*interval+1
+            # print(offset)
+            _, pt_map = pcd.hidden_point_removal(camera, radius)
+            all_index.update(pt_map)
+            # print(all_index)
+
+        pcd = pcd.select_by_index(list(all_index))
+        return pcd
 
 
 if __name__ == '__main__':

@@ -85,7 +85,6 @@ class Doosan:
         # self.display_trajectory_publisher = rospy.Publisher("/move_group/display_planned_path", DisplayTrajectory, queue_size=20)
         self.get_pos_x()
 
-
     # def callback_joint_state(self, msg):
     #     self.joint_state = msg
     def get_pose(self):
@@ -326,6 +325,7 @@ class Doosan:
         pose_goal.orientation.z = pos.orientation.z
         pose_goal.orientation.w = pos.orientation.w
 
+        self.move_group.set_goal_orientation_tolerance(np.deg2rad(20))
         self.move_group.set_pose_target(pose_goal)
 
         is_plan_valid = self.move_group.go(wait=True)
@@ -344,6 +344,7 @@ class Doosan:
         :return:
         """
         # pos = self.MRadToMMDeg(pos)
+        rospy.loginfo('{nodeName} : Deplacement du mouvement relatif'.format(nodeName=rospy.get_name()))
         print(pos)
         try:
             rospy.wait_for_service('/dsr01m1013/motion/move_line', timeout=5)
@@ -352,7 +353,7 @@ class Doosan:
         try:
             go_srv = rospy.ServiceProxy('/dsr01m1013/motion/move_line', MoveLine)
             result = go_srv(pos, [0, 0], [0, 0], 2, 0, 1, 1, 1, 1)
-            print("msg go to send")
+            # rospy.loginfo('{nodeName} : Mouvement relatif envoyer'.format(nodeName=rospy.get_name()))
             return result
         except rospy.ServiceException as e:
             print("Service call failed: s")
@@ -458,7 +459,7 @@ class Doosan:
             get_rtom_srv = rospy.ServiceProxy('/dsr01m1013/aux_control/get_current_rotm', GetCurrentRotm)
             # ask in space type 1 (base space)
             result = get_rtom_srv(0)
-            rospy.loginfo(result)
+            # rospy.loginfo(result)
             return result
         except rospy.ServiceException as e:
             print("Service call failed: s")
@@ -525,7 +526,7 @@ class Doosan:
         """
         jac = np.asarray(self.move_group.get_jacobian_matrix(self.DegToRad(self.get_pos_j())))
         mani = np.sqrt(np.linalg.det(jac @ jac.T))
-        print(mani)
+        # print(mani)
 
     def check_collision(self, poses):
         """
@@ -559,7 +560,7 @@ class Doosan:
         Send the doosan to home pose
         :return: bool
         """
-        res = self.go_to_j([0, -0.610865, 2.35619, 3.1415, 0, -3.05433])
+        res = self.go_to_j([0, -0.610865, 2.35619, 0, 0, 0])
         return res
 
     def is_plan_valid(self, joints):
@@ -594,7 +595,8 @@ class Doosan:
     def get_joint_limit_index(self, configuration, k=1):
         in_exp = 1
         for index in range(5):
-            in_exp = in_exp * (((configuration[index] - self.joint_limit[index][0]) * (self.joint_limit[index][1] - configuration[index])) /
+            in_exp = in_exp * (((configuration[index] - self.joint_limit[index][0]) * (
+                    self.joint_limit[index][1] - configuration[index])) /
                                (self.joint_limit[index][1] - self.joint_limit[index][0]))
         P = 1 - math.exp(- k * in_exp)
         return P
@@ -625,3 +627,19 @@ class Doosan:
                 upper_limit = float(limit.attrib["upper"])
                 joint_limits.append([lower_limit, upper_limit])
         return joint_limits
+
+    def get_joint_velocity_limit(self):
+        # tree =
+        # Charger le fichier URDF
+        root = ET.fromstring(rospy.get_param("/dsr01m1013/robot_description"))
+        # root = tree.getroot()
+
+        # Parcourir les éléments du fichier URDF
+        joint_speed_limits = []
+        for joint in root.iter("joint"):
+            # Vérifier si le joint a une limite
+            if joint.find("limit") is not None:
+                limit = joint.find("limit")
+                velocity_limit = float(limit.attrib["velocity"])
+                joint_speed_limits.append([velocity_limit])
+        return np.asarray(joint_speed_limits)

@@ -1,7 +1,7 @@
 ar_tag: ar_marker_2
 compute_best_spots: true
 compute_relation_guards: true
-debug: false
+debug: true
 generate_guards: true
 guards_limit: 50
 guards_pcd: /data/final_guards
@@ -55,4 +55,4 @@ table2ar2_calibration_mat:
   - 0.0
   - 0.0
   - 1.0
-trajectorie: /data/evaluation/100/1/80/0.8trajectorie.plk
+trajectorie: /data/evaluation/10/1/50/1trajectorie.plk

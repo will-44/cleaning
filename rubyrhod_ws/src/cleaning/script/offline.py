@@ -31,8 +31,6 @@ import matplotlib.pyplot as plt
 import math
 
 
-
-
 class Offline:
 
     def __init__(self, path_machine, path_mesh, relation_path, debug=False):
@@ -145,9 +143,9 @@ class Offline:
             relation_indice = {}
             for elem in relation.keys():
                 I = round(math.pow(self.arm.get_manipulability(list(elem)) *
-                          self.arm.get_joint_limit_index(list(elem))/self.arm.joint_index_max, 1) *
-                          math.pow(len(relation[elem])/len(self.pcd_machine.points), 0.5), 4)
-                print(I)
+                                   self.arm.get_joint_limit_index(list(elem)) / self.arm.joint_index_max, 1) *
+                          math.pow(len(relation[elem]) / len(self.pcd_machine.points), 0.5), 4)
+                # print(I)
                 relation_indice[I] = elem
 
             best_key = max(relation_indice.keys())
@@ -163,8 +161,6 @@ class Offline:
                 # rospy.loginfo(len(longest_value))
                 # rospy.loginfo(max_value)
                 break
-
-
 
             extracted_values[best_config] = longest_value
             del relation[best_config]
@@ -217,7 +213,7 @@ class Offline:
         ikin = self.arm.ikin_moveit(guard.pose, "camera_base")
 
         if ikin.error_code.val == 1:
-            tcp_map = guard#self.arm.fkin_moveit(pose, "camera_base").pose_stamped[0]
+            tcp_map = guard  # self.arm.fkin_moveit(pose, "camera_base").pose_stamped[0]
 
             quaternion = (
                 tcp_map.pose.orientation.x,
@@ -291,15 +287,12 @@ class Offline:
         msg.layout.dim[1].stride = 4
         return self.fov_emulator.get_visible_point(msg)
 
-
     def get_fov_transformation(self, pose):
         '''
        Return the TCP pose in the map frame
        :param pose: The tcp pose in the map
        :return: translatio matrix  and is pose valide
        '''
-
-
 
         # transform the pose from the map to the base_footprint
         try:
@@ -331,7 +324,6 @@ class Offline:
         cone_transform.resize(1, 16)
 
         return cone_transform[0], tcp_machine
-
 
     def get_next_pose(self):
         """
@@ -458,11 +450,11 @@ class Offline:
         # o3d.visualization.draw_geometries([pcd_sampled])
         return pcd_sampled
 
-    def cluster_pcd(self, pcd):
+    def cluster_pcd(self, pcd, esp=0.5, min_points=10):
         with o3d.utility.VerbosityContextManager(
                 o3d.utility.VerbosityLevel.Debug) as cm:
             labels = np.array(
-                pcd.cluster_dbscan(eps=0.05, min_points=10, print_progress=True))
+                pcd.cluster_dbscan(eps=esp, min_points=min_points, print_progress=True))
 
         max_label = labels.max()
         # print(f"point cloud has {max_label + 1} clusters")
@@ -482,7 +474,7 @@ class Offline:
         return cluster_centers, clusters_pcds
 
     def chose_spot_from_vectors(self, vectors, spots, cluster_center):
-        # Choix sot associate
+        # Choix spot associate
 
         angles = np.arctan2(vectors[:, 1], vectors[:, 0])
         means_angle = np.mean(angles)
@@ -522,7 +514,7 @@ if __name__ == '__main__':
     spots = []
     spots = offline.data_manager.load_var_pickle(
         rospkg.RosPack().get_path('cleaning') + rospy.get_param("/spots"))
-
+    print(spots)
     pcds_spots = offline.data_manager.load_pcd_list(rospkg.RosPack().get_path('cleaning') +
                                                     rospy.get_param("/spots_pcds"))
     # print(pcds_spots)
@@ -583,6 +575,7 @@ if __name__ == '__main__':
     if (debug):
         o3d.visualization.draw_geometries(pcds_spots)
     for index, spot in enumerate(spots):
+        print(spot)
         spot[2] = offline.robot.mir_pose_angle(spot, pcds_spots[index])
         offline.robot.move_mobile_base(spot[0], spot[1], spot[2])
         # rospy.sleep(10)
@@ -608,12 +601,13 @@ if __name__ == '__main__':
             rospy.loginfo("pb dans la transformation")
 
         result_dict = offline.select_best_guard(offline.dict_pos2pts, offline.pcd_machine,
-                                               limit=rospy.get_param("/guards_limit"), index_it=index)
-        best_guard = list(result_dict.keys())
+                                                limit=rospy.get_param("/guards_limit"), index_it=index)
+        best_guard_configurations = list(map(list, list(result_dict.keys())))
+
         guard_observation_pcd = list(result_dict.values())
         observed_pcd = np.concatenate((observed_pcd, guard_observation_pcd), axis=0)
         guard = []
-        for configuration in best_guard:
+        for configuration in best_guard_configurations:
             fkin = offline.arm.fkin_moveit(configuration, "camera_base")
             fkin = tf2_geometry_msgs.do_transform_pose(fkin.pose_stamped[0], trans_machine)
             pose = np.array([fkin.pose.position.x, fkin.pose.position.y, fkin.pose.position.z])
@@ -625,16 +619,17 @@ if __name__ == '__main__':
 
         guard_np = np.asarray(guard.points)
 
-        if np.size(guard_np, 0) > 1:
-            # Check guards accessibility
-            dist_matrix = ((euclidean_distance_matrix(guard_np)) * 1000).astype(int)
-            dist_matrix = offline.open3d_tool.check_obs_btw_points(dist_matrix, guard_np, offline.mesh_machine)
+        if np.size(best_guard_configurations, 0) > 1:
+            # get distance matrix in radian in miliseconde
+            dist_matrix = ((offline.robot.joint_tsp(np.asarray(best_guard_configurations),
+                                                    offline.arm.get_joint_velocity_limit())) * 1000).astype(int)
+            # dist_matrix = offline.open3d_tool.check_obs_btw_points(dist_matrix, guard_np, offline.mesh_machine)
             # Generate path
             permutation = offline.robot.generate_trajectory(dist_matrix)
 
             # Update the final trajectory
-            offline.offline_trajectory[tuple(spot)] = offline.robot.sort_poses(best_guard, permutation)
-
+            offline.offline_trajectory[tuple(spot)] = offline.robot.sort_poses(best_guard_configurations, permutation)
+            guard_np = offline.robot.sort_poses(guard_np, permutation)
             # DEBUG
             if debug:
                 lines = []
@@ -648,14 +643,14 @@ if __name__ == '__main__':
                 line_set.colors = o3d.utility.Vector3dVector(colors)
 
                 o3d.visualization.draw_geometries([guard, offline.pcd_machine, line_set])
-
+        else:
+            offline.offline_trajectory[tuple(spot)] = []
     file = rospy.get_param("/guards_pcd")
     o3d.io.write_point_cloud(rospkg.RosPack().get_path('cleaning') + file + ".ply", guard)
     file = rospy.get_param("/observed_pcd")
     offline.data_manager.save_pcd_list(observed_pcd, rospkg.RosPack().get_path('cleaning') + file)
 
     # NEW PART
-
 
     file = rospy.get_param("/observed_pcd")
     pcds = offline.data_manager.load_pcd_list(rospkg.RosPack().get_path('cleaning') + file)
@@ -664,10 +659,10 @@ if __name__ == '__main__':
     # Generate non obsevable area
     observable_pcd = offline.open3d_tool.fuse_pcds(pcds)
     # Search for non observed point
-    non_obs_pcd = offline.open3d_tool.compare_pcd(offline.pcd_machine, observable_pcd)
+    non_obs_pcd = offline.open3d_tool.compare_pcd(offline.pcd_machine, observable_pcd, "sup")
 
     # Get center from each cluster non observable
-    cluster_center_np, clusters_pcds = offline.cluster_pcd(non_obs_pcd)
+    cluster_center_np, clusters_pcds = offline.cluster_pcd(non_obs_pcd, esp=0.02)
 
     # Ray Cast
     # Genreate ray around machine
@@ -690,7 +685,7 @@ if __name__ == '__main__':
     # generate raycast for cluster centers
     cluster_np = np.asarray(cluster_center_np)
     dest_np = np.asarray(pcd_ray_dest.points)
-
+    print(cluster_np)
     observable_concavity = []
     # For each cluster
     for i, clust_pt in enumerate(cluster_np):
@@ -709,24 +704,24 @@ if __name__ == '__main__':
         # Remove rays origines to keep only vector of each rays
         vectors_out = rays_out[:, 3:]
 
-
-
-        # Select spot accossocaite
+        # Select spot associate
         if vectors_out.size != 0:
             clusterise = offline.open3d_tool.clusterise_dbscan(vectors_out)
+            print(clusterise)
             if clusterise:
                 # Get best vector
                 biggest_exit = max(clusterise, key=len)
                 best_vec_exit = vectors_out[biggest_exit]
-                # rospy.loginfo("Best spot:")
+                rospy.loginfo("Best spot:")
 
                 spots = np.asarray(list(map(list, list(offline.offline_trajectory.keys()))))
                 # rospy.loginfo(spots)
                 spot = offline.chose_spot_from_vectors(best_vec_exit, spots, clust_pt)
-                # rospy.loginfo(spot)
+                rospy.loginfo(spot)
                 # Choix orientation et position TCP
                 # trans to spherical
-                rayons, thetas, phis = offline.open3d_tool.euler2polar(best_vec_exit[:, 0], best_vec_exit[:, 1], best_vec_exit[:, 2])
+                rayons, thetas, phis = offline.open3d_tool.euler2polar(best_vec_exit[:, 0], best_vec_exit[:, 1],
+                                                                       best_vec_exit[:, 2])
 
                 # TODO, Here change to sample from 0.3 to 1m by 10cm until the pos is valid
                 means_thetas = np.mean(thetas)
@@ -744,14 +739,16 @@ if __name__ == '__main__':
                 collision_stamp = PoseStamped()
                 collision_stamp.header.frame_id = "machine"
                 collision_stamp.pose.orientation.w = 1
-                offline.arm.add_machine_colision(rospkg.RosPack().get_path('cleaning') + rospy.get_param("/machine_mesh"),
-                                                 collision_stamp)
+                offline.arm.add_machine_colision(
+                    rospkg.RosPack().get_path('cleaning') + rospy.get_param("/machine_mesh"),
+                    collision_stamp)
                 # rospy.sleep(10)
 
                 # compute transform machine to base
                 offline.get_transform_base()
-
+                print("Test all 7 guards")
                 for r in np.arange(0.1, 0.7, 0.1):
+                    print("In the for loop")
                     # coord for guard:
                     vector_guard = offline.open3d_tool.polar2euler(means_thetas, means_phis, r)
 
@@ -785,16 +782,14 @@ if __name__ == '__main__':
 
                     offline.broadcaster_guard.sendTransform(static_transform_stamped)
 
-
-
                     # transform to world frame
                     guard = tf2_geometry_msgs.do_transform_pose(guard, offline.trans_base)
 
                     is_valid, ikin, joint_configuration = offline.check_guard_validity(guard)
 
                     if is_valid:
+                        print("Find a valid pose")
                         matrix, tcp_machine = offline.get_fov_transformation(guard)
-
 
                         # send tf
                         static_transform_stamped = TransformStamped()
@@ -811,7 +806,6 @@ if __name__ == '__main__':
 
                         offline.broadcaster_cone.sendTransform(static_transform_stamped)
 
-
                         # send matrix to node
                         msg = Float64MultiArray()
                         msg.layout.dim.append(MultiArrayDimension())
@@ -826,11 +820,21 @@ if __name__ == '__main__':
                         pcd_observable = offline.fov_emulator.get_visible_point(msg)
                         observable_concavity.append(o3d_ros.rospc_to_o3dpc(pcd_observable))
                         # save pts at spot index
-                        # offline.offline_trajectory[tuple(spot)].append(joint_configuration)
+                        # print(type(joint_configuration))
+                        value = np.asarray(offline.offline_trajectory.get(tuple(spot)))
+                        if not np.any(value):
+                            value = []
+                        # print(value)
+                        else:
+                            value = value.tolist()
+                        print(type(value))
+                        new_joints = value.append(joint_configuration)
+                        offline.offline_trajectory.update({tuple(spot): new_joints})
                         # rospy.loginfo("resultats:")
                         # rospy.loginfo(offline.offline_trajectory[tuple(spot)])
                         # rospy.loginfo(joint_configuration)
-                        np.append(offline.offline_trajectory[tuple(spot)], [joint_configuration], axis=0)
+
+                        # np.append(offline.offline_trajectory[tuple(spot)], [joint_configuration], axis=0)
                         break
 
     # rospy.loginfo(observable_concavity)
@@ -838,10 +842,7 @@ if __name__ == '__main__':
     file = rospy.get_param("/observable_concavity")
     offline.data_manager.save_pcd_list(observable_concavity, rospkg.RosPack().get_path('cleaning') + file)
 
-
-
     # input("finish !!")
-
 
     # END NEW PART
     # set spot z to 1m, only for better visual understanding

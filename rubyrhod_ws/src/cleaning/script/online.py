@@ -94,7 +94,7 @@ class OnlineStrategy:
                                                           rospy.Duration(1.0))
             except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
                     tf2_ros.ExtrapolationException):
-                rospy.loginfo("pb dans la transformation")
+                rospy.loginfo('{nodeName} : Aucun message de la transformation'.format(nodeName=rospy.get_name()))
             for pt in dust_poses:
                 pose = geometry_msgs.msg.PoseStamped()
                 pose.pose.position.x = pt[0]
@@ -174,8 +174,6 @@ if __name__ == '__main__':
         while strat.arm.check_motion() != 0:
             rospy.sleep(0.8)
 
-
-
         answ = input("Are you ready to go to the next spot ?")
         if answ == "no":
             pass
@@ -195,10 +193,11 @@ if __name__ == '__main__':
                 # except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
                 #         tf2_ros.ExtrapolationException):
                 #     rospy.loginfo("pb dans la transformation")
-                collision_stamp = tf2_geometry_msgs.do_transform_pose(collision_stamp, trans_machine)
-                strat.arm.add_machine_colision(rospkg.RosPack().get_path('cleaning') + rospy.get_param("/machine_mesh"),
-                                               collision_stamp)
-                rospy.sleep(10)
+
+                # collision_stamp = tf2_geometry_msgs.do_transform_pose(collision_stamp, trans_machine)
+                # strat.arm.add_machine_colision(rospkg.RosPack().get_path('cleaning') + rospy.get_param("/machine_mesh"),
+                #                                collision_stamp)
+                # rospy.sleep(10)
                 print("continue")
             else:
                 result_mir = strat.robot.move_base(spot[0], spot[1], spot[2])
@@ -206,7 +205,7 @@ if __name__ == '__main__':
         if result_mir:
             input("The mir arrived, does the vacuum ready ?")
             # # clear la octomap
-            strat.arm.clear_collisions()
+
             # activate octomap
             strat.octo_pub.publish(True)
 
@@ -239,8 +238,11 @@ if __name__ == '__main__':
                     static_transform_stamped.transform.rotation.w = tcp_pose.orientation.w
 
                     broadcaster_guard.sendTransform(static_transform_stamped)
-
+                    rospy.loginfo('{nodeName} : Position pour le GUARD'.format(nodeName=rospy.get_name()))
                     print(np.degrees(pose))
+                    rospy.loginfo('{nodeName} : GUARD numero: '.format(nodeName=rospy.get_name()))
+                    print(str(index)+"sur " + str(len(arm_poses)))
+
                 res = strat.arm.go_to_j(pose)
 
                 config = JointState()
@@ -276,10 +278,12 @@ if __name__ == '__main__':
                     if len(dust_poses) > 1:
                         dist_matrix = ((euclidean_distance_matrix(dust_poses)) * 1000).astype(int)
                         dust_permutation = strat.robot.generate_trajectory(dist_matrix, 2)
-                        print(dust_permutation)
+
 
                         # Sort points
                         dust_poses = strat.robot.sort_poses(dust_poses, dust_permutation)
+                        rospy.loginfo('{nodeName} : Position des dust: '.format(nodeName=rospy.get_name()),
+                                      )
                         print(dust_poses)
 
                     tcp_pose = strat.arm.get_pose()
@@ -289,7 +293,8 @@ if __name__ == '__main__':
                                                                rospy.Duration(1))
                     except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
                             tf2_ros.ExtrapolationException):
-                        rospy.loginfo("pb dans la transformation")
+                        rospy.loginfo(
+                            '{nodeName} : Aucun message de la transformation'.format(nodeName=rospy.get_name()))
                     tcp_pose_world = tf2_geometry_msgs.do_transform_pose(tcp_pose, trans_tcp)
 
                     try:
@@ -297,9 +302,9 @@ if __name__ == '__main__':
                                                                  rospy.Duration(1))
                     except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
                             tf2_ros.ExtrapolationException):
-                        rospy.loginfo("pb dans la transformation")
+                        rospy.loginfo(
+                            '{nodeName} : Aucun message de la transformation'.format(nodeName=rospy.get_name()))
                     for dust in dust_poses:
-
                         pose = tcp_pose_world
                         pose.pose.position.x = dust[0]
                         pose.pose.position.y = dust[1]
@@ -333,7 +338,8 @@ if __name__ == '__main__':
                         while strat.arm.check_motion() != 0:
                             rospy.sleep(0.1)
                         if res:
-                            print("we go to dust")
+                            rospy.loginfo('{nodeName} : Go to dust'.format(nodeName=rospy.get_name()))
+
                             # Go to the dust with compliance
 
                             strat.arm.dsr_set_tcp("vacuum")
@@ -342,18 +348,21 @@ if __name__ == '__main__':
                             # input("coucou1")
                             # strat.arm.set_compliance()
                             # rospy.sleep(1)
-                            res = strat.arm.dsr_go_relatif([0, 0, 65, 0, 0, 0])
+                            rospy.loginfo('{nodeName} : Go linear forward'.format(nodeName=rospy.get_name()))
+                            res = strat.arm.dsr_go_relatif([0, 0, 30, 0, 0, 0])
                             # res = strat.arm.dsr_go_relatif([0, 0, 65, 0, 0, 0])
                             # rospy.sleep(2)
-                            print("forward:", res)
+
+
                             # input("coucou1")
                             rospy.sleep(2)
 
                             # res = strat.arm.dsr_spiral(5, 10, 5)
                             # print("spiral: ", res)
                             # input("coucou2")
+                            rospy.loginfo('{nodeName} : Go linear backward'.format(nodeName=rospy.get_name()))
                             strat.arm.dsr_go_relatif([0, 0, -75, 0, 0, 0])
-                            rospy.sleep(2)
+                            rospy.sleep(4)
 
                             # while strat.arm.check_motion() != 0:
                             #     rospy.sleep(2)
@@ -380,6 +389,7 @@ if __name__ == '__main__':
             strat.octo_pub.publish(False)
             # clear la octomap
             # strat.arm.clear_collisions()
+            strat.arm.clear_collisions()
 
     # input("Cleanning finish, press enter to continue:")
     strat.finish_pub.publish(True)

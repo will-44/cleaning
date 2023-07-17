@@ -48,7 +48,7 @@ class FovEmulator:
         #                     cone_r
 
         self.cone_x = 0.5
-        self.cone_alpha = radians(30)  # fov min /2
+        self.cone_alpha = radians(37.15)  # fov min /2
         self.cone_r = self.cone_x * math.tan(self.cone_alpha)
         self.cone_surface = self.cone_r / math.sin(self.cone_alpha)
 
@@ -92,7 +92,7 @@ class FovEmulator:
         camera = cone_t_np[0]
 
         # Get all points visible by the camera
-        radius = 100
+        radius = 10
         # diameter = np.linalg.norm(
         #     np.asarray(machine_pcd.get_max_bound()) - np.asarray(machine_pcd.get_min_bound()))
         # radius = diameter * 10

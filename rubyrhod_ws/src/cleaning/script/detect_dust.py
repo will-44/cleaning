@@ -24,8 +24,6 @@ class detectDust:
         self.dust_pixels_pub = rospy.Publisher("/dust_pixels", Floats, queue_size=1)
         self.bridge = CvBridge()
 
-
-
         self.depth = 0
         self.camera_info = rospy.wait_for_message("/rgb/camera_info", CameraInfo, timeout=10)
         path_mask = rospkg.RosPack().get_path('cleaning') + "/img/mask_depth.png"  # Path to the mask image
@@ -36,9 +34,10 @@ class detectDust:
             self.intrinsec = np.reshape(self.camera_info.K, (3, 3))
             print(self.intrinsec)
         except:
-            rospy.loginfo("No camera info")
-    #         lo_color = (34, 106, 56)
-    # hi_color = (92, 255, 133)
+            rospy.loginfo('{nodeName} : No camera info'.format(nodeName=rospy.get_name()))
+
+        # lo_color = (34, 106, 56)
+        # hi_color = (92, 255, 133)
         self.min_hue = 34
         self.max_hue = 92
         self.min_saturation = 106

@@ -10,7 +10,7 @@ import rospy
 class DataManager:
 
     def __init__(self):
-        print("ok")
+        rospy.loginfo('{nodeName} : DataMenager init'.format(nodeName = rospy.get_name()))
 
     def save_pcd_list(self, pcd_list, file_name_prefix):
         """

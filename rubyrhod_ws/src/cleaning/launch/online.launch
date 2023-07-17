@@ -26,7 +26,7 @@
          <arg name="mode" value="real"/>
      </include>
 
-    <node pkg="cleaning" name="collision_depth" type="collisions_filter" output="screen" if="$(eval arg('mode') == 'real')"/>
+<!--    <node pkg="cleaning" name="collision_depth" type="collisions_filter" output="screen" if="$(eval arg('mode') == 'real')"/>-->
 
     <node pkg="cleaning" name="detect_dust" type="detect_dust.py" output="screen" if="$(eval arg('mode') == 'real')"/>
     <node pkg="cleaning" name="dust_service" type="dust_service.py" output="screen" if="$(eval arg('mode') == 'real')"/>
@@ -40,6 +40,7 @@
 <!--    <node name="mir_rviz"  pkg="rviz" type="rviz" respawn="false" args="$(arg command_args)" output="screen" if="$(eval arg('mode') == 'real')"/>-->
 
 
+    <node name="record_camera"  pkg="cleaning" type="topic2video.py" respawn="false" args="-topic '/rgb/image_raw' -f '/home/will/Videos/record.mp4' -r 5" output="screen" if="$(eval arg('mode') == 'real')"/>
 
 <!--     <include file="$(find azure_iot)/launch/log_upload.launch"></include> -->
 </launch>

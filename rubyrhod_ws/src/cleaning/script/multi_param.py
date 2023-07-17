@@ -17,9 +17,10 @@ import os
 if __name__ == '__main__':
     rospy.init_node('emulate_camera', anonymous=True)
 
-    spot_limits = [100, 50, 30, 20, 10]
+    spot_limits = [20, 10]
     guard_potentials = [1]
-    guard_limits = [100, 80, 50, 20, 10]
+    # guard_limits = [80, 50, 20, 10]
+    guard_limits = [5, 2]
     maneuvrability_coeffs = [1]
     for spot_limit in spot_limits:
         # Change spots limit

@@ -174,14 +174,28 @@ class Open3dTool:
         thetas = np.arccos(z / rayons)
         phis = np.arctan2(y, x)
         return rayons, thetas, phis
+
     def polar2euler(self, theta, phi, rayon):
         x = rayon * np.sin(theta) * np.cos(phi)
         y = rayon * np.sin(theta) * np.sin(phi)
         z = rayon * np.cos(theta)
         return np.array([x, y, z])
-    def compare_pcd(self, initial_pcd, goal_pcd, precision=0.0001):
+
+    def compare_pcd(self, initial_pcd, goal_pcd, precision=0.0001, diff="sup"):
         dists = initial_pcd.compute_point_cloud_distance(goal_pcd)
         dists = np.asarray(dists)
-        ind = np.where(dists > precision)[0]
+        if diff == "sup":  # pour offline generation
+            ind = np.where(dists > precision)[0]
+        else:
+            ind = np.where(dists < precision)[0]
         diff_pcd = initial_pcd.select_by_index(ind)
-        return diff_pcd
+        return diff_pcd, ind
+
+    # TODO need to be change
+
+    # def compare_pcd(self, initial_pcd, goal_pcd, precision=0.0001):
+    #     dists = initial_pcd.compute_point_cloud_distance(goal_pcd)
+    #     dists = np.asarray(dists)
+    #     ind = np.where(dists < precision)[0]
+    #     diff_pcd = initial_pcd.select_by_index(ind)
+    #     return diff_pcd, ind

@@ -28,7 +28,6 @@ class Robot:
         # Subscribers
         self.mir_sub = rospy.Subscriber("/mir_result", Bool, self.callback_mir)
 
-
         # Global var
         self.mir_result = False
         self.mir_did_answer = False
@@ -79,7 +78,7 @@ class Robot:
                                                    rospy.Duration(1.0))
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
                 tf2_ros.ExtrapolationException):
-            rospy.loginfo("pb dans la transformation")
+            rospy.loginfo('{nodeName} : Aucun message de la transformation'.format(nodeName=rospy.get_name()))
         tcp_pose_world = tf2_geometry_msgs.do_transform_pose(pose, trans_mir)
         euler = euler_from_quaternion([tcp_pose_world.pose.orientation.x, tcp_pose_world.pose.orientation.y,
                                        tcp_pose_world.pose.orientation.z, tcp_pose_world.pose.orientation.w])
@@ -120,7 +119,7 @@ class Robot:
                                                    rospy.Duration(1.0))
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
                 tf2_ros.ExtrapolationException):
-            rospy.loginfo("pb dans la transformation")
+            rospy.loginfo('{nodeName} : Aucun message de la transformation'.format(nodeName=rospy.get_name()))
         tcp_pose_world = tf2_geometry_msgs.do_transform_pose(pose_mir, trans_mir)
         euler = euler_from_quaternion([tcp_pose_world.pose.orientation.x, tcp_pose_world.pose.orientation.y,
                                        tcp_pose_world.pose.orientation.z, tcp_pose_world.pose.orientation.w])
@@ -134,12 +133,11 @@ class Robot:
         tcp_pose_world.pose.position.z = 0
         print(tcp_pose_world)
 
-
         display_marker(Marker.ARROW, x, y, 0, quaternion[0], quaternion[1], quaternion[2], quaternion[3], "machine")
         # print(pose_mir)
         self.mir_pub.publish(tcp_pose_world)
         rospy.sleep(1)
-        rospy.loginfo("pose send")
+        rospy.loginfo('{nodeName} : Message envoyer a la base mobile'.format(nodeName=rospy.get_name()))
         tcp_pose_world.header.stamp = rospy.get_rostime()
         while not self.mir_did_answer:
             rospy.sleep(0.1)
@@ -201,3 +199,16 @@ class Robot:
             result[index_loop] = poses[index_value]
         return result
 
+    def joint_tsp(self, configurations, robot_speeds):
+        '''
+
+        :param configurations: the array of guards configurations
+        :param robot_speeds: the speed of all joints
+        :return: The list of index order
+        '''
+        distances = np.zeros((len(configurations), len(configurations)))
+        for i, initial_config in enumerate(configurations):
+            for j, compare_config in enumerate(configurations):
+                diff = np.max(np.abs(initial_config - compare_config) / robot_speeds)
+                distances[i, j] = diff
+        return distances
