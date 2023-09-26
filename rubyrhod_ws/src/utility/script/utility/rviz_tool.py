@@ -57,7 +57,7 @@ def display_marker(marker_type: object, x: object, y: object, z: object, t: obje
     publisher.publish(m)
 
 
-def display_marker_array(marker_type, poses, ref):
+def display_marker_array(marker_type, poses, colors, ref):
     """
     Send many markers to rviz
     :param marker_type: type
@@ -68,13 +68,13 @@ def display_marker_array(marker_type, poses, ref):
     msg = MarkerArray()
     all_marks = []
     i = 0
-    for pose in poses:
+    for i, pose in enumerate(poses):
         m = Marker()
         m.action = Marker.ADD
         m.header.frame_id = ref
         m.header.stamp = rospy.Time.now()
         m.ns = 'marker_test_%d' % i
-        i += 1
+        # i += 1
         m.id = 0
         m.type = marker_type
         m.pose = pose.pose
@@ -88,9 +88,10 @@ def display_marker_array(marker_type, poses, ref):
             m.scale.y = 0.01
             m.scale.z = 0.01
         m.color.a = 1
-        m.color.r = 1
-        m.color.g = 0
-        m.color.b = 0
+
+        m.color.r = colors[i][0]
+        m.color.g = colors[i][1]
+        m.color.b = colors[i][2]
         all_marks.append(m)
     msg.markers = all_marks
     array_publisher.publish(msg)

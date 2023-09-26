@@ -4,11 +4,13 @@ import rospy
 
 from dsr_msgs.srv import Ikin
 from dsr_msgs.srv import Fkin
+from dsr_msgs.srv import GetSolutionSpace
 from dsr_msgs.srv import MoveJoint
 from dsr_msgs.srv import MoveLine
 from dsr_msgs.srv import MoveSpiral
 from dsr_msgs.srv import MoveStop
 from dsr_msgs.srv import MoveResume
+from dsr_msgs.srv import GetCurrentPosx
 from dsr_msgs.srv import GetCurrentPose
 from dsr_msgs.srv import GetCurrentPosj
 from dsr_msgs.srv import CheckMotion
@@ -17,13 +19,16 @@ from dsr_msgs.srv import SetCurrentTcp
 from dsr_msgs.srv import SetCurrentTool
 from dsr_msgs.srv import TaskComplianceCtrl
 from dsr_msgs.srv import ReleaseComplianceCtrl
+from dsr_msgs.srv import GetSolutionSpace
 
 from moveit_msgs.srv import GetPositionIK
 from moveit_msgs.srv import GetStateValidity
 from moveit_msgs.srv import GetPositionFK
 from moveit_msgs.msg import RobotState
 from moveit_msgs.msg import RobotState, PositionIKRequest, AttachedCollisionObject
-from geometry_msgs.msg import PoseStamped
+from geometry_msgs.msg import PoseStamped, Pose
+
+from std_msgs.msg import Float64MultiArray
 
 import numpy as np
 import sys
@@ -44,7 +49,7 @@ class Doosan:
         self.group_name = "arm"
         self.move_group = moveit_commander.MoveGroupCommander(self.group_name)
         self.move_group.set_planner_id("RRTConnect")
-        self.move_group.set_planning_time(2)
+        self.move_group.set_planning_time(0.5)
         # Set the end effector as the tcp link, define in the doosan urdf
         # self.move_group.set_end_effector_link("world")
 
@@ -77,6 +82,7 @@ class Doosan:
         # self.scene.attach_box('world', controler_name, controler_pose, size=(0.40, 0.50, 0.40))
         # lower, upper
         self.joint_limit = np.array(self.get_joint_limit())
+        self.joint_speed = self.get_joint_velocity_limit()
         self.joint_index_max = self.get_joint_limit_index(np.mean(self.joint_limit, axis=1))
         # print(self.joint_index_max)
         # Joint state sub
@@ -89,6 +95,23 @@ class Doosan:
     #     self.joint_state = msg
     def get_pose(self):
         return self.move_group.get_current_pose()
+
+    def dsr_get_pose(self):
+        """
+
+        :return: The tcp pose in the base frame
+        """
+        try:
+            rospy.wait_for_service('/dsr01m1013/aux_control/get_current_posx', timeout=5)
+        except:
+            return False
+
+        try:
+            pose_srv = rospy.ServiceProxy('/dsr01m1013/aux_control/get_current_posx', GetCurrentPosx)
+            pose = pose_srv(0)
+            return self.MMDegToMRad(list(pose.task_pos_info[0].data))
+        except rospy.ServiceException as e:
+            print("Service call failed: s")
 
     def set_tcp(self, name):
         self.move_group.set_end_effector_link(name)
@@ -193,7 +216,7 @@ class Doosan:
         pos[5] = pos[5] * np.pi / 180
         return pos
 
-    def ikin_moveit(self, pos, eef_link_name):
+    def ikin_moveit(self, pos, eef_link_name, initial_conf=[0, -0.610865, 2.35619, 0, 0, 0]):
         """
 
         :param pos: geometry_msgs/Pose with quaternion
@@ -207,7 +230,7 @@ class Doosan:
         try:
             robot = RobotState()
             robot.joint_state.name = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
-            robot.joint_state.position = [0, 0, 0, 0, 0, 0]
+            robot.joint_state.position = initial_conf
             pose = PoseStamped()
             pose.pose = pos
             ik_rqst = PositionIKRequest(ik_link_name=eef_link_name, robot_state=robot, group_name='arm',
@@ -217,6 +240,47 @@ class Doosan:
             return result
         except rospy.ServiceException as e:
             print("Service call failed: s")
+
+    def get_solution_space(self, configuration):
+        # convert pos angle from rad to deg and m to mm and deg
+        configuration = self.RadToDeg(configuration)
+        try:
+            rospy.wait_for_service('/dsr01m1013/aux_control/get_solution_space', timeout=5)
+        except:
+            return False
+
+        try:
+            sol_srv = rospy.ServiceProxy('/dsr01m1013/aux_control/get_solution_space', GetSolutionSpace)
+            result = sol_srv(configuration)
+            return result.sol_space
+        except rospy.ServiceException as e:
+            print("Service call failed: s")
+
+    def ik_closest(self,  pos, eef_link_name, initial_conf=[0, -0.610865, 2.35619, 0, 0, 0]):
+        """
+        select the IK in the closest subset solution than the initial_conf
+        :param pos:
+        :param eef_link_name:
+        :param initial_conf:
+        :return:
+        """
+        iks = []
+        diffs = []
+        ikin = self.ikin_moveit(pos, eef_link_name, initial_conf)
+        if ikin.error_code.val != 1:
+            return None
+        new_conf = np.round(np.asarray(ikin.solution.joint_state.position), 3)
+        while not np.any(np.isin(new_conf, iks)):
+            iks.append(new_conf)
+            diffs.append(self.get_solution_space(new_conf.copy()) - 2) # 2 est le solution space de home
+            ikin = self.ikin_moveit(pos, eef_link_name, initial_conf)
+            new_conf = np.round(np.asarray(ikin.solution.joint_state.position), 3)
+            if ikin.error_code.val != 1:
+                break
+        if min(diffs) > 2:
+            return None
+        res = iks[diffs.index(min(diffs))]
+        return res
 
     def ikin(self, pos, sol_space=0, ref=0):
         """
@@ -337,6 +401,28 @@ class Doosan:
         rospy.sleep(2)
         return is_plan_valid
 
+    def dsr_go_to_l(self, pos):
+        """
+        movement linear slow
+        :param pos:array 1*6
+        :return:
+        """
+        pos = self.MRadToMMDeg(pos)
+        rospy.loginfo('{nodeName} : Deplacement du mouvement linear'.format(nodeName=rospy.get_name()))
+        print(pos)
+        try:
+            rospy.wait_for_service('/dsr01m1013/motion/move_line', timeout=5)
+        except:
+            return False
+        try:
+            go_srv = rospy.ServiceProxy('/dsr01m1013/motion/move_line', MoveLine)
+            result = go_srv(pos, [30, 0], [100, 0], 0, 0, 0, 0, 0, 0)
+            # rospy.loginfo('{nodeName} : Mouvement linear envoyer'.format(nodeName=rospy.get_name()))
+            return result
+        except rospy.ServiceException as e:
+            print("Service call failed: s")
+            return False
+
     def dsr_go_relatif(self, pos):
         """
 
@@ -383,7 +469,7 @@ class Doosan:
             return False
             print("Service call failed: s")
 
-    def set_compliance(self):
+    def set_compliance(self, compliance_settings=[3000, 3000, 3000, 0, 0, 0]):
         """
         :return:
         """
@@ -394,7 +480,7 @@ class Doosan:
         try:
             set_compliance_srv = rospy.ServiceProxy('/dsr01m1013/force/task_compliance_ctrl', TaskComplianceCtrl)
 
-            result = set_compliance_srv([3000, 3000, 3000, 0, 0, 0], 1, 10)
+            result = set_compliance_srv(compliance_settings, 0, 0)
             return result
         except rospy.ServiceException as e:
             print("Service call failed: s")
@@ -560,6 +646,7 @@ class Doosan:
         Send the doosan to home pose
         :return: bool
         """
+
         res = self.go_to_j([0, -0.610865, 2.35619, 0, 0, 0])
         return res
 
@@ -569,6 +656,20 @@ class Doosan:
         joint_state.name = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
         joint_state.position = joints
         plan = self.move_group.plan(joint_state)
+        if plan[0]:
+            return True
+        else:
+            return False
+    def is_plan_l_valid(self, pose):
+        """
+
+        :param pose_st: pose stamped
+        :return:
+        """
+        # pose_goal = Pose()
+        # # pose_goal.name = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
+        # pose_goal = pose
+        plan = self.move_group.plan(pose)
         if plan[0]:
             return True
         else:
@@ -643,3 +744,20 @@ class Doosan:
                 velocity_limit = float(limit.attrib["velocity"])
                 joint_speed_limits.append([velocity_limit])
         return np.asarray(joint_speed_limits)
+
+    def get_sol_space(self, config):
+        '''
+
+        :param config: list [6] joint angles (deg)
+        :return:
+        '''
+        try:
+            rospy.wait_for_service('/dsr01m1013/aux_control/get_solution_space', timeout=5)
+        except:
+            return False
+        try:
+            get_sol_srv = rospy.ServiceProxy('/dsr01m1013/aux_control/get_solution_space', GetSolutionSpace)
+            result = get_sol_srv(self.RadToDeg(config))
+            return result
+        except rospy.ServiceException as e:
+            print("Service call failed: s")

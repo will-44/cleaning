@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <launch>
-    <rosparam file="$(find cleaning)/config/config.yaml" />
+    <rosparam file="$(find cleaning)/config/config_lab.yaml" />
 <!--    <node pkg="cleaning" name="fov_emulator" type="fov_emulator.py" output="screen"/>-->
     <include file="$(find dsr_control)/launch/dsr_moveit.launch"></include>
 <!--    <node pkg="cleaning" type="offline.py" name="offline" ns="/dsr01m1013" output="screen">-->

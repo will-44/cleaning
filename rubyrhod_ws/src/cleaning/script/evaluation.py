@@ -21,7 +21,7 @@ def save_csv(coverage_initial, overflap_initial, coverage_concavity, overlap_con
         writer = csv.writer(f)
 
         row = [rospy.get_param('/spot_limit'), rospy.get_param('guards_limit'), rospy.get_param('/potential_guard'),
-               nb_spots, nb_guard, coverage_initial, overflap_initial,
+               rospy.get_param('/maneuvrability_coeff'), nb_spots, nb_guard, coverage_initial, overflap_initial,
                nb_guard_concavity, coverage_concavity, overlap_concavity]
         # write a row to the csv file
         writer.writerow(row)

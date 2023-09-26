@@ -1,0 +1,65 @@
+ar_tag: ar_marker_2
+compute_best_spots: true
+compute_relation_guards: true
+debug: true
+generate_guards: true
+
+machine_mesh: /mesh/machine_test/machine_3/machine_3.obj
+machine_pcd: /mesh/machine_test/machine_3/machine_3_down.ply
+machine_ply: /mesh/machine_test/machine_3/machine_3_down.ply
+machine2ar_calibration: scie2ar6_calibration_mat
+relation_spot: /data/relation_machine_3.pkl
+sort_spots: true
+
+reachability_map: /mesh/reachability_map.pcd
+
+guards_pcd: /data/final_guards
+maneuvrability_coeff: 1
+observable_concavity: /data/observed_concavity
+observed_pcd: /data/observed_pdc
+potential_guard: 2
+relation_guards: /data/relation_path_arm_
+result_pcd: /data/final_result
+spot_limit: 25
+spots: /data/evaluation/100/spots.pkls
+spots_pcds: /data/pcd_17_04_saw
+guards_limit: 50
+
+trajectorie: /data/evaluation/10/1/20/1trajectorie.plk
+
+scie2ar6_calibration_mat:
+  - - -0.9985386733331825
+    - -0.006093210157366835
+    - 0.05369721266495826
+    - -0.27083302137903353
+  - - 0.0027610966188325865
+    - -0.998077868386769
+    - -0.061910782437184786
+    - 0.9562152753048085
+  - - 0.05397123496334935
+    - -0.061672047367515845
+    - 0.9966361745240988
+    - -0.9768656990732438
+  - - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+
+table2ar2_calibration_mat:
+  - - 0.9972773283665013
+    - -0.06408157594352347
+    - 0.03648947726082053
+    - 0.08336138881899191
+  - - 0.06729985875326293
+    - 0.9931861255790659
+    - -0.09514225648488034
+    - 0.9152489689435612
+  - - -0.030143976810705724
+    - 0.09733895202763551
+    - 0.994794686897853
+    - -1.0366598910813083
+  - - 0.0
+    - 0.0
+    - 0.0
+    - 1.0
+

@@ -9,13 +9,13 @@
 
     <include file="$(find behaviors)/launch/tf.launch"></include>
 
-    <include file="$(find ar_track_alvar)/launch/usb_cam_ar_track.launch" if="$(eval arg('mode') == 'real')"></include>
+<!--    <include file="$(find ar_track_alvar)/launch/usb_cam_ar_track.launch" if="$(eval arg('mode') == 'real')"></include>-->
 
 
-    <node pkg="cleaning" type="machine_calibration.py" name="machine_calibration"
-          if="$(eval arg('mode') == 'real')"  output="screen" args="toto" ns="/dsr01m1013">
-          <param  name="robot_description" value="/dsr01m1013/robot_description" />
-    </node>
+<!--    <node pkg="cleaning" type="machine_calibration.py" name="machine_calibration"-->
+<!--          if="$(eval arg('mode') == 'real')"  output="screen" args="toto" ns="/dsr01m1013">-->
+<!--          <param  name="robot_description" value="/dsr01m1013/robot_description" />-->
+<!--    </node>-->
 
 
         <node pkg="cleaning" type="init_octomap.py" name="init_octomap" ns="/dsr01m1013" if="$(eval arg('mode') == 'real')" output="screen">
@@ -26,21 +26,21 @@
          <arg name="mode" value="real"/>
      </include>
 
-<!--    <node pkg="cleaning" name="collision_depth" type="collisions_filter" output="screen" if="$(eval arg('mode') == 'real')"/>-->
+    <node pkg="cleaning" name="collision_depth" type="collisions_filter" output="screen" if="$(eval arg('mode') == 'real')"/>
 
     <node pkg="cleaning" name="detect_dust" type="detect_dust.py" output="screen" if="$(eval arg('mode') == 'real')"/>
     <node pkg="cleaning" name="dust_service" type="dust_service.py" output="screen" if="$(eval arg('mode') == 'real')"/>
 
-<!--     <node pkg="cleaning" type="online.py" name="online" ns="/dsr01m1013" output="screen" > -->
-<!--         <param  name="robot_description" value="/dsr01m1013/robot_description" /> -->
-<!--     </node> -->
-    <node pkg="cleaning" name="telemetrie" type="telemetrie.py" output="screen"/>
+<!--     <node pkg="cleaning" type="online.py" name="online" ns="/dsr01m1013" output="screen" >-->
+<!--         <param  name="robot_description" value="/dsr01m1013/robot_description" />-->
+<!--     </node>-->
+<!--    <node pkg="cleaning" name="telemetrie" type="telemetrie.py" output="screen"/>-->
 
 <!--    <arg name="command_args" value="-d $(find cleaning)/config/mir.rviz" />-->
 <!--    <node name="mir_rviz"  pkg="rviz" type="rviz" respawn="false" args="$(arg command_args)" output="screen" if="$(eval arg('mode') == 'real')"/>-->
 
 
-    <node name="record_camera"  pkg="cleaning" type="topic2video.py" respawn="false" args="-topic '/rgb/image_raw' -f '/home/will/Videos/record.mp4' -r 5" output="screen" if="$(eval arg('mode') == 'real')"/>
+<!--    <node name="record_camera"  pkg="cleaning" type="topic2video.py" respawn="false" args="-topic 'image_topic_2' -f '/home/will/Videos/record.mp4' -r 5" output="screen" if="$(eval arg('mode') == 'real')"/>-->
 
 <!--     <include file="$(find azure_iot)/launch/log_upload.launch"></include> -->
 </launch>

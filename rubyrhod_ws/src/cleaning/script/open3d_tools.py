@@ -153,6 +153,13 @@ class Open3dTool:
         return rays, line, line_color, line_indice
 
     def clusterise_dbscan(self, points, eps=0.5, neighbors=3):
+        """
+
+        :param points:
+        :param eps: distance max between two point of the same cluster
+        :param neighbors: number min of pt in a cluster
+        :return:
+        """
         # Create DBSCAN algorithm.
         dbscan_instance = dbscan(points, eps, neighbors)  # Params to twik
 

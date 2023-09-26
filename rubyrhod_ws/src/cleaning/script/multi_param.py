@@ -15,13 +15,13 @@ import os
 
 
 if __name__ == '__main__':
-    rospy.init_node('emulate_camera', anonymous=True)
+    rospy.init_node('multi_param_test', anonymous=True)
 
-    spot_limits = [20, 10]
+    spot_limits = [10]
     guard_potentials = [1]
-    # guard_limits = [80, 50, 20, 10]
-    guard_limits = [5, 2]
-    maneuvrability_coeffs = [1]
+    guard_limits = [20, 10, 5]
+    # guard_limits = [20]
+    maneuvrability_coeffs = [1] #, 0.75, 0.5, 0.25, 0.1, 0]
     for spot_limit in spot_limits:
         # Change spots limit
         # create the folder

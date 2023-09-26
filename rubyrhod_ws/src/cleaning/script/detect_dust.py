@@ -21,14 +21,20 @@ class detectDust:
     def __init__(self, callback_activate=True):
         # self.image_pub = rospy.Publisher("image_topic_2", Float64MultiArray, queue_size=10)
         self.image_pub = rospy.Publisher("/image_topic_2", Image, queue_size=1)
+        self.depth_pub = rospy.Publisher("/image_topic_depth", Image, queue_size=1)
         self.dust_pixels_pub = rospy.Publisher("/dust_pixels", Floats, queue_size=1)
         self.bridge = CvBridge()
 
         self.depth = 0
         self.camera_info = rospy.wait_for_message("/rgb/camera_info", CameraInfo, timeout=10)
-        path_mask = rospkg.RosPack().get_path('cleaning') + "/img/mask_depth.png"  # Path to the mask image
+        path_mask = rospkg.RosPack().get_path('cleaning') + "/img/mask_color.png"  # Path to the mask image
+        path_mask_depth = rospkg.RosPack().get_path('cleaning') + "/img/mask_color.png"  # Path to the mask image
+
+        mask_tool_depth = cv2.imread(path_mask)  # Load the mask image
         mask_tool = cv2.imread(path_mask)  # Load the mask image
+
         self.mask_tool = cv2.cvtColor(mask_tool, cv2.COLOR_BGR2GRAY)  # Convert the mask image to grayscale
+        self.mask_tool_depth = cv2.cvtColor(mask_tool_depth, cv2.COLOR_BGR2GRAY)  # Convert the mask image to grayscale
 
         try:
             self.intrinsec = np.reshape(self.camera_info.K, (3, 3))
@@ -90,7 +96,17 @@ class detectDust:
         # print(centers_poses)
 
     def get_position(self, center, depth):
+        # remove from mask
+        depth[self.mask_tool_depth != 0] = 0
+        try:
+            image_msg = self.bridge.cv2_to_imgmsg(depth, "16UC1")
+            image_msg.header.frame_id = "rgb_camera_link"
 
+            self.depth_pub.publish(image_msg)
+        except CvBridgeError as e:
+            print(e)
+
+        # Get pose from 3d image
         center_poses = []
         cx = self.intrinsec[0][2]
         cy = self.intrinsec[1][2]
@@ -112,8 +128,8 @@ class detectDust:
         # Remove dead zone cause of the tool
         hsv_image[self.mask_tool != 0] = [0, 0, 0]
 
-        # lo_color = (self.min_hue, self.min_saturation, self.min_value)
-        # hi_color = (self.max_hue, self.max_saturation, self.max_value)
+        lo_color = (self.min_hue, self.min_saturation, self.min_value)
+        hi_color = (self.max_hue, self.max_saturation, self.max_value)
         # print(lo_color)
         # For Canplex
         # lo_color = (36, 158, 28)#(34, 106, 56)
@@ -123,8 +139,8 @@ class detectDust:
         # hi_color = (92, 255, 133)
         #
         # For ETS
-        lo_color = (32, 81, 24)
-        hi_color = (81, 255, 133)
+        lo_color = (30, 72, 24)
+        hi_color = (81, 255, 255)
         mask = cv2.inRange(hsv_image, lo_color, hi_color)
 
         kernel_dilate = np.ones((10, 10), 'uint8')

@@ -14,7 +14,7 @@ This class generate all position available for the robot mobile base around the 
 
 
 class ReachabilityRelation:
-    def __init__(self, machine_path, reachability_path, poses_gap=0.05, debug=False):
+    def __init__(self, machine_path, reachability_path, poses_gap=0.20, debug=False):
         self.robot = Robot()
         self.o3d_tool = Open3dTool()
         self.point_cloud = o3d.io.read_point_cloud(machine_path)
@@ -23,7 +23,7 @@ class ReachabilityRelation:
         self.poses_availables_pcd = o3d.geometry.PointCloud()
         self.poses_av_tup = []
 
-        self.robot_length = 0.5  # TODO doing test to verify this value
+        self.robot_length = 0.4  # TODO doing test to verify this value
         self.arm_base_hight = 0.7
         self.debug = debug
 
@@ -49,9 +49,8 @@ class ReachabilityRelation:
         # get dimension of point cloud in meter
         dim_max = self.point_cloud.get_max_bound()
         dim_min = self.point_cloud.get_min_bound()
-        nb_pt_x = int((dim_max[0] + 2) / self.poses_gap)
-        nb_pt_y = int((dim_max[1] + 2) / self.poses_gap)
-
+        nb_pt_x = int((dim_max[0] + 1) / self.poses_gap)
+        nb_pt_y = int((dim_max[1] + 6) / self.poses_gap)
         pos_pts_x = []
         pos_pts_y = []
 
@@ -70,9 +69,11 @@ class ReachabilityRelation:
         pcd = o3d.geometry.PointCloud()
         pcd.points = o3d.utility.Vector3dVector(poses_plan)
         trans = center - pcd.get_center()
+        # trans = [0, 0, self.arm_base_hight]
         trans[2] = self.arm_base_hight
         pcd = pcd.translate(trans)
-
+        trans = [-1, 0, 0]
+        pcd = pcd.translate(trans, relative=True)
         return pcd
 
     def get_available_poses(self):
@@ -150,6 +151,7 @@ class ReachabilityRelation:
             # Test visible points
             visible_points_new = self.get_visble_points(self.mesh, [pose[0], pose[1], self.arm_base_hight])
             self.visible_points.points = visible_points_new.points
+            # print("update mesh")
             queries = np.asarray(self.visible_points.points)
 
             # Voxel solution
@@ -161,7 +163,7 @@ class ReachabilityRelation:
             # print(type(index_points_reachable))
 
             # Distance solution
-            pcd, index_points_reachable = self.o3d_tool.compare_pcd(self.visible_points, reach_map_trans_r, precision=0.05)
+            pcd, index_points_reachable = self.o3d_tool.compare_pcd(self.visible_points, reach_map_trans_r, precision=0.05, diff="inf")
             index_points_reachable = (np.asarray(index_points_reachable),)
             # print(index_points_reachable)
             reachability_relation[pose] = list(
@@ -181,17 +183,18 @@ class ReachabilityRelation:
             # o3d.visualization.draw_geometries([self.base_poses_pcd, hull_ls, self.visible_points])
         return reachability_relation
 
-    def get_visble_points(self, pcd, base_pose, reach=10, interval=0.2):
+    def get_visble_points(self, pcd, base_pose, reach=10, interval=0.5):
         all_index = set()
         for offset in range(round(reach / interval)):
             camera = [base_pose[0], base_pose[1], base_pose[2] + offset*interval]
-            radius = 70*offset*interval+1
+            radius = 7000*offset*interval+1
             # print(offset)
             _, pt_map = pcd.hidden_point_removal(camera, radius)
             all_index.update(pt_map)
             # print(all_index)
 
         pcd = pcd.select_by_index(list(all_index))
+        # o3d.visualization.draw_geometries([pcd])
         return pcd
 
 

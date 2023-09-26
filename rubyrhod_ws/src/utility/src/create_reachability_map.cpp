@@ -234,7 +234,7 @@ int main(int argc, char **argv)
             // Reachability Index D=R/N*100;
             float d = float(pose_col_filter.count(sphere_coord)) / (pose_col.size() / new_data.size()) * 100;
 //            ROS_INFO("Indice D: %f", d);
-            if(d >= 10.0){
+            if(d >= 5.0){
                 sphere_color.insert(std::make_pair(it->first, double(d)));
             }
 

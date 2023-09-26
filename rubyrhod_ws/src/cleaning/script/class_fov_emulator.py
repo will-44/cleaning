@@ -14,6 +14,7 @@ from geometry_msgs.msg import PoseStamped
 from open3d_ros_helper import open3d_ros_helper as o3d_ros
 from sensor_msgs.msg import PointCloud2
 from std_msgs.msg import Float64MultiArray
+from ros_numpy import numpify, msgify
 
 
 class FovEmulator:
@@ -23,6 +24,7 @@ class FovEmulator:
         # Load the machine in pcd
         self.machine_path = rospkg.RosPack().get_path('cleaning') + rospy.get_param("/machine_pcd")
         self.machine_pcd = o3d.io.read_point_cloud(self.machine_path)
+        # self.machine_pcd = self.machine_pcd.voxel_down_sample(voxel_size=0.05)
 
         self.machine_pcd_initial = self.machine_pcd
 
@@ -53,6 +55,7 @@ class FovEmulator:
         self.cone_surface = self.cone_r / math.sin(self.cone_alpha)
 
         self.cone_np = np.array([[0, 0, 0], [self.cone_x, 0, 0]])
+        # uniquement deux point pour le top et le bot du cone ou de la pyramid
         self.cone_pcd = o3d.geometry.PointCloud()
         self.cone_pcd.points = o3d.utility.Vector3dVector(self.cone_np)
 
@@ -74,7 +77,104 @@ class FovEmulator:
 
             o3d.visualization.draw_geometries([mesh, mesh_cone])
 
-    def get_visible_point(self, trans):
+        # pyramide
+        self.hauteur = 0.7  # A definir
+        petit_angle = 45
+        grand_angle = 35
+        self.theta_g = math.radians(grand_angle)
+        self.theta_p = math.radians(petit_angle)
+
+    def get_visible_point_pyramid(self, trans):
+
+        machine_pcd = copy.deepcopy(self.machine_pcd_initial)
+        start_time = time.time()
+        # open cone pcd + machine pcd
+        mat = np.asarray(trans.data)
+        mat.resize(4, 4)
+        # print(mat)
+
+        # cone is a pcd with 2pts as the top of the cone and the bot
+        cone_t = copy.deepcopy(self.cone_pcd).transform(mat)
+        cone_np = np.asarray(self.cone_pcd.points)
+        cone_t_np = np.asarray(cone_t.points)
+
+        # Setup camera pose
+        camera = cone_t_np[0]
+
+        # Get all points visible by the camera
+        radius = 10
+        _, pt_map = machine_pcd.hidden_point_removal(camera, radius)
+        machine_pcd = machine_pcd.select_by_index(pt_map)
+
+        if self.debug:
+            cone_t.paint_uniform_color([0, 0, 1])
+            # machine_pcd.paint_uniform_color([1, 0, 0])
+            mesh_frame = o3d.geometry.TriangleMesh.create_coordinate_frame(
+                size=0.06, origin=[0, 0, 0])
+
+        tf_buffer = tf2_ros.Buffer()
+        listener = tf2_ros.TransformListener(tf_buffer)
+
+        try:
+            trans_cone = tf_buffer.lookup_transform('cone', 'machine', rospy.Time(),
+                                                    rospy.Duration(1.0))
+        except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
+                tf2_ros.ExtrapolationException):
+            rospy.loginfo("FOV_EMULATOR: pb dans la transformation")
+            pcd = o3d.geometry.PointCloud()
+            self.result_pub.publish(pcd)
+            return
+
+        try:
+            trans_machine = tf_buffer.lookup_transform('machine', 'cone', rospy.Time(),
+                                                       rospy.Duration(1.0))
+        except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
+                tf2_ros.ExtrapolationException):
+            rospy.loginfo("FOV_EMULATOR: pb dans la transformation")
+            pcd = o3d.geometry.PointCloud()
+            self.result_pub.publish(pcd)
+            return
+
+        # Transform pcd visible to fov ref
+        mat_machine2fov = numpify(trans_cone.transform)
+        machine_pcd.transform(mat_machine2fov)
+
+        # o3d.visualization.draw_geometries([mesh_frame, machine_pcd, self.cone_pcd])
+
+        machine_np = np.asarray(machine_pcd.points)
+
+        # Compute pts include in pyramid FoV
+        pitch = np.arctan2(machine_np[:, 1], machine_np[:, 0])
+        yaw = np.arctan2(machine_np[:, 2], machine_np[:, 0])
+        pts_include_np = machine_np[(- self.theta_p < pitch) & (pitch < self.theta_p) & (-self.theta_g < yaw) &
+                                    (yaw < self.theta_g) & (machine_np[:, 0] >= 0) & (machine_np[:, 0] <= self.hauteur)]
+        # print(pts_include_np)
+        pts_include_pcd = o3d.geometry.PointCloud()
+        if pts_include_np.size != 0:
+            pts_include_pcd.points = o3d.utility.Vector3dVector(pts_include_np)
+            if self.debug:
+                print("--- %s seconds ---" % (time.time() - start_time))
+                pts_include_pcd.paint_uniform_color([1, 0, 0])
+
+                cone_t = copy.deepcopy(self.cone_pcd).transform(mat)
+                mesh = o3d.geometry.TriangleMesh.create_coordinate_frame().transform(mat)
+                mesh_cone = o3d.geometry.TriangleMesh.create_cone(radius=self.cone_r, height=self.cone_x)
+                mesh_cone_t = copy.deepcopy(mesh_cone).transform(mat)
+
+                cone_t.paint_uniform_color([0, 0, 1])
+                o3d.visualization.draw_geometries([machine_pcd, pts_include_pcd, cone_t, mesh_cone_t])
+
+        # Transform back pcd include in fov to machine ref
+        mat_fov2machine = numpify(trans_machine.transform)
+        pts_include_pcd.transform(mat_fov2machine)
+
+        # Create ros message
+        pcd = o3d_ros.o3dpc_to_rospc(pts_include_pcd)
+        pcd.header.frame_id = "machine"
+        self.result_pub.publish(pcd)
+        return pcd
+
+    def get_visible_point_cone(self, trans):
 
         machine_pcd = copy.deepcopy(self.machine_pcd_initial)
         start_time = time.time()

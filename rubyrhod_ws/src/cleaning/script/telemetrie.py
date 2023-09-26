@@ -3,7 +3,7 @@
 import rospy
 import rospkg
 import csv
-from geometry_msgs.msg import Pose, Point, PoseStamped
+from geometry_msgs.msg import Pose, Point, PoseStamped, Pose2D
 from sensor_msgs.msg import JointState
 from std_msgs.msg import Bool
 from ros_numpy import numpify, msgify
@@ -16,7 +16,7 @@ from rospy_message_converter import json_message_converter
 class TeleMetrie:
     def __init__(self):
         # Sub
-        self.spot_sub = rospy.Subscriber("/telemetrie/spot", PoseStamped, self.callback_spot)
+        self.spot_sub = rospy.Subscriber("/telemetrie/spot", Pose2D, self.callback_spot)
         self.guard_sub = rospy.Subscriber("/telemetrie/guard", JointState, self.callback_guard)
         self.finish_sub = rospy.Subscriber("/telemetrie/finish", Bool, self.callback_finish)
         self.dust_sub = rospy.Subscriber("/telemetrie/dust_pose", PoseStamped, self.callback_dust)

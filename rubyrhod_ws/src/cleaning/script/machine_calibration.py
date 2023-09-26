@@ -92,7 +92,8 @@ class MachineCalibration:
         mat_name = "/" + rospy.get_param("/machine2ar_calibration")
 
         mat_artag2machine = np.asarray(rospy.get_param(mat_name))
-
+        print("mat:")
+        print(mat_artag2machine)
         trans_artag2machine = msgify(Transform, mat_artag2machine)
         print(trans_artag2machine)
         # send tf
