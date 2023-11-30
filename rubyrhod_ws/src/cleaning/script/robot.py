@@ -174,14 +174,14 @@ class Robot:
         cost_solver = fast_tsp.compute_cost(perm, dist_mat)
         tour = fast_tsp.greedy_nearest_neighbor(dist_mat)
         cost_greedy = fast_tsp.compute_cost(tour, dist_mat)
-        if self.debug:
+        if True:
             print("cost for find tour:")
             print(cost_solver)
             print("cost for greedy nearest neighbor:")
             print(cost_greedy)
         res = []
-
-        if cost_greedy > cost_solver:
+        # res = perm
+        if cost_greedy >= cost_solver:
             res = perm
         else:
             res = tour

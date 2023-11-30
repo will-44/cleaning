@@ -27,7 +27,7 @@
 			<child link="link1" />
 			<origin rpy="0 0 0" xyz="0 0 0.1525" />
 			<axis xyz="0 0 1" />
-			<limit effort="346" lower="-3.1415" upper="1.57" velocity="2.0944"/>
+			<limit effort="346" lower="-1.5708" upper="1.5708" velocity="2.0944"/>
 			<dynamics friction="0" />
 		</joint>
 		<link name="link1">
@@ -158,7 +158,7 @@
 			<child link="link5" />
 			<origin rpy="-1.571 0 0" xyz="0 0 0" />
 			<axis xyz="0 0 1" />
-			<limit effort="50" lower="-1.57" upper="1.57" velocity="3.927"/>
+			<limit effort="50" lower="-1.58825" upper="1.91986" velocity="3.927"/>
 			<dynamics friction="0" />
 		</joint>
 		<link name="link5">

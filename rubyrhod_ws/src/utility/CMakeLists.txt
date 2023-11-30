@@ -166,16 +166,19 @@ add_definitions(${PCL_DEFINITIONS})
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(mir src/mir_node.cpp includes/mir.h src/mir.cpp)
+add_executable(camera_frame src/camear_frame.cpp)
 
 add_executable(create_reachability_map src/create_reachability_map.cpp includes/sphere_discretization.h src/sphere_discretization.cpp includes/progressbar.hpp)
 
 
 
 target_link_libraries(mir ${catkin_LIBRARIES})
+target_link_libraries(camera_frame ${catkin_LIBRARIES})
 target_link_libraries(create_reachability_map ${catkin_LIBRARIES} pcl_visualization)
 
 
 add_dependencies(mir ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(camera_frame ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(create_reachability_map ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

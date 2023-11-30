@@ -20,12 +20,12 @@ class Positionning:
 
     def get_artag_position(self):
         # get artag from world
-        # try:
-        #     trans_machine2artag = self.tf_buffer.lookup_transform(self.artag, "machine", rospy.Time(),
-        #                                                           rospy.Duration(1.0))
-        # except(tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
-        #     rospy.loginfo("pb dans la transformation")
-        # mat_surface2artag = numpify(trans_machine2artag.transform)
+        try:
+            trans_machine2artag = self.tf_buffer.lookup_transform(self.artag, "machine", rospy.Time(),
+                                                                  rospy.Duration(1.0))
+        except(tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
+            rospy.loginfo("pb dans la transformation")
+        mat_surface2artag = numpify(trans_machine2artag.transform)
         try:
             trans_artag2base = self.tf_buffer.lookup_transform("machine", "base_0", rospy.Time(),
                                                                rospy.Duration(1.0))

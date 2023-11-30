@@ -2,10 +2,9 @@
 Changelog for package moveit_config_m1509
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.2.0 (2021-07-01)
+1.3.0 (2021-07-01)
 ------------------
-* update DRFL
-* modify arguments
+* update moveit_config arguments
 * Contributors: doosan-robotics
 
 1.1.0 (2020-04-29)

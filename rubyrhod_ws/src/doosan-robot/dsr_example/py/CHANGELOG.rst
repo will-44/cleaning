@@ -2,12 +2,14 @@
 Changelog for package dsr_example_py
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.2.0 (2021-07-01)
+1.3.0 (2021-07-01)
 ------------------
-* update emulator and example
-* update noetic
+* permission and encoding
+* update 1.2.0
+* update example
+* add collision model(cylinder)
 * add a0912 model
-* Contributors: doosan-robotics, dra
+* Contributors: doosan-robotics
 
 1.1.0 (2020-04-29)
 ------------------

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from queue import PriorityQueue
 
 import rospy
 
@@ -18,6 +19,9 @@ from dsr_msgs.srv import GetCurrentRotm
 from dsr_msgs.srv import SetCurrentTcp
 from dsr_msgs.srv import SetCurrentTool
 from dsr_msgs.srv import TaskComplianceCtrl
+from dsr_msgs.srv import SetRobotMode
+from dsr_msgs.srv import SetDesiredForce
+from dsr_msgs.srv import ReleaseForce
 from dsr_msgs.srv import ReleaseComplianceCtrl
 from dsr_msgs.srv import GetSolutionSpace
 
@@ -30,6 +34,7 @@ from geometry_msgs.msg import PoseStamped, Pose
 
 from std_msgs.msg import Float64MultiArray
 
+from ros_numpy import numpify, msgify
 import numpy as np
 import sys
 import moveit_commander
@@ -39,6 +44,8 @@ import math
 
 from std_srvs.srv import Empty
 import xml.etree.ElementTree as ET
+from scipy.spatial.transform import Rotation as R
+
 
 
 class Doosan:
@@ -68,18 +75,18 @@ class Doosan:
         mir_pose.pose.orientation.w = 0  # 1.0
         mir_name = "mir"
         self.scene.attach_box('world', mir_name, mir_pose, size=(0.50, 0.40, 0.7))
-        # Add the controler doosan as a box
-        # controler_pose = geometry_msgs.msg.PoseStamped()
-        # controler_pose.header.frame_id = "world"  # world frame (careful with the simu to real)
-        # controler_pose.pose.position.x = -0.1
-        # controler_pose.pose.position.y = 0.0
-        # controler_pose.pose.position.z = -0.2
-        # controler_pose.pose.orientation.x = 0.0  # 0.0
-        # controler_pose.pose.orientation.y = 0.0  # 0.0
-        # controler_pose.pose.orientation.z = 0.0  # 1.57
-        # controler_pose.pose.orientation.w = 1.0  # 1.0
-        # controler_name = "controler"
-        # self.scene.attach_box('world', controler_name, controler_pose, size=(0.40, 0.50, 0.40))
+        # Add the behind limit as a box
+        behind_pose = geometry_msgs.msg.PoseStamped()
+        behind_pose.header.frame_id = "world"  # world frame (careful with the simu to real)
+        behind_pose.pose.position.x = -0.5
+        behind_pose.pose.position.y = 0.0
+        behind_pose.pose.position.z = 1.0
+        behind_pose.pose.orientation.x = 0.0  # 0.0
+        behind_pose.pose.orientation.y = 0.0  # 0.0
+        behind_pose.pose.orientation.z = 0.0  # 1.57
+        behind_pose.pose.orientation.w = 1.0  # 1.0
+        behind_name = "controler"
+        # self.scene.attach_box('world', behind_name, behind_pose, size=(0.05, 2, 1.5))
         # lower, upper
         self.joint_limit = np.array(self.get_joint_limit())
         self.joint_speed = self.get_joint_velocity_limit()
@@ -90,6 +97,7 @@ class Doosan:
         # self.joint_state = 0
         # self.display_trajectory_publisher = rospy.Publisher("/move_group/display_planned_path", DisplayTrajectory, queue_size=20)
         self.get_pos_x()
+        print("init doosan")
 
     # def callback_joint_state(self, msg):
     #     self.joint_state = msg
@@ -328,7 +336,7 @@ class Doosan:
         except rospy.ServiceException as e:
             print("Service call failed: s")
 
-    def fkin(self, poses):
+    def fkin(self, poses, ee_link=['link6']):
         """
 
         :param poses:
@@ -347,7 +355,7 @@ class Doosan:
             robot.joint_state.position = poses
             msg = GetPositionFK()
             fkin_srv = rospy.ServiceProxy('/dsr01m1013/compute_fk', GetPositionFK)
-            result = fkin_srv(fk_link_names=['link6'], robot_state=robot)
+            result = fkin_srv(fk_link_names=ee_link, robot_state=robot)
             return result
         except rospy.ServiceException as e:
             print("Service call failed: s")
@@ -364,12 +372,29 @@ class Doosan:
         joint_angles = pos
 
         # Planifier une trajectoire de joint en utilisant les angles de joint
-        result = self.move_group.go(joint_angles, wait=True)
+        try:
+            result = self.move_group.go(joint_angles, wait=True)
+        except:
+            print("Moveit could not send the move")
         # if result:
         # Calling ``stop()`` ensures that there is no residual movement
         self.move_group.stop()
         self.move_group.clear_pose_targets()
+        while self.check_motion() != 0:
+            rospy.sleep(0.1)
+        # print("joint angles:")
+        # print(np.round(self.move_group.get_current_joint_values(), 3))
+        # print("joint angles:")
+        # print(np.round(joint_angles, 3))
+        # input("press enter to continue")
+        if np.array_equal(np.round(self.move_group.get_current_joint_values(), 3), np.round(joint_angles, 3)):
+            return True
+        else:
+            return False
+        print("result moveJ:")
+        print(result)
         return result
+
 
     def go_to_l(self, pos):
         """
@@ -395,29 +420,112 @@ class Doosan:
         is_plan_valid = self.move_group.go(wait=True)
         # Calling `stop()` ensures that there is no residual movement
         self.move_group.stop()
+        # move_group.compute_cartesian_path(
         # # It is always good to clear your targets after planning with poses.
         # # Note: there is no equivalent function for clear_joint_value_targets()
         self.move_group.clear_pose_targets()
-        rospy.sleep(2)
+        # rospy.sleep(2)
+        while self.check_motion() != 0:
+            rospy.sleep(0.1)
+
+
+        # print("pose goal:")
+        # print(np.round(numpify(pose_goal.position), 3))
+        # print("pose current:")
+        # print(np.round(numpify(self.move_group.get_current_pose().pose.position), 3))
+        # input("press enter to continue")
+
+        if np.array_equal(np.round(numpify(self.move_group.get_current_pose().pose.position), 2),
+                          np.round(numpify(pose_goal.position), 2)):
+            return True
+        else:
+            return False
+        print("result moveL:")
+        print(is_plan_valid)
         return is_plan_valid
+
+    def dsr_compliant_move_l(self, pos):
+        """
+        generate a compliant movement from the plan generate by the moveit.
+        :param pos:
+        :return:
+        """
+        # pos = self.MRadToMMDeg(pos)
+
+        pose_goal = geometry_msgs.msg.Pose()
+
+        pose_goal.position.x = pos[0]
+        pose_goal.position.y = pos[1]
+        pose_goal.position.z = pos[2]
+
+        # trans zyz euler to quaternion
+        matrix = R.from_euler('zyz', [pos[3], pos[4], pos[5]], degrees=False)
+        quat = matrix.as_quat()
+
+        pose_goal.orientation.x = quat[0]
+        pose_goal.orientation.y = quat[1]
+        pose_goal.orientation.z = quat[2]
+        pose_goal.orientation.w = quat[3]
+
+        self.move_group.set_goal_orientation_tolerance(np.deg2rad(20))
+        (plan, fraction) = self.move_group.compute_cartesian_path([pose_goal], 0.01, 0.0)
+        print("carthesian plan:")
+        print(plan)
+        print("fraction")
+        print(fraction)
+
+        for joint_plan in plan.joint_trajectory.points:
+            # fkin
+            plan_fkin = self.fkin(joint_plan.positions, ee_link='vacuum_link')
+
+            # quat to euler zyz
+            matrix = R.from_quat([plan_fkin.pose.orientation.x, plan_fkin.pose.orientation.y,
+                                  plan_fkin.pose.orientation.z, plan_fkin.pose.orientation.w])
+            # Change the coordinate system
+            orient = matrix.as_euler('zyz', degrees=False)
+            print("pos:")
+            print(plan_fkin.pose.position)
+            print("orientation zyz:")
+            print(np.radians(np.asarray(orient)))
+
+            self.dsr_go_to_l(np.concatenate((np.asarray(plan_fkin.pose.position), np.radians(np.asarray(orient)))))
+
+    # def dsr_pause(self):
+    #     """
+    #     This methode send a pause in the mouvement by a service from dsr
+    #     :return:
+    #     """
+    #     try:
+    #         rospy.wait_for_service("/dsr01m1013/drl/drl_pause", timeout=5)
+    #     except rospy.ServiceException as e:
+    #         print(e)
+    #     try:
+
+
+
 
     def dsr_go_to_l(self, pos):
         """
-        movement linear slow
+        movement linear slow async
         :param pos:array 1*6
         :return:
         """
         pos = self.MRadToMMDeg(pos)
-        rospy.loginfo('{nodeName} : Deplacement du mouvement linear'.format(nodeName=rospy.get_name()))
-        print(pos)
+        # rospy.loginfo('{nodeName} : Deplacement du mouvement linear'.format(nodeName=rospy.get_name()))
+        # print(pos)
         try:
             rospy.wait_for_service('/dsr01m1013/motion/move_line', timeout=5)
         except:
             return False
         try:
             go_srv = rospy.ServiceProxy('/dsr01m1013/motion/move_line', MoveLine)
-            result = go_srv(pos, [30, 0], [100, 0], 0, 0, 0, 0, 0, 0)
+            result = go_srv(pos, [20, 0], [50, 0], 0, 0, 0, 0, 0, 0)
             # rospy.loginfo('{nodeName} : Mouvement linear envoyer'.format(nodeName=rospy.get_name()))
+            print("result moveL:")
+            print(self.dsr_get_pose())
+            # print("initial pos:")
+            # print(pos)
+            print(result)
             return result
         except rospy.ServiceException as e:
             print("Service call failed: s")
@@ -430,15 +538,15 @@ class Doosan:
         :return:
         """
         # pos = self.MRadToMMDeg(pos)
-        rospy.loginfo('{nodeName} : Deplacement du mouvement relatif'.format(nodeName=rospy.get_name()))
-        print(pos)
+        rospy.loginfo('Deplacement du mouvement relatif')
+        # print(pos)
         try:
             rospy.wait_for_service('/dsr01m1013/motion/move_line', timeout=5)
         except:
             return False
         try:
             go_srv = rospy.ServiceProxy('/dsr01m1013/motion/move_line', MoveLine)
-            result = go_srv(pos, [0, 0], [0, 0], 2, 0, 1, 1, 1, 1)
+            result = go_srv(pos, [20, 0], [80, 0], 0, 0, 1, 1, 1, 0)
             # rospy.loginfo('{nodeName} : Mouvement relatif envoyer'.format(nodeName=rospy.get_name()))
             return result
         except rospy.ServiceException as e:
@@ -481,6 +589,37 @@ class Doosan:
             set_compliance_srv = rospy.ServiceProxy('/dsr01m1013/force/task_compliance_ctrl', TaskComplianceCtrl)
 
             result = set_compliance_srv(compliance_settings, 0, 0)
+            return result
+        except rospy.ServiceException as e:
+            print("Service call failed: s")
+
+    def set_force(self, force_value=[0, 0, 0, 0, 0, 0], force_dir=[0, 0, 0, 0, 0, 0]):
+        """
+        :return:
+        """
+        try:
+            rospy.wait_for_service('/dsr01m1013/force/set_desire_force', timeout=5)
+        except:
+            return False
+        try:
+            set_force_srv = rospy.ServiceProxy('/dsr01m1013/force/set_desire_force', TaskComplianceCtrl)
+
+            result = set_force_srv(force_value, force_dir, 0, 0, 0)
+            return result
+        except rospy.ServiceException as e:
+            print("Service call failed: s")
+    def release_force(self):
+        """
+        :return:
+        """
+        try:
+            rospy.wait_for_service('/dsr01m1013/force/release_force', timeout=5)
+        except:
+            return False
+        try:
+            release_force_srv = rospy.ServiceProxy('/dsr01m1013/force/release_force', ReleaseForce)
+
+            result = release_force_srv(0)
             return result
         except rospy.ServiceException as e:
             print("Service call failed: s")
@@ -655,7 +794,10 @@ class Doosan:
         joint_state = JointState()
         joint_state.name = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
         joint_state.position = joints
-        plan = self.move_group.plan(joint_state)
+        try:
+            plan = self.move_group.plan(joint_state)
+        except:
+            return False
         if plan[0]:
             return True
         else:
@@ -761,3 +903,22 @@ class Doosan:
             return result
         except rospy.ServiceException as e:
             print("Service call failed: s")
+
+    def set_robot_mode(self, mode=0):
+        """
+
+        :param mode: 0: manual 1: autonome
+        :return:
+        """
+        try:
+            rospy.wait_for_service('/dsr01m1013/system/set_robot_mode', timeout=5)
+        except:
+            return False
+        try:
+            get_sol_srv = rospy.ServiceProxy('/dsr01m1013/system/set_robot_mode', SetRobotMode)
+            result = get_sol_srv(mode)
+            return result
+        except rospy.ServiceException as e:
+            print("Service call failed: s")
+
+

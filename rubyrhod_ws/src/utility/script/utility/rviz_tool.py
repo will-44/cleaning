@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import roslib
+from geometry_msgs.msg import Pose, Point, Quaternion
 
 roslib.load_manifest('visualization_marker_tutorials')
 from visualization_msgs.msg import Marker, MarkerArray
@@ -57,7 +58,7 @@ def display_marker(marker_type: object, x: object, y: object, z: object, t: obje
     publisher.publish(m)
 
 
-def display_marker_array(marker_type, poses, colors, ref):
+def display_marker_array(marker_type, poses, ref):
     """
     Send many markers to rviz
     :param marker_type: type
@@ -77,7 +78,8 @@ def display_marker_array(marker_type, poses, colors, ref):
         # i += 1
         m.id = 0
         m.type = marker_type
-        m.pose = pose.pose
+        pos = Pose(Point(pose[0], pose[1], pose[2]), Quaternion(0, 0, 0, 0))
+        m.pose = pos
 
         if marker_type == Marker.ARROW:
             m.scale.x = 0.5
@@ -89,9 +91,48 @@ def display_marker_array(marker_type, poses, colors, ref):
             m.scale.z = 0.01
         m.color.a = 1
 
-        m.color.r = colors[i][0]
-        m.color.g = colors[i][1]
-        m.color.b = colors[i][2]
+        m.color.r = 0  # colors[i][0]
+        m.color.g = 0  # colors[i][1]
+        m.color.b = 1  # colors[i][2]
         all_marks.append(m)
     msg.markers = all_marks
+    array_publisher.publish(msg)
+
+
+def display_text_array(points, ref):
+    '''
+    this function send a marker msg to rviz to
+    display text at each points positions
+    :param points: PoseStamped array
+    :return:
+    '''
+    msg = MarkerArray()
+    all_marks = []
+    for i, point in enumerate(points):
+        m = Marker()
+        m.action = Marker.ADD
+        m.header.frame_id = ref
+        m.header.stamp = rospy.Time.now()
+        m.ns = 'marker_test_%d' % i
+        # i += 1
+        m.id = 0
+        m.type = Marker.TEXT_VIEW_FACING
+        m.text = str(i)
+
+        m.pose = point.pose
+
+        m.scale.z = 0.1
+        m.color.a = 1
+        m.color.r = 1
+        m.color.g = 0
+        m.color.b = 0
+        all_marks.append(m)
+    msg.markers = all_marks
+    array_publisher.publish(msg)
+
+def reset_rviz():
+    m = Marker()
+    m.action = 3
+    msg = MarkerArray()
+    msg.markers = [m]
     array_publisher.publish(msg)

@@ -86,7 +86,7 @@
               xyz=" 0 0.02 0"
               rpy="0 0 0" />
       <geometry>
-        <sphere radius="0.024"/>
+        <sphere radius="0.015"/>
       </geometry>
       <material
               name="">
@@ -99,7 +99,7 @@
               xyz="0 0.02 0"
               rpy="0 0 0" />
       <geometry>
-        <sphere radius="0.024"/>
+        <sphere radius="0.020"/>
       </geometry>
     </collision>
   </link>
@@ -116,7 +116,7 @@
     name="tube_joint"
     type="fixed">
     <origin
-      xyz="0 0.1 0"
+      xyz="0 0.13 0"
       rpy="0 0 0" />
     <parent
       link="vacuum_base_link" />
