@@ -173,8 +173,8 @@ class Open3dTool:
         visualizer = cluster_visualizer()
         visualizer.append_clusters(clusters, points)
         visualizer.append_cluster(noise, points, marker='x')
-        # visualizer.show()
-        return clusters
+        # visualizer.show(invisible_axis=False)
+        return clusters, noise
 
     def euler2polar(self, x, y, z):
         rayons = np.sqrt(np.power(x, 2) + np.power(y, 2) + np.power(z, 2))

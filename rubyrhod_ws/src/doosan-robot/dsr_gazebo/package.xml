@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>dsr_gazebo</name>
-  <version>1.2.0</version>
+  <version>1.3.0</version>
   <description>The dsr_gazebo package</description>
 
   <author email="kabkyoum.kim@doosan.com">Kab Kyoum Kim</author>
@@ -19,6 +19,9 @@
   <depend>controller_manager</depend>
   <depend>xacro</depend>
   <depend>urdf</depend>
+
+  <exec_depend>dsr_description</exec_depend>
+  <exec_depend>dsr_control</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

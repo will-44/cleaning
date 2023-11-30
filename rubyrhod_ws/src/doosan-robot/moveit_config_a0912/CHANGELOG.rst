@@ -2,11 +2,11 @@
 Changelog for package moveit_config_a0509
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.2.0 (2021-07-01)
+1.3.0 (2021-07-01)
 ------------------
-* update noetic
+* update moveit_config arguments
 * add a0912 model
-* Contributors: doosan-robotics, dra
+* Contributors: doosan-robotics
 
 1.1.0 (2020-04-29)
 ------------------

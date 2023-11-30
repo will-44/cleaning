@@ -47,11 +47,22 @@
 
   <xacro:include filename="$(find azure_kinect_ros_driver)/urdf/azure_kinect.urdf.xacro" />
   <joint name="camera_fixed" type="fixed">
-    <origin xyz="-0.05 0 0.1" rpy="0 -1.57 0"/>
+    <origin xyz="-0.06 0.01 0.1" rpy="-1.15622991 -1.56390655  1.14494029"/>
     <parent link="link6"/>
     <child link="camera_base"/>
   </joint>
 
+<!--  Matrice entre link6 et camera_base -->
+<!--  0.00582503  0.00730799   -0.999956  -0.0744662-->
+<!--  0.00419196    0.999964  0.00733246  0.00341612-->
+<!--  0.999974 -0.00423448  0.00579419    0.102301-->
+<!--  0           0           0           1-->
+<!--  0.0028461   0.0112804   -0.999932  -0.0737303-->
+<!--  0.00627436    0.999916   0.0112981 0.000351512-->
+<!--  0.999976 -0.00630609  0.00277508    0.102236-->
+<!--  0           0           0           1-->
+<!--  Angle XYZ -->
+<!-- x:-0.9020437, y: -1.5614485, z: -0.8978304 -->
   <xacro:include filename="$(find vacuum)/urdf/vacuum.urdf"/>
   <joint name="vacuum_fixed" type="fixed">
     <origin xyz="0 0 0" rpy="1.57 0 0"/>

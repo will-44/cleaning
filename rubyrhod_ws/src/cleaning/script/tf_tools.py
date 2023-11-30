@@ -23,7 +23,7 @@ from scipy.spatial.transform import Rotation as R
 from data_manager import DataManager
 from open3d_tools import Open3dTool
 from robot import Robot
-from dust import Dust
+# from dust import Dust
 from utility.srv import DetectDust
 from python_tsp.distances import euclidean_distance_matrix
 
@@ -42,14 +42,37 @@ class TfTools:
                 '{nodeName} : Aucun message de la transformation'.format(nodeName=rospy.get_name()))
         return trans_result
 
-    def transform_pose_array(self, poses: PoseStamped, transform):
-        if type(poses) != PoseStamped:
-            raise TypeError('poses is not a PoseStamped but a : ', type(poses))
+    def transform_pose_array(self, poses, transform):
+        """
+        get a poseStamped array and return a poseStamped array transformed
+        :param poses: PoseStamped array
+        :param transform:
+        :return: array of PoseStamped transformed
+        """
+        # if type(poses) != list:
+        #     raise TypeError('poses is not a PoseStamped but a : ', type(poses))
         result = []
         for pose in poses:
             pose_trans = tf2_geometry_msgs.do_transform_pose(pose, transform)
             result.append(pose_trans)
         return result
+
+    def array_2_posestamped(self, list):
+        """
+        get a array of 3d poses and retrun a array of posestamped
+        :param list:
+        :return:
+        """
+        result = []
+        for pose in list:
+            pose_stamped = PoseStamped()
+            pose_stamped.pose.position.x = pose[0]
+            pose_stamped.pose.position.y = pose[1]
+            pose_stamped.pose.position.z = pose[2]
+            result.append(pose_stamped)
+        return result
+
+
 
 
 

@@ -2,14 +2,19 @@
 Changelog for package dsr_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.2.0 (2021-07-01)
+1.3.0 (2021-07-01)
 ------------------
 * update DRFL
-* update noetic
+* update 1.2.0
+* moveit gazebo connect
+* Merge pull request `#61 <https://github.com/doosan-robotics/doosan-robot/issues/61>`_ from fmessmer/fix_install_tags
+  add missing install tags
+* add missing install tags
+* add h-series moveit_config
 * update common package tree
 * add a0912 model
 * update services
-* Contributors: doosan-robotics, dra
+* Contributors: doosan robotics ros master, doosan-robotics, fmessmer
 
 1.1.0 (2020-04-29)
 ------------------

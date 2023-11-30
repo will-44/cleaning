@@ -2,11 +2,13 @@
 Changelog for package dsr_launcher
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.2.0 (2021-07-01)
+1.3.0 (2021-07-01)
 ------------------
-* delete multi launch
-* update noetic
-* Contributors: dra
+* update robotiq_plugin
+* permission and encoding
+* update 1.2.0
+* moveit gazebo connect
+* Contributors: doosan-robotics
 
 1.1.0 (2020-04-29)
 ------------------

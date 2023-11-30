@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>doosan_robotics</name>
-  <version>1.2.0</version>
+  <version>1.3.0</version>
   <description>The doosan_robotics metapackage</description>
 
   <author email="kabkyoum.kim@doosan.com">Kab Kyoum Kim</author>
@@ -33,6 +33,7 @@
   <exec_depend>moveit_config_a0912</exec_depend>
   <exec_depend>moveit_config_h2017</exec_depend>
   <exec_depend>moveit_config_h2515</exec_depend>
+  
 
   <build_depend>joint_state_controller</build_depend>
   <build_depend>position_controllers</build_depend>

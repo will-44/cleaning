@@ -25,21 +25,31 @@ from open3d_tools import Open3dTool
 from robot import Robot
 from utility.srv import DetectDust
 from python_tsp.distances import euclidean_distance_matrix
+from dust import Dust
 
+
+rospy.init_node('test', anonymous=True)
 
 arm = Doosan()
+# # ask the robot position while ros exist
+# while not rospy.is_shutdown():
+#     # arm.dsr_get_joint_pos()
+#     rospy.loginfo(arm.get_pos_j())
 
-# Set tool weight
-arm.dsr_emergency_stop()
-res = arm.dsr_set_tool("Tool_clean")
-arm.dsr_resume()
-rospy.sleep(4)
-# print(res)
-arm.set_compliance()
-# rospy.sleep(4)
-res = arm.dsr_go_relatif([0.0, 0.0, -65.0, 0.0, 0.0, 0.0])
-res = arm.dsr_go_relatif([0.0, 0.0, -65.0, 0.0, 0.0, 0.0])
-rospy.sleep(2)
-res = arm.dsr_go_relatif([0.0, 0.0, 65.0, 0.0, 0.0, 0.0])
-rospy.sleep(3)
-arm.release_compliance()
+# ask dust pose
+dust = Dust()
+rospy.sleep(1)
+dust_poses = dust.ask_dust_poses()
+
+print(dust_poses)
+# arm.set_tcp("vacuum_safe_tcp")
+arm.dsr_set_tcp("vacuum")
+# start compliance
+arm.set_compliance([100, 100, 100, 20, 20, 20])
+
+tcp_pose = arm.dsr_get_pose()
+dust_pose = [dust_poses[0][0], dust_poses[0][1], dust_poses[0][2] + 0.01,
+             tcp_pose[3], tcp_pose[4], tcp_pose[5]]
+print(dust_pose)
+# send the robot to the dust pose
+arm.dsr_go_to_l(dust_pose)

@@ -4,31 +4,37 @@
 joint_limits:
   joint1:
     has_velocity_limits: true
-    max_velocity: 2.094
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 1.5
+    has_acceleration_limits: true
+    max_acceleration: 0.6
   joint2:
     has_velocity_limits: true
-    max_velocity: 2.094
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 1.5
+    has_acceleration_limits: true
+    max_acceleration: 0.3
   joint3:
     has_velocity_limits: true
-    max_velocity: 3.142
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 2.0
+    has_acceleration_limits: true
+    max_acceleration: 0.1
   joint4:
     has_velocity_limits: true
-    max_velocity: 3.927
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 2.0
+    has_acceleration_limits: true
+    max_acceleration: 0.6
   joint5:
     has_velocity_limits: true
-    max_velocity: 3.927
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 2.0
+    has_acceleration_limits: true
+    max_acceleration: 0.8
   joint6:
     has_velocity_limits: true
-    max_velocity: 3.927
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 3.0
+    has_acceleration_limits: true
+    max_acceleration: 1.0
+#    [0.8984686220597001, 0.7835528562970353, 0.1921830848818873, 1.3717319749312538, 1.4130228732351016, 1.8976265782901485]
+#    [0.8984686220597001, 0.7835528562970353, 0.1921830848818873, 1.3717319749312538, 1.5479096988080132, 2.1384197960118483]
+#    [1.1271065170914953, 0.6978456327410801, 0.46616078469435746, 0.8949879699874381, 1.5091816255086608, 1.6416376512131898]
+#    [1.1405541571786166, 0.11408918633018438, 0.024236725626574283, 0.0792713405840494, 1.179865045388935, 1.3452171751711697]
+#    [0.963753252721556, 0.6909144496329349, 0.6223637454464392, 0.7944631205639483, 1.4338644950326531, 2.047507495943574]
+#    [1.1982645102336809, 0.6006443426858776, 0.2823680933721965, 0.7923964426301192, 1.6634141478305184, 2.2122522019604136]

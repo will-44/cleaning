@@ -23,7 +23,7 @@ class ReachabilityRelation:
         self.poses_availables_pcd = o3d.geometry.PointCloud()
         self.poses_av_tup = []
 
-        self.robot_length = 0.4  # TODO doing test to verify this value
+        self.robot_length = 0.3  # TODO doing test to verify this value
         self.arm_base_hight = 0.7
         self.debug = debug
 
@@ -72,7 +72,7 @@ class ReachabilityRelation:
         # trans = [0, 0, self.arm_base_hight]
         trans[2] = self.arm_base_hight
         pcd = pcd.translate(trans)
-        trans = [-1, 0, 0]
+        trans = [-1.5, 0, 0]
         pcd = pcd.translate(trans, relative=True)
         return pcd
 
@@ -120,24 +120,26 @@ class ReachabilityRelation:
             self.vis.add_geometry(reach_map_trans_r)
             self.vis.add_geometry(self.base_poses_pcd)
             # self.vis.add_geometry(self.mesh)
-            self.visible_points = self.mesh
+            self.visible_points = copy.deepcopy(self.mesh)
             self.vis.add_geometry(self.visible_points)
 
         for pt in self.base_poses:
             reachability_relation.update({pt: []})
         # we check all possible positions
+
         for pose in reachability_relation.keys():
+
+            # self.visible_points = self.mesh
             # transform RM to actual base pose, we suppose the position as x m up to the floor and turn to orients it to the machine center
             reach_map_trans = reach_map_trans.translate([pose[0], pose[1], self.arm_base_hight], relative=False)
-
             angle = self.robot.mir_pose_angle(pose, self.mesh)
             # print(angle)
             reach_map_trans_r.points = reach_map_trans.points
             rot = reach_map_trans_r.get_rotation_matrix_from_xyz((0, 0, angle))
             reach_map_trans_r.rotate(rot)
 
-            reach_map_vox_trans = o3d.geometry.VoxelGrid.create_from_point_cloud(reach_map_trans_r,
-                                                                                 voxel_size=0.16)
+            # reach_map_vox_trans = o3d.geometry.VoxelGrid.create_from_point_cloud(reach_map_trans_r,
+            #                                                                      voxel_size=0.16)
 
             # check how much the new RM include mesh points
             # Here we consider all point in the workspace to be with quality at 1
@@ -149,10 +151,10 @@ class ReachabilityRelation:
             # downpcd = self.mesh.voxel_down_sample(voxel_size=0.05)
             # queries = np.asarray(downpcd.points)
             # Test visible points
-            visible_points_new = self.get_visble_points(self.mesh, [pose[0], pose[1], self.arm_base_hight])
+            visible_points_new = self.get_visble_points(copy.copy(self.mesh), [pose[0], pose[1], self.arm_base_hight])
             self.visible_points.points = visible_points_new.points
             # print("update mesh")
-            queries = np.asarray(self.visible_points.points)
+            # queries = np.asarray(self.visible_points.points)
 
             # Voxel solution
             # bool_points_reachable = reach_map_vox_trans.check_if_included(o3d.utility.Vector3dVector(queries))
@@ -183,24 +185,22 @@ class ReachabilityRelation:
             # o3d.visualization.draw_geometries([self.base_poses_pcd, hull_ls, self.visible_points])
         return reachability_relation
 
-    def get_visble_points(self, pcd, base_pose, reach=10, interval=0.5):
+    def get_visble_points(self, pcd_inital, base_pose, reach=2, interval=0.5):
         all_index = set()
+        pcd_initial = copy.deepcopy(self.mesh)
         for offset in range(round(reach / interval)):
             camera = [base_pose[0], base_pose[1], base_pose[2] + offset*interval]
             radius = 7000*offset*interval+1
-            # print(offset)
-            _, pt_map = pcd.hidden_point_removal(camera, radius)
+            _, pt_map = pcd_initial.hidden_point_removal(camera, radius)
             all_index.update(pt_map)
-            # print(all_index)
-
-        pcd = pcd.select_by_index(list(all_index))
-        # o3d.visualization.draw_geometries([pcd])
-        return pcd
+        result = pcd_initial.select_by_index(list(all_index))
+        return result
 
 
 if __name__ == '__main__':
     rospy.init_node('Reachability_relation', anonymous=True)
-    debug = rospy.get_param("debug", default=False)
+    debug = rospy.get_param("debug", default=True)
+    print(debug)
     path_machine = rospkg.RosPack().get_path('cleaning') + rospy.get_param("machine_pcd")
     reachability_map_path = rospkg.RosPack().get_path('cleaning') + rospy.get_param("reachability_map")
     relation = ReachabilityRelation(path_machine, reachability_map_path, debug=debug)

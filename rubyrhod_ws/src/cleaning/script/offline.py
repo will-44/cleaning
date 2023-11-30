@@ -513,11 +513,6 @@ if __name__ == '__main__':
     mesh_path = rospkg.RosPack().get_path('cleaning') + rospy.get_param("/machine_ply")
     offline = Offline(pcd_path, mesh_path, path_relation)
 
-    # TEST
-    # offline.arm.go_home()
-    # while offline.arm.check_motion() != 0:
-    #     rospy.sleep(0.1)
-    #END TEST
 
     # answer = input("Do you want to generate the mobile base spots ? (around 1H) y/n: ")
     # if answer == "y" or answer == "yes":
@@ -530,6 +525,26 @@ if __name__ == '__main__':
                                              rospkg.RosPack().get_path('cleaning') + rospy.get_param("/spots"))
         offline.data_manager.save_pcd_list(list(best_spots.values()),
                                            rospkg.RosPack().get_path('cleaning') + rospy.get_param("/spots_pcds"))
+        if debug:
+            # Get each best spots value and give it a rnd color
+            result_pcd = []
+            for index, pcd in enumerate(best_spots.values()):
+                color = [random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0)]
+                pcd.paint_uniform_color(color)
+                # best_spots[list(best_spots.keys())[index]] = pcd
+                result_pcd.append(pcd)
+            # Get each best spot key and creat a pcd with it with a hight (z) of 1
+            for index, spot in enumerate(best_spots.keys()):
+                spot = list(spot)
+                # spot.append(1)  # set z to 0 (2d position to 3d) for visualisation
+                print(spot)
+                pcd = offline.open3d_tool.np2pcd(np.asarray([spot]))
+                pcd.paint_uniform_color([0, 0, 1])
+                result_pcd.append(pcd)
+            # Visualize the result of each values and keys
+
+            o3d.visualization.draw_geometries(result_pcd)
+            # o3d.visualization.draw_geometries(list(best_spots.values()))
     spots = []
     spots = offline.data_manager.load_var_pickle(
         rospkg.RosPack().get_path('cleaning') + rospy.get_param("/spots"))
@@ -716,12 +731,16 @@ if __name__ == '__main__':
 
         # Select spot associate
         if vectors_out.size != 0:
-            clusterise = offline.open3d_tool.clusterise_dbscan(vectors_out)
+            clusterise, noise = offline.open3d_tool.clusterise_dbscan(vectors_out)
             print(clusterise)
             if clusterise:
                 # Get best vector
                 biggest_exit = max(clusterise, key=len)
+                print("biggest_exit:")
+                print(biggest_exit)
                 best_vec_exit = vectors_out[biggest_exit]
+                print("best_vec_exit:")
+                print(best_vec_exit)
                 rospy.loginfo("Best spot:")
 
                 spots = np.asarray(list(map(list, list(offline.offline_trajectory.keys()))))

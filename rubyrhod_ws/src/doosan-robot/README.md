@@ -1,15 +1,8 @@
+
 # [Doosan Robotics](http://www.doosanrobotics.com/kr/)
 [![license - apache 2.0](https://img.shields.io/:license-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![support level: community](https://img.shields.io/badge/support%20level-community-lightgray.png)](http://rosindustrial.org/news/2016/10/7/better-supporting-a-growing-ros-industrial-software-platform)
-
-# *Precautions*
-### Features not currently supported
-> __Robotiq description cannot be called on gazebo simulation.__   
-__Mobile (Husky) simulation not available__   
-__Does not support the use of multi robots (only supports single robots)__
-
-
 # *overview*
 
 [Doosan ROS Video](https://www.youtube.com/watch?v=mE24X5PhZ4M&feature=youtu.be)   
@@ -18,23 +11,22 @@ __Does not support the use of multi robots (only supports single robots)__
 [Doosan ROS Online Lecture(Eng)](https://www.youtube.com/watch?v=KkzoS5VORPc) 
 
 # *build* 
-##### *Doosan Robot ROS Package is implemented at ROS-Noetic.*
-    ### We recommand the /home/<user_home>/catkin_ws/src
+##### *Doosan Robot ROS Package is implemented at ROS-Kinetic.*
+    ### We recoomand the /home/<user_home>/catkin_ws/src
     cd ~/catkin_ws/src
-    git clone -b noetic-devel --single-branch https://github.com/doosan-robotics/doosan-robot
-    rosdep install --from-paths doosan-robot --ignore-src --rosdistro noetic -r -y
-    
-    ##### Serial Package source build
-    ### Noetic distro does not support serial package, so you have to install it manually.
-    cd ~/catkin_ws/src
-    git clone https://github.com/wjwwood/serial.git
-    
+    git clone https://github.com/doosan-robotics/doosan-robot
+    rosdep install --from-paths doosan-robot --ignore-src --rosdistro kinetic -r -y
     cd ~/catkin_ws
     catkin_make
     source ./devel/setup.bash
 
 #### package list
-    sudo apt-get install ros-noetic-rqt* ros-noetic-moveit* ros-noetic-gazebo-ros-control ros-noetic-joint-state-controller ros-noetic-effort-controllers ros-noetic-position-controllers ros-noetic-ros-controllers ros-noetic-ros-control ros-noetic-joint-state-publisher-gui ros-noetic-joint-state-publisher
+    sudo apt-get install ros-kinetic-rqt* ros-kinetic-moveit* ros-kinetic-industrial-core ros-kinetic-gazebo-ros-control ros-kinetic-joint-state-controller ros-kinetic-effort-controllers ros-kinetic-position-controllers ros-kinetic-ros-controllers ros-kinetic-ros-control ros-kinetic-serial
+    
+__packages for mobile robot__
+
+    sudo apt-get install ros-kinetic-lms1xx ros-kinetic-interactive-marker-twist-server ros-kinetic-twist-mux ros-kinetic-imu-tools ros-kinetic-controller-manager ros-kinetic-robot-localization
+
 
 # *usage* <a id="chapter-3"></a>
 #### Operation Mode
@@ -68,7 +60,7 @@ roslaunch dsr_description a0509.launch
 <img src="https://user-images.githubusercontent.com/47092672/55622394-0f708f00-57db-11e9-8625-a344513a5d3a.png" width="70%">
 
 > + In dsr_description, the user can use joint_state_publisher to move the robot.
-> + [Joint_state_publisher](http://wiki.ros.org/joint_state_publisher)
+> + [joint_state_publisher](http://wiki.ros.org/joint_state_publisher)
 
 > $ _roslaunch dsr_description m0617.launch color:=blue gripper:=robotiq_2f_ 
 
@@ -113,7 +105,7 @@ mobile := USE_MOBILE <none  /  husky> defalut = none
 ##### *How to use MoveIt Commander*
 ###### _You can run Moveit with CLI commands through the moveit commander package._
 ###### _You can install the "moveit_commander" package using below command._
-    sudo apt-get install ros-noetic-moveit-commander
+    sudo apt-get install ros-kinetic-moveit-commander
 ##### *MoveitCommander usage example*
 	roslaunch dsr_launcher dsr_moveit.launch model:=m1013
 	In another terminal 
@@ -140,7 +132,9 @@ __If you don`t have real doosan controller, you must execute emulator before run
     roslaunch dsr_launcher single_robot_rviz.launch host:=127.0.0.1 port:=12345 mode:=virtual model:=m1013 color:=blue gripper:=none mobile:=none
     roslaunch dsr_launcher single_robot_gazebo.launch host:=192.168.127.100
     roslaunch dsr_launcher single_robot_rviz_gazebo.launch gripper:=robotiq_2f mobile:=husky
-    
+    roslaunch dsr_launcher multi_robot_rviz.launch
+    roslaunch dsr_launcher multi_robot_gazebo.launch model:=m0609
+    roslaunch dsr_launcher multi_robot_rviz_gazebo.launch
 ___
 #### dsr_example
 ###### single robot
@@ -162,6 +156,26 @@ ___
 > _$ rosrun dsr_example_py single_robot_simple.py_
 > <img src="https://user-images.githubusercontent.com/47092672/55624471-fbc82700-57e0-11e9-8c1f-4fe9f526944b.png" width="70%">
 
+
+###### multi robot
+    <launch>
+      - multi robot in rviz : 
+      roslaunch dsr_launcher multi_robot_rviz.launch
+      - multi robot in gazebo : 
+      roslaunch dsr_launcher multi_robot_gazebo.launch
+      - multi robot in rviz + gazebo : 
+      roslaunch dsr_launcher multi_robot_rviz_gazebo.launch
+    <run application node>
+      rosrun dsr_example_py multi_robot_simple.py
+    <ex>
+        roslaunch dsr_launcher multi_robot_rviz_gazebo.launch
+        rosrun dsr_example_py multi_robot_simple.py  
+
+> _$ roslaunch dsr_launcher multi_robot_rviz_gazebo.launch_
+
+> _$ rosrun dsr_example_py multi_robot_simple.py_
+> <img src="https://user-images.githubusercontent.com/47092672/55622398-10092580-57db-11e9-8a23-b9dae4131897.png" width="70%">
+
 ###### robot + gripper
 > insert argument gripper:=robotiq_2f  
 - single robot + gripper
@@ -177,6 +191,33 @@ rosrun serial_example_node serial_example_node ttyUSB0 115200
 rostopic echo /serial_read
 rostopic pub /serial_write std_msgs/String 'data: 100'
 ```
+
+
+
+###### robot + mobile
+> insert argument mobile:=husky
+- single robot on mobile
+```bash
+roslaunch dsr_launcher single_robot_rviz.launch mobile:=husky
+  
+<run application node>
+  rosrun dsr_example_py single_robot_mobile.py
+```
+
+> _$ roslaunch dsr_launcher single_robot_rviz mobile:=husky color:=blue_  
+> <img src="https://user-images.githubusercontent.com/47092672/55622399-10092580-57db-11e9-9ee0-f3c04a5569de.png" width="70%">
+
+- multi robot on mobile
+```bash
+roslaunch dsr_launcher multi_robot_rviz.launch mobile:=husky
+
+<run application node>
+  rosrun dsr_example_py multi_robot_mobile.py  
+```
+
+> _$ roslaunch dsr_launcher multi_robot_rviz mobile:=husky_
+> <img src="https://user-images.githubusercontent.com/47092672/55622397-10092580-57db-11e9-8fe8-4d711725ac45.png" width="70%">
+
     
 #### gazebo+rviz+virtual
     roslaunch dsr_launcher single_robot_rviz_gazebo.launch
@@ -206,6 +247,17 @@ rostopic pub /serial_write std_msgs/String 'data: 100'
   </include>
 ```  
 
+#### Run multi-robot by command line
+```bash
+roslaunch dsr_launcher multi_robot_rviz.launch
+rostopic pub /dsr01m1013/joint_position_controller/command std_msgs/Float64MultiArray "layout:
+  dim:
+  - label: ''
+    size: 0
+    stride: 0
+    data_offset: 0
+data: [10, 10, 40, 10, 60, 10]"
+```
 #### Service Call
 ```bash
 rosservice call /dsr01m1013/motion/move_joint "pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
@@ -220,8 +272,17 @@ syncType: 0"
 ___
 # manuals
 
-[Manual(Kor)](http://wiki.ros.org/doosan-robotics?action=AttachFile&do=get&target=Doosan_Robotics_ROS_Manual_ver1.12_20200522A%28Kor.%29.pdf)
+[Manual(Kor)](http://wiki.ros.org/doosan-robotics?action=AttachFile&do=get&target=%EC%9D%BC%EB%B0%98%EB%B9%84_Doosan_Robotics_ROS_Manual_v1.13_KR.pdf)
 
 
-[Manual(Eng)](http://wiki.ros.org/doosan-robotics?action=AttachFile&do=get&target=Doosan_Robotics_ROS_Manual_ver1.12_20200522%28EN.%29.pdf)
+[Manual(Eng)](http://wiki.ros.org/doosan-robotics?action=AttachFile&do=get&target=%EC%9D%BC%EB%B0%98%EB%B9%84_Doosan_Robotics_ROS_Manual_v1.13_EN.pdf)
 
+# demo
+
+### Doosan-Robots In Gazebo
+
+<img src="https://user-images.githubusercontent.com/47092672/55624381-9f650780-57e0-11e9-80aa-0f26ec528987.png" width="80%">
+
+### Doosan-Robots & Mobile in Rviz 
+
+<img src="https://user-images.githubusercontent.com/47092672/55624380-9ecc7100-57e0-11e9-8854-f6d8ca3561e7.png" width="80%">

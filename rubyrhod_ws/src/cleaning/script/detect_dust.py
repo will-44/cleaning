@@ -27,8 +27,8 @@ class detectDust:
 
         self.depth = 0
         self.camera_info = rospy.wait_for_message("/rgb/camera_info", CameraInfo, timeout=10)
-        path_mask = rospkg.RosPack().get_path('cleaning') + "/img/mask_color.png"  # Path to the mask image
-        path_mask_depth = rospkg.RosPack().get_path('cleaning') + "/img/mask_color.png"  # Path to the mask image
+        path_mask = rospkg.RosPack().get_path('cleaning') + "/img/mask_depth.png"  # Path to the mask image
+        path_mask_depth = rospkg.RosPack().get_path('cleaning') + "/img/mask_depth.png"  # Path to the mask image
 
         mask_tool_depth = cv2.imread(path_mask)  # Load the mask image
         mask_tool = cv2.imread(path_mask)  # Load the mask image
@@ -171,6 +171,8 @@ class detectDust:
                 cv2.circle(image, (cX, cY), 3, (0, 0, 255), -1)
 
         try:
+            # cv2.imshow('image', image)
+            # cv2.waitKey(0)
             image_msg = self.bridge.cv2_to_imgmsg(image, "bgr8")
             image_msg.header.frame_id = "rgb_camera_link"
 
