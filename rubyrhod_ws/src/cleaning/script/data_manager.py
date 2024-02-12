@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
 import glob
+import json
 import pickle
 
 import open3d as o3d
 import rospy
+import numpy as np
 
 
 class DataManager:
@@ -54,3 +56,34 @@ class DataManager:
             res = pickle.load(f)
         return res
 
+    def open_json(self, path):
+        """
+        Open a json file and return the data
+        :param path: the path of the file
+        :return: the data
+        """
+        with open(path) as json_file:
+            data = json.load(json_file)
+        return data
+
+    def convert_np_arrays(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return obj
+
+    def save_dict_to_json(self, input_dict, json_file_path):
+        # Convert tuple keys to strings and handle NumPy arrays
+        converted_dict = {str(key): self.convert_np_arrays(value) for key, value in input_dict.items()}
+
+        # Save the dictionary to a JSON file
+        with open(json_file_path, 'w') as json_file:
+            json.dump(converted_dict, json_file, indent=2)
+
+    def load_json_to_dict(self, json_file_path):
+        with open(json_file_path, 'r') as json_file:
+            loaded_dict = json.load(json_file)
+
+        # Convert keys back to tuples and handle NumPy arrays
+        converted_dict = {eval(key): self.convert_np_arrays(value) for key, value in loaded_dict.items()}
+
+        return converted_dict

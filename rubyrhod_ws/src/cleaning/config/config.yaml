@@ -1,22 +1,22 @@
 ar_tag: ar_marker_2
-compute_best_spots: true
-compute_relation_guards: true
-debug: false
-generate_guards: true
-guards_limit: 50
-guards_pcd: /data/final_guards
+compute_best_spots: false
+compute_relation_guards: false
+debug: true
+generate_guards: false
+guards_limit: 15
+guards_pcd: /data_article/video/final_guards
 machine2ar_calibration: scie2ar6_calibration_mat
 machine_mesh: /mesh/table_coro_tri_rot.obj
 machine_pcd: /mesh/table_coro.ply
 machine_ply: /mesh/table_coro_tri.ply
 maneuvrability_coeff: 1
-observable_concavity: /data/observed_concavity
-observed_pcd: /data/observed_pdc
+observable_concavity: /data_article/video/observed_concavity
+observed_pcd: /data_article/video/observed_pdc
 potential_guard: 2
 reachability_map: /mesh/reachability_map.pcd
-relation_guards: /data/relation_path_arm_
-relation_spot: /data/relation_coro.pkl
-result_pcd: /data/final_result
+relation_guards: /data_article/video/relation_path_arm_
+relation_spot: /data_article/relation_coro.pkl
+result_pcd: /data_article/video/final_result
 scie2ar6_calibration_mat:
 - - -0.9985386733331825
   - -0.006093210157366835
@@ -35,9 +35,9 @@ scie2ar6_calibration_mat:
   - 0.0
   - 1.0
 sort_spots: true
-spot_limit: 25
-spots: /data/evaluation/100/spots.pkls
-spots_pcds: /data/pcd_17_04_saw
+spot_limit: 2
+spots: /data_article/evaluation/spots.pkls
+spots_pcds: /data_article/spots_pcd
 table2ar2_calibration_mat:
 - - 0.9972773283665013
   - -0.06408157594352347
@@ -55,4 +55,4 @@ table2ar2_calibration_mat:
   - 0.0
   - 0.0
   - 1.0
-trajectorie: /data/evaluation_table_test/10/1/10/1trajectorie.plk
+trajectorie: /data_article/evaluation/10/1/10/1trajectorie.plk

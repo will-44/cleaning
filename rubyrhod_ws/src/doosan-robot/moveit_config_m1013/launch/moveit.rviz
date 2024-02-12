@@ -6,6 +6,7 @@ Panels:
       Expanded:
         - /MotionPlanning1
         - /MotionPlanning1/Scene Geometry1
+        - /MotionPlanning1/Scene Robot1
         - /TF1
         - /TF1/Frames1
         - /DepthCloud1/Auto Size1
@@ -285,64 +286,16 @@ Visualization Manager:
             Show Trail: false
         Robot Alpha: 0.5
         Show Robot Collision: true
-        Show Robot Visual: true
+        Show Robot Visual: false
       Value: true
       Velocity_Scaling_Factor: 0.1
     - Class: rviz/TF
-      Enabled: true
+      Enabled: false
+      Filter (blacklist): ""
+      Filter (whitelist): ""
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        ar_marker_8:
-          Value: true
-        base_0:
-          Value: true
-        camera_base:
-          Value: false
-        camera_body:
-          Value: false
-        camera_depth:
-          Value: false
-        camera_visor:
-          Value: false
-        depth_camera_link:
-          Value: true
-        imu_link:
-          Value: true
-        link1:
-          Value: false
-        link2:
-          Value: false
-        link3:
-          Value: false
-        link4:
-          Value: false
-        link5:
-          Value: false
-        link6:
-          Value: false
-        machine:
-          Value: true
-        plate_arm:
-          Value: true
-        rgb_camera_link:
-          Value: true
-        structure_vention:
-          Value: true
-        surface:
-          Value: true
-        vacuum_base_link:
-          Value: false
-        vacuum_safe_tcp:
-          Value: false
-        vacuum_sphere:
-          Value: false
-        vacuum_tcp:
-          Value: false
-        vacuum_tube:
-          Value: false
-        world:
-          Value: false
       Marker Alpha: 1
       Marker Scale: 0.5
       Name: TF
@@ -350,37 +303,9 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        surface:
-          structure_vention:
-            plate_arm:
-              world:
-                base_0:
-                  link1:
-                    link2:
-                      link3:
-                        link4:
-                          link5:
-                            link6:
-                              camera_base:
-                                camera_body:
-                                  {}
-                                camera_depth:
-                                  {}
-                                camera_visor:
-                                  {}
-                                depth_camera_link:
-                                  imu_link:
-                                    {}
-                                  rgb_camera_link:
-                                    {}
-                              vacuum_base_link:
-                                vacuum_tube:
-                                  vacuum_sphere:
-                                    vacuum_tcp:
-                                      vacuum_safe_tcp:
-                                        {}
+        {}
       Update Interval: 0
-      Value: true
+      Value: false
     - Alpha: 1
       Class: rviz/RobotModel
       Collision Enabled: false
@@ -434,7 +359,7 @@ Visualization Manager:
       Use rainbow: true
       Value: true
     - Class: rviz/Image
-      Enabled: false
+      Enabled: true
       Image Topic: /image_topic_2
       Max Value: 1
       Median window: 5
@@ -444,7 +369,7 @@ Visualization Manager:
       Queue Size: 2
       Transport Hint: raw
       Unreliable: false
-      Value: false
+      Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -474,7 +399,7 @@ Visualization Manager:
       Use rainbow: true
       Value: true
     - Class: rviz/Image
-      Enabled: true
+      Enabled: false
       Image Topic: /image_topic_depth
       Max Value: 1
       Median window: 5
@@ -484,7 +409,7 @@ Visualization Manager:
       Queue Size: 2
       Transport Hint: raw
       Unreliable: false
-      Value: true
+      Value: false
     - Alpha: 1
       Auto Size:
         Auto Size Factor: 1
@@ -630,7 +555,24 @@ Visualization Manager:
       Marker Topic: /dsr01m1013/visualization_markers
       Name: MarkerArray
       Namespaces:
-        {}
+        marker_test_0: true
+        marker_test_1: true
+        marker_test_10: true
+        marker_test_11: true
+        marker_test_12: true
+        marker_test_13: true
+        marker_test_14: true
+        marker_test_15: true
+        marker_test_16: true
+        marker_test_17: true
+        marker_test_2: true
+        marker_test_3: true
+        marker_test_4: true
+        marker_test_5: true
+        marker_test_6: true
+        marker_test_7: true
+        marker_test_8: true
+        marker_test_9: true
       Queue Size: 100
       Value: true
   Enabled: true
@@ -669,9 +611,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.21479696035385132
+      Pitch: 0.42479702830314636
       Target Frame: world
-      Yaw: 1.1063306331634521
+      Yaw: 2.351330518722534
     Saved: ~
 Window Geometry:
   Displays:

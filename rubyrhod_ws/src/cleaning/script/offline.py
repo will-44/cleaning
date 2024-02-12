@@ -44,6 +44,7 @@ class Offline:
         # PCD and Mesh of the machine
         self.pcd_machine = o3d.io.read_point_cloud(path_machine)
         self.mesh_machine = o3d.io.read_triangle_mesh(path_mesh)
+        self.mesh_machine.compute_vertex_normals()
 
         self.relation = self.data_manager.load_var_pickle(relation_path)
 
@@ -86,6 +87,14 @@ class Offline:
         # self.pcl_pub = rospy.Publisher('/transf_mat', Float64MultiArray, queue_size=10)
 
     def select_best_spot(self, relation, pcd_initial, limit=10, index_it=0):
+        """
+
+        :param relation:
+        :param pcd_initial:
+        :param limit: the percentage of the first spot selected
+        :param index_it:
+        :return:
+        """
         extracted_values = {}
         max_value = 0
         first_iteration = True
@@ -99,7 +108,7 @@ class Offline:
                 max_value = len(longest_value)
                 first_iteration = False
 
-            if not np.any(longest_value) or len(longest_value) <= int(max_value / limit):
+            if not np.any(longest_value) or len(longest_value) <= int(max_value * (limit/100)):
                 # rospy.loginfo("Dict Stop")
                 # rospy.loginfo(len(longest_value))
                 # rospy.loginfo(max_value)
@@ -139,7 +148,7 @@ class Offline:
         This methode is call for each spot, it determined the best configurations tpo inspect the machine
         :param relation:
         :param pcd_initial:
-        :param limit:
+        :param limit: the percentage of the first guard selected
         :param index_it:
         :return:
         """
@@ -165,7 +174,7 @@ class Offline:
 
             # If no point associated or the score is less than
             # the best score divided by the limit also, the search stoped
-            if not np.any(points_machine) or best_score <= max_score / limit:
+            if not np.any(points_machine) or best_score <= max_score * (limit/100):
                 # rospy.loginfo("Dict Stop")
                 # print(len(longest_value))
                 # print(max_value)
@@ -518,14 +527,15 @@ if __name__ == '__main__':
     # if answer == "y" or answer == "yes":
     if rospy.get_param("/compute_best_spots"):
         # Get the best spots for the MiR
+        print(offline.relation)
         best_spots = offline.select_best_spot(offline.relation, offline.pcd_machine,
                                               limit=rospy.get_param("/spot_limit"))
-        # print(list(best_spots.keys()))
+        print(list(best_spots.keys()))
         offline.data_manager.save_var_pickle(list(best_spots.keys()),
                                              rospkg.RosPack().get_path('cleaning') + rospy.get_param("/spots"))
         offline.data_manager.save_pcd_list(list(best_spots.values()),
                                            rospkg.RosPack().get_path('cleaning') + rospy.get_param("/spots_pcds"))
-        if debug:
+        if True:
             # Get each best spots value and give it a rnd color
             result_pcd = []
             for index, pcd in enumerate(best_spots.values()):
@@ -535,16 +545,33 @@ if __name__ == '__main__':
                 result_pcd.append(pcd)
             # Get each best spot key and creat a pcd with it with a hight (z) of 1
             for index, spot in enumerate(best_spots.keys()):
+                # get spot angle
+                angle = offline.robot.mir_pose_angle(spot, best_spots[spot])
                 spot = list(spot)
                 # spot.append(1)  # set z to 0 (2d position to 3d) for visualisation
                 print(spot)
-                pcd = offline.open3d_tool.np2pcd(np.asarray([spot]))
-                pcd.paint_uniform_color([0, 0, 1])
-                result_pcd.append(pcd)
+                # for each spot import a robot mesh and translate and rotate it following the spot
+                # and add it to the pcd list
+
+                robot_path = rospkg.RosPack().get_path('cleaning') + "/mesh/doosan_robot.PLY"
+                robot_doosan = o3d.io.read_triangle_mesh(robot_path)
+                robot_doosan.compute_vertex_normals()
+                # resize robot mesh
+                robot_doosan.scale(0.001, center=(0, 0, 0))
+                Rot = robot_doosan.get_rotation_matrix_from_xyz((0, 0, np.pi))
+                robot_doosan.rotate(Rot, center=(0, 0, 0))
+                robot_doosan.rotate(R.from_euler('z', angle, degrees=False).as_matrix(), center=(0, 0, 0))
+                robot_doosan.translate([spot[0], spot[1], 1])
+                result_pcd.append(robot_doosan)
+
+
+
+                # pcd = offline.open3d_tool.np2pcd(np.asarray([spot]))
+                # pcd.paint_uniform_color([0, 0, 1])
+                # result_pcd.append(pcd)
             # Visualize the result of each values and keys
 
             o3d.visualization.draw_geometries(result_pcd)
-            # o3d.visualization.draw_geometries(list(best_spots.values()))
     spots = []
     spots = offline.data_manager.load_var_pickle(
         rospkg.RosPack().get_path('cleaning') + rospy.get_param("/spots"))
@@ -689,6 +716,13 @@ if __name__ == '__main__':
     # Get center from each cluster non observable
     cluster_center_np, clusters_pcds = offline.cluster_pcd(non_obs_pcd, esp=0.02)
 
+    # add the machine to the pcds in a new list just for the visualisation
+    if debug:
+        new_list = []
+        for pcd in clusters_pcds:
+            new_list.append(pcd)
+        new_list.append(offline.mesh_machine)
+        o3d.visualization.draw_geometries(new_list)
     # Ray Cast
     # Genreate ray around machine
     scene = o3d.t.geometry.RaycastingScene()
@@ -716,6 +750,17 @@ if __name__ == '__main__':
     for i, clust_pt in enumerate(cluster_np):
         rays, line, line_color, line_indice = offline.open3d_tool.generate_rays_vectors(clust_pt, dest_np)
         ans = scene.cast_rays(rays)
+        if debug:
+            # Create line set for visualization
+            lineset = o3d.geometry.LineSet()
+
+            lineset.points = o3d.utility.Vector3dVector(np.asarray(line))
+            lineset.lines = o3d.utility.Vector2iVector(np.asarray(line_indice))
+            lineset.colors = o3d.utility.Vector3dVector(np.asarray(line_color))
+
+            # show the mesh and draw lines
+            o3d.visualization.draw_geometries([offline.mesh_machine, lineset])
+
         # get rays not in collision
         rays_hit = ans['t_hit'].numpy()
 
@@ -726,8 +771,26 @@ if __name__ == '__main__':
         indice = np.where(rays_hit != float('inf'))[0]
         rays_out = np.delete(rays.numpy(), indice, axis=0)
 
+        lines_out = np.delete(line, indice, axis=0)
+        lines_color_out = np.delete(line_color, indice, axis=0)
+        lines_indice_out = np.delete(line_indice, indice, axis=0)
+
+
         # Remove rays origines to keep only vector of each rays
         vectors_out = rays_out[:, 3:]
+
+        # debug show rays out
+        if debug:
+            # Create line set for visualization
+            lineset = o3d.geometry.LineSet()
+
+            lineset.points = o3d.utility.Vector3dVector(np.asarray(lines_out))
+            lineset.lines = o3d.utility.Vector2iVector(np.asarray(lines_indice_out))
+            lineset.colors = o3d.utility.Vector3dVector(np.asarray(lines_color_out))
+
+            # show the mesh and draw lines
+            o3d.visualization.draw_geometries([offline.mesh_machine, lineset])
+
 
         # Select spot associate
         if vectors_out.size != 0:
@@ -749,10 +812,11 @@ if __name__ == '__main__':
                 rospy.loginfo(spot)
 
                 # Debug
-                pcd_clust = clusters_pcds[i]
-                pcd_spot = offline.open3d_tool.np2pcd(np.asarray([spot]))
-                pcd_spot.paint_uniform_color([1,0,0])
-                # o3d.visualization.draw_geometries([offline.mesh_machine, pcd_clust, pcd_spot])
+                if debug:
+                    pcd_clust = clusters_pcds[i]
+                    pcd_spot = offline.open3d_tool.np2pcd(np.asarray([spot]))
+                    pcd_spot.paint_uniform_color([1,0,0])
+                    o3d.visualization.draw_geometries([offline.mesh_machine, pcd_clust, pcd_spot])
                 # End debug
 
                 # Choix orientation et position TCP
@@ -910,7 +974,7 @@ if __name__ == '__main__':
                 o3d.visualization.draw_geometries([guard, offline.pcd_machine, line_set])
         else:
             print("la size est de 0 !!!")
-            input("Alerte !!! : ")
+            # input("Alerte !!! : ")
             offline.offline_trajectory[tuple(spot)] = []
 
 

@@ -17,15 +17,15 @@ import os
 if __name__ == '__main__':
     rospy.init_node('multi_param_test', anonymous=True)
 
-    spot_limits = [10, 20]
+    spot_limits = [5, 10, 15, 20, 30]
     guard_potentials = [1]
-    guard_limits = [20, 10, 5]
+    guard_limits = [1, 2, 5, 10, 15, 30, 40]
     # guard_limits = [20]
-    maneuvrability_coeffs = [1] #, 0.75, 0.5, 0.25, 0.1, 0]
+    maneuvrability_coeffs = [0.75, 0.5, 0.25, 0.1, 0]
     for spot_limit in spot_limits:
         # Change spots limit
         # create the folder
-        folder_path = "/data_test/evaluation/" + f"{spot_limit}"
+        folder_path = "/data_article/evaluation/" + f"{spot_limit}"
         if not os.path.exists(rospkg.RosPack().get_path('cleaning') + folder_path):
             os.mkdir(rospkg.RosPack().get_path('cleaning') + folder_path)
             # Set the compute of the best spots
@@ -39,7 +39,7 @@ if __name__ == '__main__':
         for guard_potential in guard_potentials:
             # change guard potential
             # create the folder
-            folder_path = "/data_test/evaluation/" + f"{spot_limit}/{guard_potential}"
+            folder_path = "/data_article/evaluation/" + f"{spot_limit}/{guard_potential}"
             # If already exist get the actual file
             if not os.path.exists(rospkg.RosPack().get_path('cleaning') + folder_path):
                 os.mkdir(rospkg.RosPack().get_path('cleaning') + folder_path)
@@ -54,13 +54,18 @@ if __name__ == '__main__':
             for guard_limit in guard_limits:
                 # change guard limit
                 # create the folder
-                folder_path = "/data_test/evaluation/" + f"{spot_limit}/{guard_potential}/{guard_limit}"
-                os.mkdir(rospkg.RosPack().get_path('cleaning') + folder_path)
+                folder_path = "/data_article/evaluation/" + f"{spot_limit}/{guard_potential}/{guard_limit}"
+                if not os.path.exists(rospkg.RosPack().get_path('cleaning') + folder_path):
+                    os.mkdir(rospkg.RosPack().get_path('cleaning') + folder_path)
+                else:
+                    # Don't compute relation guards
+                    rospy.set_param('/compute_relation_guards', False)
+                # rospy.set_param('/relation_guards', folder_path + "/relation_guards")
 
                 for maneuvrability_coeff in maneuvrability_coeffs:
                     # change guard limit
                     # create the folder
-                    folder_path = "/data_test/evaluation/" + f"{spot_limit}/{guard_potential}/{guard_limit}/{maneuvrability_coeff}"
+                    folder_path = "/data_article/evaluation/" + f"{spot_limit}/{guard_potential}/{guard_limit}/{maneuvrability_coeff}"
                     os.mkdir(rospkg.RosPack().get_path('cleaning') + folder_path)
 
 

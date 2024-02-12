@@ -65,6 +65,8 @@ class Dust:
             pcd_dust = o3d_ros.rospc_to_o3dpc(resp1.pcds[0])
             # mesh = o3d.geometry.TriangleMesh.create_coordinate_frame()
             dust_poses = np.asarray(pcd_dust.points)
+            print("dust_poses" + str(len(dust_poses)))
+            print(dust_poses)
 
             # Transform to robot frame
             frame = resp1.pcds[0].header.frame_id
@@ -89,7 +91,8 @@ class Dust:
 
         except rospy.ServiceException as e:
             print("Service call failed: %s" % e)
-        # print(result_poses)
+        print("result_poses" + str(len(result_poses)))
+        print(result_poses)
         return result_poses
 
     def filter_dust(self, dusts, dist=0.5):
@@ -99,6 +102,8 @@ class Dust:
         :param dist:
         :return:
         """
+        print("dusts" + str(len(dusts)))
+        print(dusts)
         if (len(dusts) == 0):
             return []
         rejected_points = []
@@ -110,7 +115,7 @@ class Dust:
         # get rejected points
         rejected_points = dusts[norm > dist]
         #remove point to close from machine
-        valid_dusts = valid_dusts[abs(valid_dusts[:, 2]) > 0.05]
+        # valid_dusts = valid_dusts[abs(valid_dusts[:, 2]) > 0.05]
 
         #add rejected points
         too_close = valid_dusts[abs(valid_dusts[:, 2]) < 0.05]
@@ -135,7 +140,7 @@ class Dust:
         """
         dust_path = []
         if len(dust_list) >= 1:
-            clusters, noise = self.o3d_tool.clusterise_dbscan(dust_list, eps=0.13, neighbors=1)
+            clusters, noise = self.o3d_tool.clusterise_dbscan(dust_list, eps=0.05, neighbors=1)
             # add the noise to the cluster list
             for index in noise:
                 clusters.append([index])

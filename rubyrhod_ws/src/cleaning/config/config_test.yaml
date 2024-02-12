@@ -4,7 +4,7 @@ compute_relation_guards: true
 debug: false
 generate_guards: true
 
-machine_mesh: /mesh/lab/lab_perceuse.obj
+machine_mesh: /mesh/lab/lab.obj
 machine_pcd: /mesh/lab/lab_perceuse.ply
 machine_ply: /mesh/lab/lab_perceuse.ply
 machine2ar_calibration: lab2ar8_calibration_mat
@@ -25,8 +25,8 @@ spots: /data_test/evaluation/100/spots.pkls
 spots_pcds: /data_test/pcd_17_04_saw
 guards_limit: 50
 
-trajectorie: /data_test/evaluation/20/1/5/1trajectorie.plk
-
+#trajectorie: /data_test/evaluation/10/1/5/1trajectorie.plk
+trajectorie: /data/test.json
 scie2ar6_calibration_mat:
   - - -0.9985386733331825
     - -0.006093210157366835

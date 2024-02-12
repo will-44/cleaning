@@ -78,7 +78,7 @@ class Doosan:
         # Add the behind limit as a box
         behind_pose = geometry_msgs.msg.PoseStamped()
         behind_pose.header.frame_id = "world"  # world frame (careful with the simu to real)
-        behind_pose.pose.position.x = -0.5
+        behind_pose.pose.position.x = -0.8
         behind_pose.pose.position.y = 0.0
         behind_pose.pose.position.z = 1.0
         behind_pose.pose.orientation.x = 0.0  # 0.0
@@ -169,6 +169,8 @@ class Doosan:
             return False
             print("Service call failed: s")
 
+    def moveit_get_configuration(self):
+        return self.move_group.get_current_joint_values()
     def dsr_set_tool(self, name):
         """
         Set tool weight specify in the teach pendant
@@ -786,7 +788,7 @@ class Doosan:
         :return: bool
         """
 
-        res = self.go_to_j([0, -0.610865, 2.35619, 0, 0, 0])
+        res = self.go_to_j([0, -0.698132, 1.39626, 0, 1.74533, 0])
         return res
 
     def is_plan_valid(self, joints):

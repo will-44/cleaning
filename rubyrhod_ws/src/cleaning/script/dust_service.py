@@ -20,10 +20,12 @@ def detect_dust_srv(req):
 
     # Detect dust based on the color image
     dust_center = detector.detect_dust(image_color)
-
+    print("dust_center" + str(len(dust_center)))
+    print(dust_center)
     # Get the positions of dust centers in 3D space using the depth image
     poses = detector.get_position(dust_center, image_depth)
-
+    print("poses" + str(len(poses)))
+    print(poses)
     # Convert the dust positions to an open3d PointCloud object
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(poses)

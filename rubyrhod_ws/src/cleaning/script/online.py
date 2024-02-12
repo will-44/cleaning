@@ -45,9 +45,15 @@ class OnlineStrategy:
         self.finish_pub = rospy.Publisher('/telemetrie/finish', Bool, queue_size=10)
         self.octo_pub = rospy.Publisher('/toggle_octomap', Bool, queue_size=10)
         self.spot_pub = rospy.Publisher('/telemetrie/spot', Pose2D, queue_size=10)
-        # Dicts
-        with open(offline_trajectory_path, 'rb') as f:
-            self.offline_traj = pickle.load(f)
+
+        # Open json file
+        self.data_manager = DataManager()
+        print(offline_trajectory_path)
+        self.offline_traj = self.data_manager.load_json_to_dict(offline_trajectory_path)
+
+        # Dicts (old version, with diciotnary saved from pickel)
+        # with open(offline_trajectory_path, 'rb') as f:
+        #     self.offline_traj = pickle.load(f)
 
         # Global var
         self.base_trajectory = list(map(list, list(self.offline_traj.keys())))
@@ -93,7 +99,7 @@ if __name__ == '__main__':
     rospy.sleep(1)
     is_sim = True
     dont_move = False
-    is_detect_dust =  
+    is_detect_dust = True
 
     index_mir = 0
     index = input("from witch index do you want to start ?")
@@ -177,7 +183,7 @@ if __name__ == '__main__':
                 #     rospy.sleep(0.1)
                 rospy.sleep(2)
                 # GO TO DUST
-                if is_detect_dust and res:
+                if is_detect_dust: # and res: #dire que res est toujours vrai
                     print("mouvement reach !")
                     # Set the TCP at the end of vacuum, and we add 5cm to set up an approche point.
                     # the rest will be executed by compliance
@@ -186,16 +192,19 @@ if __name__ == '__main__':
 
                     # Detect Dust in vacuum_tcp frame
                     dust_poses = strat.dust.ask_dust_poses()
+
                     # Filter points
-                    # print(dust_poses)
-                    dust_poses = strat.dust.filter_dust(dust_poses, dist=0.7)
-                    # print(dust_poses)
+                    print(dust_poses)
+                    dust_poses = strat.dust.filter_dust(dust_poses, dist=0.5)
+                    print("after filter")
+                    print(dust_poses)
                     # Compute the path thought dust clusters in vacuum_tcp frame
                     entry_points, dust_path = strat.dust.dust_path(dust_poses)
-                    print("entry_points:")
-                    print(entry_points)
-                    print("dust_path:")
-                    print(dust_path)
+                    # input("Press enter to continue:")
+                    # print("entry_points:")
+                    # print(entry_points)
+                    # print("dust_path:")
+                    # print(dust_path)
                     # On a les entry point de chaque cluster et le path de chaque cluster
                     # Donc on peut se deplacer a l'entry_point avec moveit et utiliser le reste avec dsr
                     # en recuperant les orientations du entry point final,

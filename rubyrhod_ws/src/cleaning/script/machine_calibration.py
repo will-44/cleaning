@@ -131,8 +131,8 @@ class MachineCalibration:
         self.broadcaster_map2machine.sendTransform(static_transform_stamped)
 
         while (not rospy.is_shutdown()):
-            static_transform_stamped.header.stamp = rospy.Time.now()
-            self.broadcaster_map2machine.sendTransform(static_transform_stamped)
+            static_transform_stamped_ar2mach.header.stamp = rospy.Time.now()
+            self.broadcaster_map2machine.sendTransform(static_transform_stamped_ar2mach)
             rospy.sleep(0.01)
 
 

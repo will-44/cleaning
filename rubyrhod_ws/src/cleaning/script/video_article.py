@@ -56,11 +56,11 @@ class VideoArticle:
         """
         # transform the picture from ros to opencv
         try:
-            print(type(image))
+
             image = self.bridge.imgmsg_to_cv2(image, "bgr8")
             cv2.imwrite(rospkg.RosPack().get_path('cleaning') + "/img/image_dust" +
                         time.strftime("%Y%m%d-%H%M%S") + ".png", image)
-            print(type(image))
+
             # hsv_image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
         except CvBridgeError as e:
             print(e)
@@ -68,6 +68,7 @@ class VideoArticle:
         trans = self.tf_tools.get_transform("vacuum_tcp", "rgb_camera_link")
         pixel_rejected_rgb = self.convert_3d_to_2d(self.tf_tools.transform_pose_array(self.tf_tools.array_2_posestamped(point_rejected), trans))
         pixel_accepted_rgb = self.convert_3d_to_2d(self.tf_tools.transform_pose_array(self.tf_tools.array_2_posestamped(points_accepted), trans))
+
         # show accepted points in green and rejected in red on the image
         for point in pixel_accepted_rgb:
             cv2.circle(image, (int(point[0]), int(point[1])), 5, (0, 255, 0), -1)

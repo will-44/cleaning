@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 
 <launch>
-    <rosparam file="$(find cleaning)/config/config_test.yaml" />
+    <rosparam file="$(find cleaning)/config/config.yaml" />
 <!--    <node pkg="cleaning" name="fov_emulator" type="fov_emulator.py" output="screen"/>-->
     <include file="$(find dsr_control)/launch/dsr_moveit.launch"></include>
-<!--    <node pkg="cleaning" type="offline.py" name="offline" ns="/dsr01m1013" output="screen">-->
-<!--        <param  name="robot_description" value="/dsr01m1013/robot_description" />-->
-<!--    </node>-->
-    <node pkg="cleaning" type="multi_param.py" name="test" output="screen"/>
+    <node pkg="cleaning" type="offline.py" name="offline" ns="/dsr01m1013" output="screen">
+        <param  name="robot_description" value="/dsr01m1013/robot_description" />
+    </node>
+<!--    <node pkg="cleaning" type="multi_param.py" name="test" output="screen"/>-->
 <!--    <node pkg="cleaning" type="evaluation.py" name="test" output="screen"/>-->
 </launch>

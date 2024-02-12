@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+import time
 
 import rospkg
 import rospy
@@ -19,6 +20,7 @@ import imutils
 class detectDust:
 
     def __init__(self, callback_activate=True):
+        self.callback_activate = callback_activate
         # self.image_pub = rospy.Publisher("image_topic_2", Float64MultiArray, queue_size=10)
         self.image_pub = rospy.Publisher("/image_topic_2", Image, queue_size=1)
         self.depth_pub = rospy.Publisher("/image_topic_depth", Image, queue_size=1)
@@ -171,17 +173,24 @@ class detectDust:
                 cv2.circle(image, (cX, cY), 3, (0, 0, 255), -1)
 
         try:
-            # cv2.imshow('image', image)
-            # cv2.waitKey(0)
+            # if not self.callback_activate:
+            #     cv2.imshow('image', image)
+            #     cv2.waitKey(0)
             image_msg = self.bridge.cv2_to_imgmsg(image, "bgr8")
             image_msg.header.frame_id = "rgb_camera_link"
 
             self.image_pub.publish(image_msg)
         except CvBridgeError as e:
             print(e)
-        msg = Floats()
-        msg.data = np.reshape(centers, (np.size(centers),))
-        self.dust_pixels_pub.publish(msg)
+        # msg = Floats()
+        # msg.data = np.reshape(centers, (np.size(centers),))
+        # self.dust_pixels_pub.publish(msg)
+
+        if not self.callback_activate:
+            print("nb of dust: " + str(len(centers)))
+            print(centers)
+            cv2.imwrite(rospkg.RosPack().get_path('cleaning') + "/img/original_image" +
+                        time.strftime("%Y%m%d-%H%M%S") + ".png", image)
         return centers
 
 
