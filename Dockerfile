@@ -36,7 +36,7 @@ RUN mkdir -p /urs/src/rubyrhod_ws/src/
 RUN mkdir -p /urs/src/rubyrhod_ws/build/
 RUN mkdir -p /urs/src/rubyrhod_ws/devel/
 WORKDIR /urs/src/rubyrhod_ws/
-COPY ./ ./src/
+COPY ./ ./rubyrhod_ws/src/
 RUN source /opt/ros/noetic/setup.sh
 RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; cd /urs/src/rubyrhod_ws/; catkin_make'
 #RUN catkin init
